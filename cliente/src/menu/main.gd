@@ -1,11 +1,11 @@
 extends Node2D
 
-var identificacion = preload("res://menu/identificacion.tscn")
+var identification = preload("res://menu/identification.tscn")
 
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	add_child(identificacion.instantiate())
+	add_child(identification.instantiate())
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

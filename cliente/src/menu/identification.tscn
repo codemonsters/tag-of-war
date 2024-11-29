@@ -144,5 +144,24 @@ offset_right = 1128.0
 offset_bottom = 645.0
 color = Color(0.298039, 0.298039, 0.298039, 0.784314)
 
+[node name="ErrorMessageLength" type="Label" parent="."]
+modulate = Color(0.980221, 0.30239, 0.267759, 1)
+offset_left = 215.0
+offset_top = 330.0
+offset_right = 415.0
+offset_bottom = 380.0
+text = "Error: Invalid Username
+From 1-20 characters"
+
+[node name="ErrorMessageUsed" type="Label" parent="."]
+modulate = Color(0.980221, 0.30239, 0.267759, 1)
+offset_left = 215.0
+offset_top = 330.0
+offset_right = 415.0
+offset_bottom = 380.0
+text = "Error: Invalid Username
+Username already in use"
+
 [connection signal="pressed" from="LblPlayAsGuest/GuestButton" to="." method="_on_boton_invitado_pressed"]
 [connection signal="pressed" from="LblAccountAcces/AccountButton" to="." method="_on_boton_cuenta_pressed"]
+[connection signal="pressed" from="BtnConnectGuest" to="." method="_on_btn_connect_guest_pressed"]
