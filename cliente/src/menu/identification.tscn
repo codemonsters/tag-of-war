@@ -90,20 +90,19 @@ offset_right = 407.0
 offset_bottom = 562.0
 text = "Conectar"
 
-[node name="TxtPassword" type="TextEdit" parent="."]
-offset_left = 789.0
-offset_top = 361.0
-offset_right = 1052.0
-offset_bottom = 404.0
-placeholder_text = "Contraseña"
-editable = false
-
 [node name="TxtAccountUser" type="TextEdit" parent="."]
 offset_left = 789.0
 offset_top = 285.0
 offset_right = 1052.0
 offset_bottom = 328.0
 placeholder_text = "Nombre de Usuario o Mail"
+
+[node name="TxtPassword" type="TextEdit" parent="."]
+offset_left = 789.0
+offset_top = 361.0
+offset_right = 1052.0
+offset_bottom = 404.0
+placeholder_text = "Contraseña"
 editable = false
 
 [node name="BtnCreateAccount" type="Button" parent="."]

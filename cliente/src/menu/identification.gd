@@ -20,11 +20,15 @@ func _on_boton_invitado_pressed() -> void:
 func _on_boton_cuenta_pressed() -> void:
 	$RectCoverAccount.visible = false
 	$RectCoverGuest.visible = true
+	$TxtAccountUser.grab_focus()
 
 func _on_btn_connect_guest_pressed() -> void:
 	var Guest_username = str($TxtGuestUser.get_text())
 	if str($TxtGuestUser.get_text()).length() > 20 or str($TxtGuestUser.get_text()).length() < 1: 
 		Guest_username = null
 		$ErrorMessageLength.visible = true
+	else:
+		pass
+		
 		
 	
