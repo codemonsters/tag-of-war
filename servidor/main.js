@@ -1,5 +1,49 @@
 const WebSocket = require('ws');
+const sqlite3 = require('sqlite3').verbose();
 const crypto = require('crypto');
+
+// Database schema
+const DB_SCHEMA = `
+  CREATE TABLE IF NOT EXISTS users (
+    id INTEGER PRIMARY KEY,
+    username TEXT UNIQUE,
+    password BLOB
+  );
+`;
+
+// SQLite database connection
+const db = new sqlite3.Database('./users.db');
+db.serialize(() => {
+    db.run(DB_SCHEMA);
+});
+
+// User registration and login functions
+function registerUser(username, password) {
+    const hashedPassword = crypto.createHash('sha256').update(password).digest();
+    return new Promise((resolve, reject) => {
+        db.run(`INSERT INTO users (username, password) VALUES (?, ?)`, username, hashedPassword, function (err) {
+            if (err) {
+                reject(err);
+            } else {
+                resolve(this.lastID);
+            }
+        });
+    });
+}
+
+function loginUser(username, password) {
+    return new Promise((resolve, reject) => {
+        db.get(`SELECT * FROM users WHERE username = ? AND password = ?`, username, password, function (err, user) {
+            if (err) {
+                reject(err);
+            } else if (!user) {
+                resolve(null); // Invalid credentials
+            } else {
+                resolve(user.id); // Valid credentials
+            }
+        });
+    });
+}
 
 const MAX_PEERS = 4096;
 const MAX_LOBBIES = 1024;
@@ -9,22 +53,6 @@ const ALFNUM = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 const NO_LOBBY_TIMEOUT = 1000;
 const SEAL_CLOSE_TIMEOUT = 10000;
 // const PING_INTERVAL = 10000;
-
-const STR_NO_LOBBY = 'Have not joined lobby yet';
-const STR_HOST_DISCONNECTED = 'Room host has disconnected';
-const STR_ONLY_HOST_CAN_SEAL = 'Only host can seal the lobby';
-const STR_SEAL_COMPLETE = 'Seal complete';
-const STR_TOO_MANY_LOBBIES = 'Too many lobbies open, disconnecting';
-const STR_ALREADY_IN_LOBBY = 'Already in a lobby';
-const STR_LOBBY_DOES_NOT_EXISTS = 'Lobby does not exists';
-const STR_LOBBY_IS_SEALED = 'Lobby is sealed';
-const STR_INVALID_FORMAT = 'Invalid message format';
-const STR_NEED_LOBBY = 'Invalid message when not in a lobby';
-const STR_SERVER_ERROR = 'Server error, lobby not found';
-const STR_INVALID_DEST = 'Invalid destination';
-const STR_INVALID_CMD = 'Invalid command';
-const STR_TOO_MANY_PEERS = 'Too many peers connected';
-// const STR_INVALID_TRANSFER_MODE = 'Invalid transfer mode, must be text';
 
 const CMD = {
     JOIN: 0,
@@ -78,11 +106,26 @@ class Peer {
         // Close connection after 1 sec if client has not joined a lobby
         this.timeout = setTimeout(() => {
             if (!this.lobby) {
-                ws.close(4000, STR_NO_LOBBY);
+                ws.close(4000, "Have not joined lobby yet");
             }
         }, NO_LOBBY_TIMEOUT);
     }
 }
+
+// class Peer {
+//     constructor(id, ws, userId) {
+//         this.id = id;
+//         this.userId = userId;
+//         this.ws = ws;
+//         this.lobby = '';
+//         // Close connection after 1 sec if client has not joined a lobby
+//         this.timeout = setTimeout(() => {
+//             if (!this.lobby) {
+//                 ws.close(4000, "Have not joined lobby yet");
+//             }
+//         }, NO_LOBBY_TIMEOUT);
+//     }
+// }
 
 class Lobby {
     constructor(name, host, mesh) {
@@ -120,7 +163,7 @@ class Lobby {
         const close = assigned === 1;
         this.peers.forEach((p) => {
             if (close) { // Room host disconnected, must close.
-                p.ws.close(4000, STR_HOST_DISCONNECTED);
+                p.ws.close(4000, "Room host has disconnected");
             } else { // Notify peer disconnect.
                 p.ws.send(ProtoMessage(CMD.PEER_DISCONNECT, assigned));
             }
@@ -137,7 +180,7 @@ class Lobby {
     seal(peer) {
         // Only host can seal
         if (peer.id !== this.host) {
-            throw new ProtoError(4000, STR_ONLY_HOST_CAN_SEAL);
+            throw new ProtoError(4000, "Only host can seal the lobby");
         }
         this.sealed = true;
         this.peers.forEach((p) => {
@@ -148,7 +191,7 @@ class Lobby {
         this.closeTimer = setTimeout(() => {
             // Close peer connection to host (and thus the lobby)
             this.peers.forEach((p) => {
-                p.ws.close(1000, STR_SEAL_COMPLETE);
+                p.ws.close(1000, "Seal complete");
             });
         }, SEAL_CLOSE_TIMEOUT);
     }
@@ -161,11 +204,11 @@ function joinLobby(peer, pLobby, mesh) {
     let lobbyName = pLobby;
     if (lobbyName === '') {
         if (lobbies.size >= MAX_LOBBIES) {
-            throw new ProtoError(4000, STR_TOO_MANY_LOBBIES);
+            throw new ProtoError(4000, "Too many lobbies open, disconnecting");
         }
         // Peer must not already be in a lobby
         if (peer.lobby !== '') {
-            throw new ProtoError(4000, STR_ALREADY_IN_LOBBY);
+            throw new ProtoError(4000, "Already in a lobby");
         }
         lobbyName = randomSecret();
         lobbies.set(lobbyName, new Lobby(lobbyName, peer.id, mesh));
@@ -174,10 +217,10 @@ function joinLobby(peer, pLobby, mesh) {
     }
     const lobby = lobbies.get(lobbyName);
     if (!lobby) {
-        throw new ProtoError(4000, STR_LOBBY_DOES_NOT_EXISTS);
+        throw new ProtoError(4000, "Lobby does not exist");
     }
     if (lobby.sealed) {
-        throw new ProtoError(4000, STR_LOBBY_IS_SEALED);
+        throw new ProtoError(4000, "Lobby is sealed");
     }
     peer.lobby = lobbyName;
     console.log(`Peer ${peer.id} joining lobby ${lobbyName} `
@@ -191,7 +234,7 @@ function parseMsg(peer, msg) {
     try {
         json = JSON.parse(msg);
     } catch (e) {
-        throw new ProtoError(4000, STR_INVALID_FORMAT);
+        throw new ProtoError(4000, "Invalid message format");
     }
 
     const type = typeof (json['type']) === 'number' ? Math.floor(json['type']) : -1;
@@ -199,7 +242,7 @@ function parseMsg(peer, msg) {
     const data = typeof (json['data']) === 'string' ? json['data'] : '';
 
     if (type < 0 || id < 0) {
-        throw new ProtoError(4000, STR_INVALID_FORMAT);
+        throw new ProtoError(4000, "Invalid message format");
     }
 
     // Lobby joining.
@@ -209,11 +252,11 @@ function parseMsg(peer, msg) {
     }
 
     if (!peer.lobby) {
-        throw new ProtoError(4000, STR_NEED_LOBBY);
+        throw new ProtoError(4000, "Not in a lobby");
     }
     const lobby = lobbies.get(peer.lobby);
     if (!lobby) {
-        throw new ProtoError(4000, STR_SERVER_ERROR);
+        throw new ProtoError(4000, "Server error, lobby not found");
     }
 
     // Lobby sealing.
@@ -237,17 +280,17 @@ function parseMsg(peer, msg) {
         const dest = lobby.peers.find((e) => e.id === destId);
         // Dest is not in this room.
         if (!dest) {
-            throw new ProtoError(4000, STR_INVALID_DEST);
+            throw new ProtoError(4000, "Invalid destination");
         }
         dest.ws.send(ProtoMessage(type, lobby.getPeerId(peer), data));
         return;
     }
-    throw new ProtoError(4000, STR_INVALID_CMD);
+    throw new ProtoError(4000, "Invalid command");
 }
 
 wss.on('connection', (ws) => {
     if (peersCount >= MAX_PEERS) {
-        ws.close(4000, STR_TOO_MANY_PEERS);
+        ws.close(4000, "Too many peers connected");
         return;
     }
     peersCount++;
