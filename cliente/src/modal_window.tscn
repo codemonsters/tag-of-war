@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://devtjakyp0866"]
+
+[node name="ModalWindow" type="Node2D"]
+
+[node name="Label" type="Label" parent="."]
+offset_left = 573.0
+offset_top = 286.0
+offset_right = 763.0
+offset_bottom = 390.0
+
+[node name="Button" type="Button" parent="."]
+offset_left = 597.0
+offset_top = 426.0
+offset_right = 733.0
+offset_bottom = 480.0
+text = "Ok"
