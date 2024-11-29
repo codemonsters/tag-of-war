@@ -1,4 +1,6 @@
-[gd_scene format=3 uid="uid://chqkxfbrrqsbe"]
+[gd_scene load_steps=2 format=3 uid="uid://chqkxfbrrqsbe"]
+
+[ext_resource type="Script" path="res://menu/test.gd" id="1_i5i8h"]
 
 [node name="Principal" type="Control"]
 layout_mode = 3
@@ -53,9 +55,10 @@ offset_bottom = -10.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Partida" type="Control" parent="Tabla/Partidas"]
+[node name="Partida" type="Button" parent="Tabla/Partidas"]
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
+script = ExtResource("1_i5i8h")
 
 [node name="Fondo" type="ColorRect" parent="Tabla/Partidas/Partida"]
 layout_mode = 1

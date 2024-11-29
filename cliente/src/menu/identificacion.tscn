@@ -70,6 +70,7 @@ color = Color(0.258814, 0.196818, 1, 1)
 
 [node name="BotonCuenta" type="Button" parent="LblAccesoCuenta"]
 modulate = Color(1, 1, 1, 0)
+layout_mode = 0
 offset_left = 166.0
 offset_top = -16.0
 offset_right = 343.0
