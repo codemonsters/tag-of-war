@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://chqkxfbrrqsbe"]
 
-[ext_resource type="Script" path="res://screens/menu/test.gd" id="1_4vvte"]
+[ext_resource type="Script" path="res://screens/menu/test.gd" id="1_erasx"]
 
 [node name="Main" type="Control"]
 layout_mode = 3
@@ -58,7 +58,7 @@ grow_vertical = 2
 [node name="Lobby" type="Button" parent="Table/Games"]
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
-script = ExtResource("1_4vvte")
+script = ExtResource("1_erasx")
 
 [node name="Background" type="ColorRect" parent="Table/Games/Lobby"]
 layout_mode = 1
