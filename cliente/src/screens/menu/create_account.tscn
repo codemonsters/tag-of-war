@@ -1,3 +1,40 @@
 [gd_scene format=3 uid="uid://cp3y8nsyepam6"]
 
 [node name="CrearCuenta" type="Node2D"]
+
+[node name="LblTitleCreateAccount" type="Label" parent="."]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = 490.0
+offset_top = 75.0
+offset_right = 600.0
+offset_bottom = 104.0
+grow_horizontal = 2
+scale = Vector2(3, 3)
+size_flags_horizontal = 4
+size_flags_vertical = 0
+text = "Crear Cuenta"
+horizontal_alignment = 1
+
+[node name="CreateAccountRect" type="ColorRect" parent="LblTitleCreateAccount"]
+show_behind_parent = true
+offset_left = -7.0
+offset_top = -8.0
+offset_right = 118.0
+offset_bottom = 34.0
+color = Color(0.187176, 0.187176, 0.187176, 1)
+
+[node name="TxtAccountUser" type="TextEdit" parent="LblTitleCreateAccount"]
+offset_left = -72.0
+offset_top = 49.0
+offset_right = 164.0
+offset_bottom = 86.0
+placeholder_text = "Nombre de Usuario o Mail"
+
+[node name="TxtPassword" type="TextEdit" parent="LblTitleCreateAccount"]
+offset_left = -68.3333
+offset_top = 111.667
+offset_right = 159.667
+offset_bottom = 151.667
+placeholder_text = "Contraseña"
