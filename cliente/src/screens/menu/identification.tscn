@@ -11,7 +11,7 @@ points = PackedVector2Array(637, 36, 637, 720)
 
 [node name="LblPlayAsGuest" type="Label" parent="."]
 offset_top = 183.0
-offset_right = 634.0
+offset_right = 631.0
 offset_bottom = 246.0
 text = "Jugar como invitado"
 horizontal_alignment = 1
@@ -103,14 +103,12 @@ offset_top = 361.0
 offset_right = 1052.0
 offset_bottom = 404.0
 placeholder_text = "Contraseña"
-editable = false
 
 [node name="BtnCreateAccount" type="Button" parent="."]
 offset_left = 925.0
 offset_top = 477.0
 offset_right = 1093.0
 offset_bottom = 531.0
-disabled = true
 text = "Crear cuenta"
 
 [node name="BtnConnectAccount" type="Button" parent="."]
@@ -118,7 +116,6 @@ offset_left = 713.0
 offset_top = 476.0
 offset_right = 881.0
 offset_bottom = 530.0
-disabled = true
 text = "Conectar"
 
 [node name="BtnPassword" type="Button" parent="."]
@@ -126,7 +123,6 @@ offset_left = 819.0
 offset_top = 565.0
 offset_right = 987.0
 offset_bottom = 619.0
-disabled = true
 text = "Recuperar Contraseña"
 
 [node name="RectCoverGuest" type="ColorRect" parent="."]
@@ -164,3 +160,4 @@ Username already in use"
 [connection signal="pressed" from="LblPlayAsGuest/GuestButton" to="." method="_on_boton_invitado_pressed"]
 [connection signal="pressed" from="LblAccountAcces/AccountButton" to="." method="_on_boton_cuenta_pressed"]
 [connection signal="pressed" from="BtnConnectGuest" to="." method="_on_btn_connect_guest_pressed"]
+[connection signal="pressed" from="BtnCreateAccount" to="." method="_on_btn_create_account_pressed"]

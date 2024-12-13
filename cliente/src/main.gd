@@ -11,7 +11,7 @@ func _ready() -> void:
 
 
 func change_screen(scene):
-	remove_child(get_node("res:/current_screen"))
+	remove_child(get_node("current_screen"))
 	var s = scene.instantiate()
 	s.name = "current_screen"
 	add_child(s)

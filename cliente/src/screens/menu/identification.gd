@@ -28,10 +28,14 @@ func _on_btn_connect_guest_pressed() -> void:
 		Guest_username = null
 		$ErrorMessageLength.visible = true
 	else:
-		remove_child(get_node("res:/current_screen"))
-		var l = scene.instantiate()
-		l.name = "current_screen"
-		add_child(l)
+		remove_child(get_node("current_screen"))
+		var s = scene.instantiate()
+		s.name = "current_screen"
+		add_child(s)
 		
 		
 	
+
+
+func _on_btn_create_account_pressed() -> void:
+	pass # Replace with function body.
