@@ -1,11 +1,22 @@
-[gd_scene format=3 uid="uid://tgw2omupquqq"]
+[gd_scene load_steps=2 format=3 uid="uid://cu06f8uhhrvym"]
 
-[node name="Room" type="Control"]
+[sub_resource type="GDScript" id="GDScript_s5v60"]
+script/source = "extends Button
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	pass # Replace with function body.
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta: float) -> void:
+	pass
+"
+
+[node name="Lobby" type="Button"]
 custom_minimum_size = Vector2(0, 40)
-layout_mode = 3
-anchors_preset = 0
-offset_right = 748.0
-offset_bottom = 40.0
+script = SubResource("GDScript_s5v60")
 
 [node name="Background" type="ColorRect" parent="."]
 layout_mode = 1
@@ -16,30 +27,28 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 0.392157)
 
-[node name="LobbyName" type="Label" parent="."]
+[node name="ServerName" type="Label" parent="."]
 layout_mode = 1
 anchors_preset = -1
-anchor_right = 0.45
+anchor_left = 0.05
+anchor_right = 0.3
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-size_flags_vertical = 1
-text = "My Awesome Server
+text = "ONLYTWENTYCHARACTERS
 "
 vertical_alignment = 1
 clip_text = true
 
-[node name="Map" type="Label" parent="."]
+[node name="MapName" type="Label" parent="."]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.7
-anchor_right = 0.9
+anchor_left = 0.31
+anchor_right = 0.55
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-size_flags_vertical = 1
-text = "The Bottomless Pit"
-horizontal_alignment = 1
+text = "Rockeffeler Oil Plant"
 vertical_alignment = 1
 clip_text = true
 
@@ -47,29 +56,25 @@ clip_text = true
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.55
-anchor_right = 0.7
+anchor_right = 0.65
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-size_flags_vertical = 1
 text = "Standard
 "
-horizontal_alignment = 1
 vertical_alignment = 1
 clip_text = true
 
 [node name="Time" type="Label" parent="."]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.45
-anchor_right = 0.55
+anchor_left = 0.75
+anchor_right = 0.825
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-size_flags_vertical = 1
-text = "60:00
+text = "10:00
 "
-horizontal_alignment = 1
 vertical_alignment = 1
 clip_text = true
 
@@ -81,8 +86,22 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 0
 grow_vertical = 2
-size_flags_vertical = 1
 text = "999/999
 "
 horizontal_alignment = 1
 vertical_alignment = 1
+clip_text = true
+
+[node name="Ping" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.825
+anchor_right = 0.9
+anchor_bottom = 1.0
+grow_horizontal = 0
+grow_vertical = 2
+text = "9999
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+clip_text = true
