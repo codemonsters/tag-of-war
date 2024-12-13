@@ -1,0 +1,75 @@
+[gd_scene load_steps=3 format=3 uid="uid://chqkxfbrrqsbe"]
+
+[ext_resource type="Script" path="res://menu/server_list/server_list.gd" id="1_dn6vo"]
+[ext_resource type="PackedScene" uid="uid://tgw2omupquqq" path="res://menu/server_list/room.tscn" id="2_177ir"]
+
+[node name="Main" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_dn6vo")
+
+[node name="Body" type="Control" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchor_left = 0.2
+anchor_top = 0.1
+anchor_right = 0.8
+anchor_bottom = 0.9
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="Background" type="ColorRect" parent="Body"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.498039)
+
+[node name="ListBackground" type="ColorRect" parent="Body"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_right = -10.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.235294)
+
+[node name="Casual" type="VBoxContainer" parent="Body"]
+unique_name_in_owner = true
+z_index = 1
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_right = -10.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Room" parent="Body/Casual" instance=ExtResource("2_177ir")]
+layout_mode = 2
+
+[node name="CasualTab" type="Button" parent="Body"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.05
+anchor_right = 0.35
+anchor_bottom = 0.102
+offset_left = 10.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Casual
+"
