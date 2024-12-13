@@ -8,7 +8,7 @@ var modal_window = preload("res://modal_window.tscn")
 
 func _ready() -> void:
 	change_screen(menu_scene)
-	show_modal_window("hola")
+
 
 func change_screen(scene):
 	remove_child(get_node("res:/current_screen"))
