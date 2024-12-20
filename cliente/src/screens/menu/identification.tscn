@@ -82,6 +82,7 @@ offset_top = 278.0
 offset_right = 457.0
 offset_bottom = 321.0
 placeholder_text = "Nombre de usuario"
+caret_multiple = false
 
 [node name="BtnConnectGuest" type="Button" parent="."]
 offset_left = 239.0
@@ -95,6 +96,7 @@ offset_left = 789.0
 offset_top = 285.0
 offset_right = 1052.0
 offset_bottom = 328.0
+focus_neighbor_bottom = NodePath("../TxtPassword")
 placeholder_text = "Nombre de Usuario o Mail"
 
 [node name="TxtPassword" type="TextEdit" parent="."]
@@ -102,6 +104,7 @@ offset_left = 789.0
 offset_top = 361.0
 offset_right = 1052.0
 offset_bottom = 404.0
+focus_neighbor_top = NodePath("../TxtAccountUser")
 placeholder_text = "Contraseña"
 
 [node name="BtnCreateAccount" type="Button" parent="."]
