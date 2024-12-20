@@ -6,35 +6,45 @@
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = 490.0
-offset_top = 75.0
-offset_right = 600.0
-offset_bottom = 104.0
+offset_left = 515.0
+offset_top = 60.0
+offset_right = 617.0
+offset_bottom = 83.0
 grow_horizontal = 2
-scale = Vector2(3, 3)
+scale = Vector2(2.5, 2.5)
 size_flags_horizontal = 4
 size_flags_vertical = 0
 text = "Crear Cuenta"
 horizontal_alignment = 1
 
-[node name="CreateAccountRect" type="ColorRect" parent="LblTitleCreateAccount"]
+[node name="CreateAccountRect" type="ColorRect" parent="."]
 show_behind_parent = true
-offset_left = -7.0
-offset_top = -8.0
-offset_right = 118.0
-offset_bottom = 34.0
+offset_left = 480.0
+offset_top = 43.0
+offset_right = 805.0
+offset_bottom = 138.0
 color = Color(0.187176, 0.187176, 0.187176, 1)
 
-[node name="TxtAccountUser" type="TextEdit" parent="LblTitleCreateAccount"]
-offset_left = -72.0
-offset_top = 49.0
-offset_right = 164.0
-offset_bottom = 86.0
-placeholder_text = "Nombre de Usuario o Mail"
+[node name="TxtAccountMail" type="TextEdit" parent="."]
+offset_left = 404.0
+offset_top = 206.0
+offset_right = 721.0
+offset_bottom = 245.0
+scale = Vector2(1.5, 1.5)
+placeholder_text = "Nombre de Usuario"
 
-[node name="TxtPassword" type="TextEdit" parent="LblTitleCreateAccount"]
-offset_left = -68.3333
-offset_top = 111.667
-offset_right = 159.667
-offset_bottom = 151.667
+[node name="TxtAccountUser" type="TextEdit" parent="."]
+offset_left = 404.0
+offset_top = 324.5
+offset_right = 723.0
+offset_bottom = 364.5
+scale = Vector2(1.5, 1.5)
+placeholder_text = "Mail"
+
+[node name="TxtPassword" type="TextEdit" parent="."]
+offset_left = 404.0
+offset_top = 443.0
+offset_right = 723.0
+offset_bottom = 483.0
+scale = Vector2(1.5, 1.5)
 placeholder_text = "Contraseña"
