@@ -76,13 +76,12 @@ offset_top = -16.0
 offset_right = 343.0
 offset_bottom = 42.0
 
-[node name="TxtGuestUser" type="TextEdit" parent="."]
+[node name="TxtGuestUser" type="LineEdit" parent="."]
 offset_left = 194.0
 offset_top = 278.0
 offset_right = 457.0
 offset_bottom = 321.0
 placeholder_text = "Nombre de usuario"
-caret_multiple = false
 
 [node name="BtnConnectGuest" type="Button" parent="."]
 offset_left = 239.0
@@ -91,7 +90,7 @@ offset_right = 407.0
 offset_bottom = 562.0
 text = "Conectar"
 
-[node name="TxtAccountUser" type="TextEdit" parent="."]
+[node name="TxtAccountUser" type="LineEdit" parent="."]
 offset_left = 789.0
 offset_top = 285.0
 offset_right = 1052.0
@@ -99,7 +98,7 @@ offset_bottom = 328.0
 focus_neighbor_bottom = NodePath("../TxtPassword")
 placeholder_text = "Nombre de Usuario o Mail"
 
-[node name="TxtPassword" type="TextEdit" parent="."]
+[node name="TxtPassword" type="LineEdit" parent="."]
 offset_left = 789.0
 offset_top = 361.0
 offset_right = 1052.0

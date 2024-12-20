@@ -1,6 +1,9 @@
-[gd_scene format=3 uid="uid://cp3y8nsyepam6"]
+[gd_scene load_steps=2 format=3 uid="uid://cp3y8nsyepam6"]
+
+[ext_resource type="Script" path="res://screens/menu/create_account.gd" id="1_iaqr4"]
 
 [node name="CrearCuenta" type="Node2D"]
+script = ExtResource("1_iaqr4")
 
 [node name="LblTitleCreateAccount" type="Label" parent="."]
 anchors_preset = 5
@@ -25,7 +28,7 @@ offset_right = 805.0
 offset_bottom = 138.0
 color = Color(0.187176, 0.187176, 0.187176, 1)
 
-[node name="TxtAccountMail" type="TextEdit" parent="."]
+[node name="TxtAccountMail" type="LineEdit" parent="."]
 offset_left = 404.0
 offset_top = 206.0
 offset_right = 721.0
@@ -33,7 +36,7 @@ offset_bottom = 245.0
 scale = Vector2(1.5, 1.5)
 placeholder_text = "Nombre de Usuario"
 
-[node name="TxtAccountUser" type="TextEdit" parent="."]
+[node name="TxtAccountUser" type="LineEdit" parent="."]
 offset_left = 404.0
 offset_top = 324.5
 offset_right = 723.0
@@ -41,10 +44,20 @@ offset_bottom = 364.5
 scale = Vector2(1.5, 1.5)
 placeholder_text = "Mail"
 
-[node name="TxtPassword" type="TextEdit" parent="."]
+[node name="TxtPassword" type="LineEdit" parent="."]
 offset_left = 404.0
 offset_top = 443.0
 offset_right = 723.0
 offset_bottom = 483.0
 scale = Vector2(1.5, 1.5)
 placeholder_text = "Contraseña"
+
+[node name="BtnCreateAccount" type="Button" parent="."]
+offset_left = 508.0
+offset_top = 573.0
+offset_right = 652.0
+offset_bottom = 621.0
+scale = Vector2(1.75, 1.75)
+text = "Crear"
+
+[connection signal="pressed" from="BtnCreateAccount" to="." method="_on_btn_create_account_pressed"]

@@ -1,5 +1,6 @@
 extends Node2D
-var scene = preload("res://screens/menu/sala_espera.tscn")
+var server_list = preload("res://screens/menu/sala_espera.tscn")
+var create_account = preload("res://screens/menu/create_account.tscn")
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -28,7 +29,7 @@ func _on_btn_connect_guest_pressed() -> void:
 		Guest_username = null
 		$ErrorMessageLength.visible = true
 	else:
-		get_parent().change_screen(scene)
+		get_parent().change_screen(server_list)
 
 func _on_btn_create_account_pressed() -> void:
-	pass # Replace with function body.
+	get_parent().change_screen(create_account)
