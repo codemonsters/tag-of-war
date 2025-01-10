@@ -1,3 +1,55 @@
-[gd_scene format=3 uid="uid://d00hun8subt3l"]
+[gd_scene load_steps=2 format=3 uid="uid://d00hun8subt3l"]
 
-[node name="CrearPartida" type="Node2D"]
+[ext_resource type="Script" path="res://screens/menu/create_game.gd" id="1_skxpg"]
+
+[node name="CreateGameScene" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_skxpg")
+
+[node name="ChooseMap" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MapSelectTitle" type="Label" parent="ChooseMap"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -179.0
+offset_top = 50.0
+offset_right = 179.0
+offset_bottom = 83.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 60
+text = "Choose map"
+
+[node name="CreateGame" type="Control" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ScreenTitle" type="Label" parent="CreateGame"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -252.0
+offset_top = 50.0
+offset_right = 252.0
+offset_bottom = 133.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 60
+text = "Create new game"
