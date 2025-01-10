@@ -133,9 +133,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 clip_text = true
 
-[node name="Casual" type="VBoxContainer" parent="Table"]
-unique_name_in_owner = true
-z_index = 1
+[node name="Lobbies" type="ScrollContainer" parent="Table"]
 layout_mode = 1
 anchors_preset = -1
 anchor_top = 0.175
@@ -147,7 +145,14 @@ offset_bottom = -10.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Lobby" parent="Table/Casual" instance=ExtResource("2_knhi0")]
+[node name="Casual" type="VBoxContainer" parent="Table/Lobbies"]
+unique_name_in_owner = true
+z_index = 1
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Lobby" parent="Table/Lobbies/Casual" instance=ExtResource("2_knhi0")]
 layout_mode = 2
 
 [node name="BtnTournament" type="Button" parent="Table"]

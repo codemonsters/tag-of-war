@@ -13,9 +13,5 @@ func add_lobby():
 #-- Principal
 
 func _ready() -> void:
-	for i in range(5):
+	for i in range(34):
 		add_lobby()
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
