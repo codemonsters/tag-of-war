@@ -1,3 +1,91 @@
-[gd_scene format=3 uid="uid://ct3o6bvauusv7"]
+[gd_scene load_steps=2 format=3 uid="uid://ct3o6bvauusv7"]
 
-[node name="RecuperarContraseña" type="Node2D"]
+[ext_resource type="Script" path="res://screens/menu/recuperar_contraseña.gd" id="1_s754y"]
+
+[node name="RecuperarContraseña" type="ColorRect"]
+offset_right = 1280.0
+offset_bottom = 720.0
+color = Color(0.298039, 0.298039, 0.298039, 1)
+script = ExtResource("1_s754y")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -230.0
+offset_top = -290.5
+offset_right = 230.0
+offset_bottom = -210.5
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.188235, 0.188235, 0.188235, 1)
+
+[node name="LblTitleRecuperarContraseña" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.1125
+anchor_right = 0.5
+anchor_bottom = 0.1125
+offset_left = -216.0
+offset_top = 1.0
+offset_right = 216.0
+offset_bottom = 56.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 40
+text = "Recuperar Contraseña"
+metadata/_edit_use_anchors_ = true
+
+[node name="TxtEnviarCorreo" type="LineEdit" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -188.5
+offset_top = 33.0
+offset_right = 188.5
+offset_bottom = 103.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 25
+placeholder_text = "Mail"
+
+[node name="BtnCorreoEnviado" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -104.0
+offset_top = -165.0
+offset_right = 104.0
+offset_bottom = -79.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/font_size = 30
+text = "Enviar"
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -339.0
+offset_top = -168.5
+offset_right = 340.0
+offset_bottom = -36.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 30
+text = "Se te enviará un link al correo
+ electrónico através del cual 
+podrás cambiar la contraseña:"
+horizontal_alignment = 1
