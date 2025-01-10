@@ -1,4 +1,4 @@
-[gd_scene load_steps=2 format=3 uid="uid://cp3y8nsyepam6"]
+[gd_scene load_steps=2 format=3 uid="uid://010kn6khmmth"]
 
 [ext_resource type="Script" path="res://screens/menu/create_account.gd" id="1_iaqr4"]
 
@@ -9,9 +9,9 @@ script = ExtResource("1_iaqr4")
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = 515.0
+offset_left = 497.0
 offset_top = 60.0
-offset_right = 617.0
+offset_right = 599.0
 offset_bottom = 83.0
 grow_horizontal = 2
 scale = Vector2(2.5, 2.5)
@@ -22,33 +22,33 @@ horizontal_alignment = 1
 
 [node name="CreateAccountRect" type="ColorRect" parent="."]
 show_behind_parent = true
-offset_left = 480.0
+offset_left = 462.0
 offset_top = 43.0
-offset_right = 805.0
+offset_right = 787.0
 offset_bottom = 138.0
 color = Color(0.187176, 0.187176, 0.187176, 1)
 
-[node name="TxtAccountMail" type="LineEdit" parent="."]
-offset_left = 404.0
-offset_top = 206.0
-offset_right = 721.0
-offset_bottom = 245.0
+[node name="TxtAccountName" type="LineEdit" parent="."]
+offset_left = 418.0
+offset_top = 204.0
+offset_right = 696.0
+offset_bottom = 239.0
 scale = Vector2(1.5, 1.5)
 placeholder_text = "Nombre de Usuario"
 
-[node name="TxtAccountUser" type="LineEdit" parent="."]
-offset_left = 404.0
-offset_top = 324.5
-offset_right = 723.0
-offset_bottom = 364.5
+[node name="TxtAccountMail" type="LineEdit" parent="."]
+offset_left = 418.0
+offset_top = 312.0
+offset_right = 696.0
+offset_bottom = 347.0
 scale = Vector2(1.5, 1.5)
-placeholder_text = "Mail"
+placeholder_text = "Correo electronico"
 
-[node name="TxtPassword" type="LineEdit" parent="."]
-offset_left = 404.0
-offset_top = 443.0
-offset_right = 723.0
-offset_bottom = 483.0
+[node name="TxtAccountPassword" type="LineEdit" parent="."]
+offset_left = 418.0
+offset_top = 415.0
+offset_right = 696.0
+offset_bottom = 450.0
 scale = Vector2(1.5, 1.5)
 placeholder_text = "Contraseña"
 
@@ -59,5 +59,29 @@ offset_right = 652.0
 offset_bottom = 621.0
 scale = Vector2(1.75, 1.75)
 text = "Crear"
+
+[node name="ErrorMessageNameLength" type="Label" parent="."]
+modulate = Color(0.980221, 0.30239, 0.267759, 1)
+offset_left = 446.0
+offset_top = 262.0
+offset_right = 814.0
+offset_bottom = 312.0
+text = "Error: Invalid Username. From 1-20 characters"
+
+[node name="ErrorMessagePasswordLength" type="Label" parent="."]
+modulate = Color(0.980221, 0.30239, 0.267759, 1)
+offset_left = 453.0
+offset_top = 473.0
+offset_right = 821.0
+offset_bottom = 523.0
+text = "Error: Invalid Password. From 6-20 characters"
+
+[node name="ErrorMessageMail" type="Label" parent="."]
+modulate = Color(0.980221, 0.30239, 0.267759, 1)
+offset_left = 549.0
+offset_top = 366.0
+offset_right = 697.0
+offset_bottom = 416.0
+text = "Error: Invalid Mail."
 
 [connection signal="pressed" from="BtnCreateAccount" to="." method="_on_btn_create_account_pressed"]
