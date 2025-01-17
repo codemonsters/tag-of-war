@@ -5,6 +5,7 @@ extends Node2D
 var server_list = preload("res://screens/menu/sala_espera.tscn")
 var create_account = preload("res://screens/menu/create_account.tscn")
 var socket = WebSocketPeer.new()
+var recuperar_contraseña = preload("res://screens/menu/recuperar_contraseña.tscn")
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -78,3 +79,7 @@ func _process(_delta):
 		var code = socket.get_close_code()
 		print("WebSocket closed with code: %d. Clean: %s" % [code, code != -1])
 		set_process(false) # Stop processing.
+
+
+func _on_btn_password_pressed() -> void:
+	get_parent().change_window(recuperar_contraseña)

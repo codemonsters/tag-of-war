@@ -1,11 +1,33 @@
-extends Node2D
+extends ColorRect
+var regex = RegEx.new()
+#var identification = preload("res://screens/menu/create_account.tscn")
 
 
-# Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	pass # Replace with function body.
+	$TxtEnviarCorreo.grab_focus()
+	$ErrorMessageMail.visible = false
+	$LblCorreoEnviado.visible = false
+	var pattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
+	var result = regex.compile(pattern)
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
+
 func _process(delta: float) -> void:
 	pass
+
+
+
+func _on_btn_correo_enviado_pressed() -> void:
+	var account_mail = str($TxtEnviarCorreo.get_text())
+	if regex.search($TxtEnviarCorreo.get_text()) == null:
+		account_mail = null
+		$ErrorMessageMail.visible = true
+	else:
+		$ErrorMessageMail.visible = false
+		$LblCorreoEnviado.visible = true
+		
+
+
+
+func _on_button_pressed() -> void:
+	get_parent().change_window(get_parent().identification)

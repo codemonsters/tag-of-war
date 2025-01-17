@@ -84,4 +84,12 @@ offset_right = 697.0
 offset_bottom = 416.0
 text = "Error: Invalid Mail."
 
+[node name="BtnVolver" type="Button" parent="."]
+offset_left = 23.0
+offset_top = 23.0
+offset_right = 219.0
+offset_bottom = 90.0
+text = "<---"
+
 [connection signal="pressed" from="BtnCreateAccount" to="." method="_on_btn_create_account_pressed"]
+[connection signal="pressed" from="BtnVolver" to="." method="_on_btn_volver_pressed"]

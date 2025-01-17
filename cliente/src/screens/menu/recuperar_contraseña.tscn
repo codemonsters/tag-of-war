@@ -89,3 +89,47 @@ text = "Se te enviará un link al correo
  electrónico através del cual 
 podrás cambiar la contraseña:"
 horizontal_alignment = 1
+
+[node name="ErrorMessageMail" type="Label" parent="."]
+modulate = Color(0.980221, 0.30239, 0.267759, 1)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -74.0
+offset_top = 105.0
+offset_right = 74.0
+offset_bottom = 155.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Error: Invalid Mail."
+
+[node name="LblCorreoEnviado" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -236.0
+offset_top = 119.0
+offset_right = 236.0
+offset_bottom = 147.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 20
+text = "¡Se te ha enviado un mail a tu correo electrónico!"
+horizontal_alignment = 1
+
+[node name="BtnVolver" type="Button" parent="."]
+layout_mode = 1
+offset_left = 23.0
+offset_top = 23.0
+offset_right = 219.0
+offset_bottom = 90.0
+text = "<---"
+
+[connection signal="pressed" from="BtnCorreoEnviado" to="." method="_on_btn_correo_enviado_pressed"]
+[connection signal="pressed" from="BtnVolver" to="." method="_on_button_pressed"]

@@ -180,3 +180,4 @@ text = "Error: Incorrect Password"
 [connection signal="pressed" from="BtnConnectGuest" to="." method="_on_btn_connect_guest_pressed"]
 [connection signal="pressed" from="BtnCreateAccount" to="." method="_on_btn_create_account_pressed"]
 [connection signal="pressed" from="BtnConnectAccount" to="." method="_on_btn_connect_account_pressed"]
+[connection signal="pressed" from="BtnPassword" to="." method="_on_btn_password_pressed"]

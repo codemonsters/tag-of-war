@@ -39,3 +39,4 @@ func _on_btn_create_account_pressed() -> void:
 	if regex.search($TxtAccountMail.get_text()) != null and str($TxtAccountPassword.get_text()).length() < 20 and str($TxtAccountPassword.get_text()).length() > 6 and str($TxtAccountName.get_text()).length() < 20 and str($TxtAccountName.get_text()).length() > 1: 
 		print("Todos los campos son correctos")
 		get_parent().change_window(lista_servidores)
+		
