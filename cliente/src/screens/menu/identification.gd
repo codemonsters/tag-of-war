@@ -29,7 +29,7 @@ func _on_btn_connect_guest_pressed() -> void:
 		Guest_username = null
 		$ErrorMessageLength.visible = true
 	else:
-		get_parent().change_screen(server_list)
+		get_parent().change_window(server_list)
 
 func _on_btn_create_account_pressed() -> void:
-	get_parent().change_screen(create_account)
+	get_parent().change_window(create_account)
