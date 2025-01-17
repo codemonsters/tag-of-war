@@ -159,7 +159,24 @@ offset_bottom = 380.0
 text = "Error: Invalid Username
 Username already in use"
 
+[node name="ErrorMessageUserAccount" type="Label" parent="."]
+modulate = Color(0.980392, 0.301961, 0.266667, 1)
+offset_left = 795.0
+offset_top = 330.0
+offset_right = 1044.0
+offset_bottom = 353.0
+text = "Error: Invalid Username or Mail"
+
+[node name="ErrorMessagePasswordAccount" type="Label" parent="."]
+modulate = Color(0.980392, 0.301961, 0.266667, 1)
+offset_left = 795.0
+offset_top = 405.0
+offset_right = 1039.0
+offset_bottom = 428.0
+text = "Error: Incorrect Password"
+
 [connection signal="pressed" from="LblPlayAsGuest/GuestButton" to="." method="_on_boton_invitado_pressed"]
 [connection signal="pressed" from="LblAccountAcces/AccountButton" to="." method="_on_boton_cuenta_pressed"]
 [connection signal="pressed" from="BtnConnectGuest" to="." method="_on_btn_connect_guest_pressed"]
 [connection signal="pressed" from="BtnCreateAccount" to="." method="_on_btn_create_account_pressed"]
+[connection signal="pressed" from="BtnConnectAccount" to="." method="_on_btn_connect_account_pressed"]

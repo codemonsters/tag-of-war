@@ -6,6 +6,8 @@ var create_account = preload("res://screens/menu/create_account.tscn")
 func _ready() -> void:
 	$ErrorMessageLength.visible = false
 	$ErrorMessageUsed.visible = false
+	$ErrorMessageUserAccount.visible = false
+	$ErrorMessagePasswordAccount.visible = false
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -31,6 +33,10 @@ func _on_btn_connect_guest_pressed() -> void:
 		$ErrorMessageLength.visible = true
 	else:
 		get_parent().change_window(server_list)
+
+func _on_btn_connect_account_pressed() -> void:
+	pass # Replace with function body.
+	
 
 func _on_btn_create_account_pressed() -> void:
 	get_parent().change_window(create_account)
