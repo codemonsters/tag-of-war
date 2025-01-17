@@ -1,7 +1,7 @@
 extends Node2D
 
 # Escena que está cargada siempre, independientemente de si el jugador está en el menú o jugando
-# El script instancia en current_screen la pantalla en la uqe está el juego en cada momento
+# El script instancia en current_screen la pantalla en la que está el juego en cada momento
 
 var fade_duration = 1.0
 var screen_transition_duration = 1.0
@@ -9,6 +9,7 @@ var menu_scene = preload("res://screens/menu/main.tscn")
 var modal_window = preload("res://modal_window.tscn")
 
 func _ready() -> void:
+	get_node("ColorRect").set_color(Color(0, 0, 0, 0))
 	change_screen(menu_scene)
 
 
@@ -17,7 +18,6 @@ func change_screen(scene, does_fade_out = true, does_screen_transition = true, s
 	var s = scene.instantiate()
 	s.name = "current_screen"
 	add_child(s)
-	move_child(s, 0)
 	if does_fade_out: fade_out()
 	if does_screen_transition: screen_transition(s,screen_transition_direction)
 
@@ -37,12 +37,14 @@ func hide_modal_window():
 
 
 func fade_out():
+	move_child($ColorRect, -1)
 	get_node("ColorRect").set_color(Color(0, 0, 0, 1))
 	var tween = get_tree().create_tween()
 	tween.tween_property(get_node("ColorRect"), "modulate:a", 0, fade_duration)
 	tween.play()
 	await tween.finished
 	tween.kill()
+	move_child($ColorRect, 0)
 
 
 func screen_transition(scene,direction):
