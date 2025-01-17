@@ -1,10 +1,16 @@
 extends Node2D
 var identification = preload("res://screens/menu/identification.tscn")
+var regex = RegEx.new()
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	pass # Replace with function body.
-
+	$TxtAccountName.grab_focus()
+	$ErrorMessageNameLength.visible = false
+	$ErrorMessagePasswordLength.visible = false
+	$ErrorMessageMail.visible = false
+	var pattern = r'^[a-z0-9]+(?:[.-][a-z0-9]+)*@[a-z0-9]+(?:[.-][a-z0-9]+)*\.[a-z]$'
+	var result = regex.compile(pattern)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
@@ -12,4 +18,23 @@ func _process(delta: float) -> void:
 
 
 func _on_btn_create_account_pressed() -> void:
-	get_parent().change_screen(identification)
+	var Account_username = str($TxtAccountName.get_text())
+	var Account_mail = str($TxtAccountMail.get_text())
+	var Account_password = str($TxtAccountPassword.get_text())
+	if str($TxtAccountName.get_text()).length() > 20 or str($TxtAccountName.get_text()).length() < 1: 
+		Account_username = null
+		$ErrorMessageNameLength.visible = true
+	else:
+		$ErrorMessageNameLength.visible = false
+	if str($TxtAccountPassword.get_text()).length() > 20 or str($TxtAccountPassword.get_text()).length() < 6: 
+		Account_password = null
+		$ErrorMessagePasswordLength.visible = true
+	else:
+		$ErrorMessagePasswordLength.visible = false
+	if regex.search($TxtAccountMail.get_text()) == null: 
+		Account_mail = null
+		$ErrorMessageMail.visible = true
+	else:
+		$ErrorMessageMail.visible = false
+	if regex.search($TxtAccountMail.get_text()) != null and str($TxtAccountPassword.get_text()).length() < 20 and str($TxtAccountPassword.get_text()).length() > 6 and str($TxtAccountName.get_text()).length() < 20 and str($TxtAccountName.get_text()).length() > 1: 
+		print("bmn")
