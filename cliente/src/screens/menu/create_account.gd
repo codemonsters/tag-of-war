@@ -1,5 +1,5 @@
 extends Node2D
-var identification = preload("res://screens/menu/identification.tscn")
+var lista_servidores = preload("res://screens/menu/lista_servidores.tscn")
 var regex = RegEx.new()
 
 
@@ -9,7 +9,7 @@ func _ready() -> void:
 	$ErrorMessageNameLength.visible = false
 	$ErrorMessagePasswordLength.visible = false
 	$ErrorMessageMail.visible = false
-	var pattern = r'^[a-z0-9]+(?:[.-][a-z0-9]+)*@[a-z0-9]+(?:[.-][a-z0-9]+)*\.[a-z]$'
+	var pattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
 	var result = regex.compile(pattern)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -37,4 +37,5 @@ func _on_btn_create_account_pressed() -> void:
 	else:
 		$ErrorMessageMail.visible = false
 	if regex.search($TxtAccountMail.get_text()) != null and str($TxtAccountPassword.get_text()).length() < 20 and str($TxtAccountPassword.get_text()).length() > 6 and str($TxtAccountName.get_text()).length() < 20 and str($TxtAccountName.get_text()).length() > 1: 
-		print("bmn")
+		print("Todos los campos son correctos")
+		get_parent().change_window(lista_servidores)
