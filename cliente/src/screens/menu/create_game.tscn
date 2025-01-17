@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://d00hun8subt3l"]
+[gd_scene load_steps=3 format=3 uid="uid://d00hun8subt3l"]
 
 [ext_resource type="Script" path="res://screens/menu/create_game.gd" id="1_skxpg"]
+[ext_resource type="Texture2D" uid="uid://djidx5o7vdn1v" path="res://assets/test_map_image.webp" id="2_3i8gr"]
 
 [node name="CreateGameScene" type="Control"]
 layout_mode = 3
@@ -32,6 +33,110 @@ grow_horizontal = 2
 theme_override_font_sizes/font_size = 60
 text = "Choose map"
 
+[node name="MapImage" type="TextureRect" parent="ChooseMap"]
+layout_mode = 0
+offset_left = 712.0
+offset_top = 177.0
+offset_right = 1202.0
+offset_bottom = 542.0
+texture = ExtResource("2_3i8gr")
+expand_mode = 1
+stretch_mode = 4
+
+[node name="Header" type="ColorRect" parent="ChooseMap"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.05
+anchor_top = 0.246
+anchor_right = 0.5
+anchor_bottom = 0.317
+offset_left = 0.639999
+offset_top = -0.12001
+offset_right = -0.160034
+offset_bottom = -0.240005
+grow_horizontal = 2
+color = Color(0, 0, 0, 0.470588)
+
+[node name="MapName" type="Label" parent="ChooseMap/Header"]
+clip_contents = true
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.02
+anchor_right = 0.02
+offset_right = 137.0
+offset_bottom = 51.0
+theme_override_font_sizes/font_size = 25
+text = "MAP NAME"
+horizontal_alignment = 1
+vertical_alignment = 1
+clip_text = true
+
+[node name="Size" type="Label" parent="ChooseMap/Header"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.756
+anchor_top = 0.157
+anchor_right = 0.843
+anchor_bottom = 0.843
+offset_left = 0.148804
+offset_top = -0.00699997
+offset_right = 0.106415
+offset_bottom = 0.00699615
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 25
+text = "SIZE"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Map1" type="ColorRect" parent="ChooseMap"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.05
+anchor_top = 0.246
+anchor_right = 0.5
+anchor_bottom = 0.317
+offset_left = 0.639999
+offset_top = 76.88
+offset_right = -0.160034
+offset_bottom = 76.76
+grow_horizontal = 2
+color = Color(0, 0, 0, 0.470588)
+
+[node name="MapName" type="Label" parent="ChooseMap/Map1"]
+clip_contents = true
+custom_minimum_size = Vector2(342, 51)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.02
+anchor_right = 0.02
+offset_left = 0.496001
+offset_right = 342.496
+offset_bottom = 51.0
+theme_override_font_sizes/font_size = 25
+text = "Tremendo mapa"
+vertical_alignment = 1
+clip_text = true
+
+[node name="Size" type="Label" parent="ChooseMap/Map1"]
+custom_minimum_size = Vector2(106, 35)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.756
+anchor_top = 0.157
+anchor_right = 0.843
+anchor_bottom = 0.843
+offset_left = 0.148804
+offset_top = -0.00699997
+offset_right = 56.1064
+offset_bottom = 0.00699615
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 25
+text = "Huge"
+vertical_alignment = 1
+clip_text = true
+
 [node name="CreateGame" type="Control" parent="."]
 visible = false
 layout_mode = 1
@@ -45,11 +150,31 @@ grow_vertical = 2
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.5
+anchor_top = 0.15
 anchor_right = 0.5
+anchor_bottom = 0.15
 offset_left = -252.0
-offset_top = 50.0
+offset_top = -41.44
 offset_right = 252.0
-offset_bottom = 133.0
+offset_bottom = 41.56
 grow_horizontal = 2
 theme_override_font_sizes/font_size = 60
 text = "Create new game"
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.863
+anchor_top = 0.877
+anchor_right = 0.863
+anchor_bottom = 0.877
+offset_left = -90.64
+offset_top = -38.44
+offset_right = 90.36
+offset_bottom = 38.56
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_font_sizes/font_size = 25
+text = "NEXT"
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

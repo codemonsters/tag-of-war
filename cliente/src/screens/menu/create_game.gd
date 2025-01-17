@@ -3,15 +3,16 @@ extends Control
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	var tree = Tree.new()
-	var root = tree.create_item()
-	tree.hide_root = true
-	var child1 = tree.create_item(root)
-	var child2 = tree.create_item(root)
-	var subchild1 = tree.create_item(child1)
-	subchild1.set_text(0, "Subchild1")
+	$CreateGame.visible = true
+	$ChooseMap.visible = false
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	pass
+
+
+func _on_button_pressed() -> void:
+	$CreateGame.visible = false
+	$ChooseMap.visible = true
+	
