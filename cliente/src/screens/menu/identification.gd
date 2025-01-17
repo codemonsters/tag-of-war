@@ -10,6 +10,8 @@ var socket = WebSocketPeer.new()
 func _ready() -> void:
 	$ErrorMessageLength.visible = false
 	$ErrorMessageUsed.visible = false
+	$ErrorMessageUserAccount.visible = false
+	$ErrorMessagePasswordAccount.visible = false
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -41,6 +43,10 @@ func _on_btn_connect_guest_pressed() -> void:
 			pass
 			#socket.send_text(Guest_username)
 		get_parent().change_window(server_list)
+
+func _on_btn_connect_account_pressed() -> void:
+	pass # Replace with function body.
+	
 
 func _on_btn_create_account_pressed() -> void:
 	get_parent().change_window(create_account)
