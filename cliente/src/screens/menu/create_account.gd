@@ -39,3 +39,7 @@ func _on_btn_create_account_pressed() -> void:
 		print("Todos los campos son correctos")
 		get_parent().change_window(get_parent().lista_servidores)
 		
+
+
+func _on_btn_volver_pressed() -> void:
+	pass # Replace with function body.
