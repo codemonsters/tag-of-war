@@ -27,6 +27,7 @@ func _on_boton_cuenta_pressed() -> void:
 	$RectCoverAccount.visible = false
 	$RectCoverGuest.visible = true
 	$TxtAccountUser.grab_focus()
+	$ErrorMessageLength.visible = false
 
 func _on_btn_connect_guest_pressed() -> void:
 	var Guest_username = str($TxtGuestUser.get_text())
