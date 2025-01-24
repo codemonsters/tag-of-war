@@ -63,7 +63,7 @@ offset_top = -0.12001
 offset_right = -0.160034
 offset_bottom = -0.240005
 grow_horizontal = 2
-color = Color(0.117647, 0.117647, 0.117647, 1)
+color = Color(0.117647, 0.117647, 0.117647, 0)
 
 [node name="MapName" type="Label" parent="ChooseMap/Header"]
 clip_contents = true
