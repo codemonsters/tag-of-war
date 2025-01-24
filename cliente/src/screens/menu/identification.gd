@@ -2,10 +2,8 @@ extends Node2D
 
 @export var websocket_url = "ws://192.168.0.109/9090"
 
-var server_list = preload("res://screens/menu/sala_espera.tscn")
-var create_account = preload("res://screens/menu/create_account.tscn")
 var socket = WebSocketPeer.new()
-var recuperar_contraseña = preload("res://screens/menu/recuperar_contraseña.tscn")
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -43,14 +41,14 @@ func _on_btn_connect_guest_pressed() -> void:
 		else:
 			pass
 			#socket.send_text(Guest_username)
-		get_parent().change_window(server_list)
+		get_parent().change_window(get_parent().server_list)
 
 func _on_btn_connect_account_pressed() -> void:
 	pass # Replace with function body.
 	
 
 func _on_btn_create_account_pressed() -> void:
-	get_parent().change_window(create_account)
+	get_parent().change_window(get_parent().create_account)
 
 
 func _process(_delta):
@@ -82,4 +80,4 @@ func _process(_delta):
 
 
 func _on_btn_password_pressed() -> void:
-	get_parent().change_window(recuperar_contraseña)
+	get_parent().change_window(get_parent().recuperar_contraseña)

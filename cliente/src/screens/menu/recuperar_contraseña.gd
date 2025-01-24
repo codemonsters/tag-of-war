@@ -1,6 +1,5 @@
 extends ColorRect
 var regex = RegEx.new()
-#var identification = preload("res://screens/menu/create_account.tscn")
 
 
 func _ready() -> void:
