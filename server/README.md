@@ -22,7 +22,7 @@ node main.js
 ws://192.168.0.104:9090/
 ## Protocolo Comunicaciones entre Clientes y Servidor WebSocket
 
-Para comunidarse, los clientes y el servidor intercambian mensajes json con dos atributos:
+Para comunicarse, los clientes y el servidor intercambian mensajes en formato json con dos atributos:
 
 ```json
 {

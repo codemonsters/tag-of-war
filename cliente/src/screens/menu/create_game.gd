@@ -11,8 +11,12 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	pass
 
-
-func _on_button_pressed() -> void:
+func _on_button_next_pressed() -> void:
 	$CreateGame.visible = false
 	$ChooseMap.visible = true
 	
+
+
+func _on_button_go_back_pressed() -> void:
+	$CreateGame.visible = true
+	$ChooseMap.visible = false
