@@ -13,6 +13,7 @@ grow_vertical = 2
 script = ExtResource("1_skxpg")
 
 [node name="ChooseMap" type="Control" parent="."]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -39,7 +40,7 @@ offset_right = 179.0
 offset_bottom = 83.0
 grow_horizontal = 2
 theme_override_font_sizes/font_size = 60
-text = "Choose map"
+text = "Selección de mapa"
 
 [node name="MapImage" type="TextureRect" parent="ChooseMap"]
 layout_mode = 0
@@ -71,14 +72,15 @@ layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.02
 anchor_right = 0.02
-offset_right = 137.0
+offset_left = -0.503999
+offset_right = 195.496
 offset_bottom = 51.0
 theme_override_colors/font_color = Color(0.266667, 0.498039, 0.34902, 1)
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_colors/font_outline_color = Color(0.266667, 0.901961, 0.34902, 1)
 theme_override_constants/outline_size = 3
 theme_override_font_sizes/font_size = 25
-text = "MAP NAME"
+text = "MAPA"
 horizontal_alignment = 1
 vertical_alignment = 1
 clip_text = true
@@ -100,7 +102,7 @@ theme_override_colors/font_color = Color(0.266667, 0.498039, 0.34902, 1)
 theme_override_colors/font_outline_color = Color(0.266667, 0.901961, 0.34902, 1)
 theme_override_constants/outline_size = 3
 theme_override_font_sizes/font_size = 25
-text = "SIZE"
+text = "TAMAÑO"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -144,22 +146,21 @@ anchor_left = 0.756
 anchor_top = 0.157
 anchor_right = 0.843
 anchor_bottom = 0.843
-offset_left = 0.148804
-offset_top = -0.00699997
-offset_right = 56.1064
-offset_bottom = 0.00699615
+offset_left = -26.8512
+offset_top = -0.00700188
+offset_right = 29.1064
+offset_bottom = 0.00699997
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_colors/font_color = Color(0.266667, 0.498039, 0.34902, 1)
 theme_override_colors/font_outline_color = Color(0.266667, 0.901961, 0.34902, 1)
 theme_override_constants/outline_size = 3
 theme_override_font_sizes/font_size = 25
-text = "Huge"
+text = "GRANDE"
 vertical_alignment = 1
 clip_text = true
 
 [node name="CreateGame" type="Control" parent="."]
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -180,7 +181,42 @@ offset_right = 252.0
 offset_bottom = 41.56
 grow_horizontal = 2
 theme_override_font_sizes/font_size = 60
-text = "Create new game"
+text = "Crear nueva partida"
+
+[node name="SelectGamemodeTxt" type="Label" parent="CreateGame"]
+layout_mode = 0
+offset_left = 89.0
+offset_top = 284.0
+offset_right = 129.0
+offset_bottom = 307.0
+theme_override_font_sizes/font_size = 40
+text = "Modo de juego"
+
+[node name="GamemodeDescriptionTxt" type="Label" parent="CreateGame"]
+layout_mode = 0
+offset_left = 619.0
+offset_top = 284.0
+offset_right = 1216.0
+offset_bottom = 354.0
+theme_override_font_sizes/font_size = 30
+text = "Modo de juego"
+vertical_alignment = 1
+
+[node name="Gamemode" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.863
+anchor_top = 0.877
+anchor_right = 0.863
+anchor_bottom = 0.877
+offset_left = -697.64
+offset_top = -350.44
+offset_right = -516.64
+offset_bottom = -273.44
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_font_sizes/font_size = 25
+text = "Supervivencia"
 
 [node name="ButtonNext" type="Button" parent="."]
 layout_mode = 1
@@ -196,7 +232,8 @@ offset_bottom = 38.56
 grow_horizontal = 0
 grow_vertical = 0
 theme_override_font_sizes/font_size = 25
-text = "NEXT"
+text = "SIGUIENTE
+"
 
 [node name="ButtonGoBack" type="Button" parent="."]
 layout_mode = 1
@@ -212,8 +249,11 @@ offset_bottom = 38.56
 grow_horizontal = 0
 grow_vertical = 0
 theme_override_font_sizes/font_size = 25
-text = "GO BACK"
+text = "VOLVER"
 
+[connection signal="pressed" from="Gamemode" to="." method="_on_gamemode_pressed"]
+[connection signal="pressed" from="Gamemode" to="." method="_on_button_go_back_pressed"]
+[connection signal="pressed" from="Gamemode" to="." method="_on_button_pressed"]
 [connection signal="pressed" from="ButtonNext" to="." method="_on_button_next_pressed"]
 [connection signal="pressed" from="ButtonGoBack" to="." method="_on_button_go_back_pressed"]
 [connection signal="pressed" from="ButtonGoBack" to="." method="_on_button_pressed"]
