@@ -20,3 +20,11 @@ func change_window(scene):
 	var s = scene.instantiate()
 	s.name = "current_screen"
 	add_child(s)
+
+func open_window(scene):
+	var n = scene.instantiate()
+	n.name = "current_window"
+	add_child(n)
+
+func close_window():
+	remove_child(get_node("current_window"))

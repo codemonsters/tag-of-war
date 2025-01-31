@@ -1,9 +1,16 @@
-[gd_scene load_steps=2 format=3 uid="uid://010kn6khmmth"]
+[gd_scene load_steps=2 format=3 uid="uid://cp3y8nsyepam6"]
 
 [ext_resource type="Script" path="res://screens/menu/create_account.gd" id="1_iaqr4"]
 
 [node name="CrearCuenta" type="Node2D"]
 script = ExtResource("1_iaqr4")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+show_behind_parent = true
+offset_top = -15.0
+offset_right = 1293.0
+offset_bottom = 723.0
+color = Color(0.298039, 0.298039, 0.298039, 1)
 
 [node name="LblTitleCreateAccount" type="Label" parent="."]
 anchors_preset = 5
