@@ -1,6 +1,4 @@
-[gd_scene load_steps=2 format=3 uid="uid://dx50a1ogcpieb"]
-
-[ext_resource type="Script" path="res://screens/menu/test.gd" id="1_i5i8h"]
+[gd_scene format=3 uid="uid://dx50a1ogcpieb"]
 
 [node name="Principal" type="Control"]
 layout_mode = 3
@@ -58,7 +56,6 @@ grow_vertical = 2
 [node name="Partida" type="Button" parent="Tabla/Partidas"]
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
-script = ExtResource("1_i5i8h")
 
 [node name="Fondo" type="ColorRect" parent="Tabla/Partidas/Partida"]
 layout_mode = 1

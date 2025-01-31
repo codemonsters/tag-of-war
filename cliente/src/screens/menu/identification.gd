@@ -43,13 +43,15 @@ func _on_btn_connect_guest_pressed() -> void:
 	else:
 		var login_dict = {"cmd":"login", "data": {"username": Guest_username}}
 		wsc.connect_to_url(websocket_url)
-		await get_tree().create_timer(2).timeout
-		wsc.send(JSON.stringify(login_dict))
+		await get_tree().create_timer(1).timeout
+		if wsc.socket.get_ready_state() == wsc.socket.STATE_OPEN:
+			wsc.send(JSON.stringify(login_dict))
 		get_parent().change_window(server_list)
+
 
 func _on_btn_connect_account_pressed() -> void:
 	pass # Replace with function body.
-	
+
 
 func _on_btn_create_account_pressed() -> void:
 	get_parent().open_window(get_parent().create_account)
@@ -61,11 +63,14 @@ func _on_btn_password_pressed() -> void:
 
 func on_message_received(message: Variant):
 	print(message)
-	
+	if message == "": #Actualizar cuando el server pueda responder que recibió los datos correctamente
+		pass
+		#get_parent().change_window(server_list)
+
 
 func on_connect():
 	print("conectado")
-	
-	
+
+
 func on_connection_closed():
 	print("desconectado")

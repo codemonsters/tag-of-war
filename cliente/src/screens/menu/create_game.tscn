@@ -251,8 +251,8 @@ grow_vertical = 0
 theme_override_font_sizes/font_size = 25
 text = "VOLVER"
 
-[connection signal="pressed" from="Gamemode" to="." method="_on_gamemode_pressed"]
 [connection signal="pressed" from="Gamemode" to="." method="_on_button_go_back_pressed"]
+[connection signal="pressed" from="Gamemode" to="." method="_on_gamemode_pressed"]
 [connection signal="pressed" from="Gamemode" to="." method="_on_button_pressed"]
 [connection signal="pressed" from="ButtonNext" to="." method="_on_button_next_pressed"]
 [connection signal="pressed" from="ButtonGoBack" to="." method="_on_button_go_back_pressed"]

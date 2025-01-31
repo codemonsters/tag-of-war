@@ -75,6 +75,15 @@ offset_right = 814.0
 offset_bottom = 312.0
 text = "Error: Invalid Username. From 1-20 characters"
 
+[node name="ErrorMessageNameInUse" type="Label" parent="."]
+visible = false
+modulate = Color(0.980221, 0.30239, 0.267759, 1)
+offset_left = 491.0
+offset_top = 262.0
+offset_right = 737.0
+offset_bottom = 312.0
+text = "Error: Username already exists."
+
 [node name="ErrorMessagePasswordLength" type="Label" parent="."]
 modulate = Color(0.980221, 0.30239, 0.267759, 1)
 offset_left = 453.0
