@@ -1,7 +1,6 @@
 extends Node2D
 var regex = RegEx.new()
 
-
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	$TxtAccountName.grab_focus()
@@ -10,7 +9,8 @@ func _ready() -> void:
 	$ErrorMessageMail.visible = false
 	var pattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
 	var result = regex.compile(pattern)
-
+	
+	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	pass
@@ -41,4 +41,4 @@ func _on_btn_create_account_pressed() -> void:
 
 
 func _on_btn_volver_pressed() -> void:
-	get_parent().change_window(get_parent().identification)
+	get_parent().close_window()

@@ -29,4 +29,4 @@ func _on_btn_correo_enviado_pressed() -> void:
 
 
 func _on_button_pressed() -> void:
-	get_parent().change_window(get_parent().identification)
+	get_parent().close_window()

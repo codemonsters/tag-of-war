@@ -52,11 +52,11 @@ func _on_btn_connect_account_pressed() -> void:
 	
 
 func _on_btn_create_account_pressed() -> void:
-	get_parent().change_window(get_parent().create_account)
+	get_parent().open_window(get_parent().create_account)
 
 
 func _on_btn_password_pressed() -> void:
-	get_parent().change_window(get_parent().recuperar_contraseña)
+	get_parent().open_window(get_parent().recuperar_contraseña)
 
 
 func on_message_received(message: Variant):
