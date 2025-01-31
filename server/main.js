@@ -7,10 +7,19 @@ const PORT = 9090;
 const wss = new WebSocket.Server({ port: PORT });
 const peers = new Map();
 
+//import { NotImplemented } from './errors.js';
+//import { ProtocolError } from './errors.js';
+
 class ProtocolError extends Error {
     constructor(code, message) {
         super(message);
         this.code = code;
+    }
+}
+
+class NotImplemented extends Error {
+    constructor(message) {
+        super(message);
     }
 }
 
@@ -58,11 +67,18 @@ function parseJsonMsg(peer, msg) {
             }
 
             if (password == '') {
-                console.log("TODO: Login como guest");
+                // Login como invitado
+                console.log("Guest login request received. Username = " + data.username);
+                peer.ws.send(JSON.stringify({
+                                'cmd': 'logged_in',
+                                'success': true,
+                                'data': {}
+                            }));
+                console.log("Done");
             } else {
+                // Login como usuario registrado
                 throw new NotImplemented("Currently only supporting guest log in");
             }
-            console.log(data.username);
             break;
         default:
             console.log(`Unknown command: ${cmd}`);
@@ -102,7 +118,7 @@ wss.on('connection', function connection(ws) {
             }
         }
     });
-    ws.send("Pong! (test answer)");
+    //ws.send("Pong! (test answer)");
 
     ws.on("close", function close(code, data) {
         console.log(`Peer disconnected (id: ${peer.id}, code: ${code}, reason: ${data.toString()})`);

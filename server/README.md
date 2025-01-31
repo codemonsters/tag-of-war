@@ -57,7 +57,8 @@ Respuesta OK:
 ```json
 {
     "cmd": "logged_in",
-    "data": { "success": true }
+    "success": true,
+    "data": {}
 }
 ```
 
@@ -66,6 +67,7 @@ Respuesta con error:
 ```json
 {
     "cmd": "logged_in",
-    "data": { "success": false, "reason": "username already taken" }
+    "success": false,
+    "data": { "reason": "username already taken" }
 }
 ```
