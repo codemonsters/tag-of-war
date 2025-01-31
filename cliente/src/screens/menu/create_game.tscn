@@ -185,38 +185,64 @@ text = "Crear nueva partida"
 
 [node name="SelectGamemodeTxt" type="Label" parent="CreateGame"]
 layout_mode = 0
-offset_left = 89.0
+offset_left = 66.0
 offset_top = 284.0
-offset_right = 129.0
-offset_bottom = 307.0
+offset_right = 352.0
+offset_bottom = 339.0
 theme_override_font_sizes/font_size = 40
 text = "Modo de juego"
 
 [node name="GamemodeDescriptionTxt" type="Label" parent="CreateGame"]
 layout_mode = 0
-offset_left = 619.0
-offset_top = 284.0
-offset_right = 1216.0
-offset_bottom = 354.0
-theme_override_font_sizes/font_size = 30
+offset_left = 787.0
+offset_top = 293.0
+offset_right = 1225.0
+offset_bottom = 348.0
+theme_override_constants/line_spacing = -5
+theme_override_font_sizes/font_size = 28
 text = "Modo de juego"
+horizontal_alignment = 3
 vertical_alignment = 1
+autowrap_mode = 2
 
-[node name="Gamemode" type="Button" parent="."]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.863
-anchor_top = 0.877
-anchor_right = 0.863
-anchor_bottom = 0.877
-offset_left = -697.64
-offset_top = -350.44
-offset_right = -516.64
-offset_bottom = -273.44
-grow_horizontal = 0
-grow_vertical = 0
+[node name="LeftArrowTxt" type="Button" parent="CreateGame"]
+layout_mode = 0
+offset_left = 401.0
+offset_top = 272.0
+offset_right = 461.0
+offset_bottom = 363.0
+theme_override_font_sizes/font_size = 60
+text = "←"
+autowrap_mode = 2
+
+[node name="RightArrowTxt" type="Button" parent="CreateGame"]
+layout_mode = 0
+offset_left = 677.0
+offset_top = 272.0
+offset_right = 737.0
+offset_bottom = 363.0
+theme_override_font_sizes/font_size = 60
+text = "→"
+autowrap_mode = 2
+
+[node name="GamemodeBackground" type="ColorRect" parent="CreateGame"]
+layout_mode = 0
+offset_left = 470.0
+offset_top = 273.0
+offset_right = 651.0
+offset_bottom = 361.0
+color = Color(0.169245, 0.169245, 0.169245, 1)
+
+[node name="GamemodeNameTxt" type="Label" parent="CreateGame"]
+layout_mode = 0
+offset_left = 471.0
+offset_top = 281.0
+offset_right = 652.0
+offset_bottom = 356.0
 theme_override_font_sizes/font_size = 25
-text = "Supervivencia"
+text = "Gamemode"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="ButtonNext" type="Button" parent="."]
 layout_mode = 1
@@ -251,9 +277,12 @@ grow_vertical = 0
 theme_override_font_sizes/font_size = 25
 text = "VOLVER"
 
+
 [connection signal="pressed" from="Gamemode" to="." method="_on_button_go_back_pressed"]
 [connection signal="pressed" from="Gamemode" to="." method="_on_gamemode_pressed"]
 [connection signal="pressed" from="Gamemode" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="CreateGame/LeftArrowTxt" to="." method="_on_left_arrow_txt_pressed"]
+[connection signal="pressed" from="CreateGame/RightArrowTxt" to="." method="_on_right_arrow_txt_pressed"]
 [connection signal="pressed" from="ButtonNext" to="." method="_on_button_next_pressed"]
 [connection signal="pressed" from="ButtonGoBack" to="." method="_on_button_go_back_pressed"]
 [connection signal="pressed" from="ButtonGoBack" to="." method="_on_button_pressed"]
