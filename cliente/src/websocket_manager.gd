@@ -59,7 +59,6 @@ func poll() -> void:
 		socket.poll()
 
 	var state := socket.get_ready_state()
-
 	if last_state != state:
 		last_state = state
 		if state == socket.STATE_OPEN:

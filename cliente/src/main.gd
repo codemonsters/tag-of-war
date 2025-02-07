@@ -3,6 +3,14 @@ extends Node2D
 # Escena que está cargada siempre, independientemente de si el jugador está en el menú o jugando
 # El script instancia en current_screen la pantalla en la que está el juego en cada momento
 
+#@export var websocket_url = "ws://192.168.0.109:9090"
+#@export var websocket_url = "ws://echo.websocket.org"
+@export var websocket_url = "ws://127.0.0.1:9090"
+
+var server_list = preload("res://screens/menu/sala_espera.tscn")
+var create_account = preload("res://screens/menu/create_account.tscn")
+var recuperar_contraseña = preload("res://screens/menu/recuperar_contraseña.tscn")
+var wsc = WebSocketClient.new()
 var fade_duration = 1.0
 var screen_transition_duration = 1.0
 var menu_scene = preload("res://screens/menu/main.tscn")
@@ -11,6 +19,14 @@ var modal_window = preload("res://modal_window.tscn")
 func _ready() -> void:
 	get_node("ColorRect").set_color(Color(0, 0, 0, 0))
 	change_screen(menu_scene)
+	wsc.message_received.connect(on_message_received)
+	wsc.connected_to_server.connect(on_connect)
+	wsc.connection_closed.connect(on_connection_closed)
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta: float) -> void:
+	wsc.poll()
 
 
 func change_screen(scene, does_fade_out = true, does_screen_transition = true, screen_transition_direction = 1):
@@ -57,3 +73,27 @@ func screen_transition(scene,direction):
 	tween.tween_property(scene, "position", Vector2(0, 0), 0.125*screen_transition_duration)
 	await tween.finished
 	tween.kill()
+
+
+func connect_to_server():
+	wsc.connect_to_url(websocket_url)
+	await get_tree().create_timer(1).timeout
+
+
+func send_to_server(message):
+	if wsc.socket.get_ready_state() == wsc.socket.STATE_OPEN:
+		wsc.send(message)
+
+
+func on_message_received(message: Variant):
+	print(message)
+	if message == "": #Actualizar cuando el server pueda responder que recibió los datos correctamente
+		pass
+
+
+func on_connect():
+	print("conectado")
+
+
+func on_connection_closed():
+	print("desconectado")
