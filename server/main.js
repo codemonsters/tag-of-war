@@ -143,3 +143,5 @@ wss.on('connection', function connection(ws) {
 });
 
 console.log("Server listening on IP address %s and port %d (ws://%s:%d)", getFirstNonLocalIPAddress(), PORT, getFirstNonLocalIPAddress(), PORT);
+
+// TODO: Echar un vistazo a Knex.js y a https://www.npmjs.com/package/waterline
