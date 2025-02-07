@@ -168,6 +168,23 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
+[node name="PlayerArrowRTxt" type="Button" parent="CreateGame"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 16.0
+offset_top = 78.0
+offset_right = 76.0
+offset_bottom = 168.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 30
+text = "→"
+autowrap_mode = 2
+
 [node name="ScreenTitle" type="Label" parent="CreateGame"]
 layout_mode = 1
 anchors_preset = -1
@@ -235,12 +252,78 @@ color = Color(0.169245, 0.169245, 0.169245, 1)
 
 [node name="GamemodeNameTxt" type="Label" parent="CreateGame"]
 layout_mode = 0
-offset_left = 470.0
+offset_left = 471.0
 offset_top = 281.0
-offset_right = 650.0
+offset_right = 652.0
 offset_bottom = 356.0
 theme_override_font_sizes/font_size = 25
 text = "Gamemode"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PlayerNumTxt" type="Label" parent="CreateGame"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -574.0
+offset_top = 96.0
+offset_right = -288.0
+offset_bottom = 151.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 29
+text = "Número de Jugadores"
+
+[node name="PlayerArrowLTxt" type="Button" parent="CreateGame"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -235.0
+offset_top = 78.0
+offset_right = -175.0
+offset_bottom = 168.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 30
+text = "←"
+autowrap_mode = 2
+
+[node name="GamemodeBackground2" type="ColorRect" parent="CreateGame"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -169.0
+offset_top = 78.5
+offset_right = 12.0
+offset_bottom = 167.5
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.169245, 0.169245, 0.169245, 1)
+
+[node name="SelectPlayerNumTxt" type="Label" parent="CreateGame"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -169.0
+offset_top = 85.0
+offset_right = 12.0
+offset_bottom = 160.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 25
+text = "1"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -277,8 +360,10 @@ grow_vertical = 0
 theme_override_font_sizes/font_size = 25
 text = "VOLVER"
 
+[connection signal="pressed" from="CreateGame/PlayerArrowRTxt" to="." method="_on_right_arrow_txt_pressed"]
 [connection signal="pressed" from="CreateGame/LeftArrowTxt" to="." method="_on_left_arrow_txt_pressed"]
 [connection signal="pressed" from="CreateGame/RightArrowTxt" to="." method="_on_right_arrow_txt_pressed"]
+[connection signal="pressed" from="CreateGame/PlayerArrowLTxt" to="." method="_on_left_arrow_txt_pressed"]
 [connection signal="pressed" from="ButtonNext" to="." method="_on_button_next_pressed"]
 [connection signal="pressed" from="ButtonGoBack" to="." method="_on_button_go_back_pressed"]
 [connection signal="pressed" from="ButtonGoBack" to="." method="_on_button_pressed"]
