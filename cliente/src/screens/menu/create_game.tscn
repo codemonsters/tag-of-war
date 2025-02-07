@@ -207,21 +207,21 @@ autowrap_mode = 2
 
 [node name="LeftArrowTxt" type="Button" parent="CreateGame"]
 layout_mode = 0
-offset_left = 401.0
-offset_top = 272.0
-offset_right = 461.0
+offset_left = 405.0
+offset_top = 273.0
+offset_right = 465.0
 offset_bottom = 363.0
-theme_override_font_sizes/font_size = 60
+theme_override_font_sizes/font_size = 30
 text = "←"
 autowrap_mode = 2
 
 [node name="RightArrowTxt" type="Button" parent="CreateGame"]
 layout_mode = 0
-offset_left = 677.0
-offset_top = 272.0
-offset_right = 737.0
+offset_left = 656.0
+offset_top = 273.0
+offset_right = 716.0
 offset_bottom = 363.0
-theme_override_font_sizes/font_size = 60
+theme_override_font_sizes/font_size = 30
 text = "→"
 autowrap_mode = 2
 
@@ -230,14 +230,14 @@ layout_mode = 0
 offset_left = 470.0
 offset_top = 273.0
 offset_right = 651.0
-offset_bottom = 361.0
+offset_bottom = 362.0
 color = Color(0.169245, 0.169245, 0.169245, 1)
 
 [node name="GamemodeNameTxt" type="Label" parent="CreateGame"]
 layout_mode = 0
-offset_left = 471.0
+offset_left = 470.0
 offset_top = 281.0
-offset_right = 652.0
+offset_right = 650.0
 offset_bottom = 356.0
 theme_override_font_sizes/font_size = 25
 text = "Gamemode"
@@ -277,10 +277,6 @@ grow_vertical = 0
 theme_override_font_sizes/font_size = 25
 text = "VOLVER"
 
-
-[connection signal="pressed" from="Gamemode" to="." method="_on_button_go_back_pressed"]
-[connection signal="pressed" from="Gamemode" to="." method="_on_gamemode_pressed"]
-[connection signal="pressed" from="Gamemode" to="." method="_on_button_pressed"]
 [connection signal="pressed" from="CreateGame/LeftArrowTxt" to="." method="_on_left_arrow_txt_pressed"]
 [connection signal="pressed" from="CreateGame/RightArrowTxt" to="." method="_on_right_arrow_txt_pressed"]
 [connection signal="pressed" from="ButtonNext" to="." method="_on_button_next_pressed"]
