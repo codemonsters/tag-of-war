@@ -39,6 +39,19 @@ class Peer {
     }
 }
 
+function getFirstNonLocalIPAddress() {
+    const interfaces = require('os').networkInterfaces();
+    for (const devName in interfaces) {
+        const iface = interfaces[devName];
+        for (let i = 0; i < iface.length; i++) {
+            const alias = iface[i];
+            if (alias.family === 'IPv4' && alias.address !== '127.0.0.1' && !alias.internal) {
+                return alias.address;
+            }
+        }
+    }
+}
+
 function processLoginRequest(peer, json) {
     const data = typeof(json['data']) === 'object' ? json['data'] : null;
     if (data == null) {
@@ -128,3 +141,5 @@ wss.on('connection', function connection(ws) {
 
     //ws.send('something');
 });
+
+console.log("Server listening on IP address %s and port %d (ws://%s:%d)", getFirstNonLocalIPAddress(), PORT, getFirstNonLocalIPAddress(), PORT);
