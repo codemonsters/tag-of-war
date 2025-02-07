@@ -2,6 +2,8 @@ extends Control
 
 var gamemodes = ["Clásico", "Supervivencia", "Infectado"]
 var gamemodes_index = 0
+var num_player = ["2", "3", "4"]
+var num_player_index = 0
 
 var clasico_descripcion = "Si te pillan, el jugador que te pilló deja de " \
 + "pillar, ahora pillas tú. Pierde el que está pillando cuando se acaba el tiempo."
@@ -58,3 +60,13 @@ func _on_right_arrow_txt_pressed() -> void:
 			gamemodes_index += 1
 			$CreateGame/GamemodeNameTxt.text = gamemodes[gamemodes_index]
 			$CreateGame/GamemodeDescriptionTxt.text = gamemode_description[gamemodes_index]
+
+func _on_num_player_l_pressed() -> void:
+	if num_player_index != 0:
+		num_player_index -= 1
+		$CreateGame/PlayerNumTxt.text = num_player[num_player_index]
+		
+func _on_num_player_r_pressed() -> void:
+	if num_player_index != 2:
+		num_player_index += 1
+		$CreateGame/PlayerNumTxt.text = num_player[num_player_index]
