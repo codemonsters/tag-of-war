@@ -5,5 +5,16 @@
     "uuid": "^11.0.5",
     "uuidv4": "^6.2.13",
     "ws": "^8.18.0"
-  }
+  },
+  "name": "server",
+  "version": "1.0.0",
+  "description": "Enlaces con ejemplos:  * https://dev.to/codesphere/getting-started-with-web-sockets-in-nodejs-49n0 * https://ably.com/blog/web-app-websockets-nodejs",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs"
 }
