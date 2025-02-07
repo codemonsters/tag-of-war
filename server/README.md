@@ -19,7 +19,7 @@ Install ws library (a websocket implementation) and nodemon (to track changes in
 ## Ejecutar el servidor
 
 node main.js
-ws://192.168.0.104:9090/
+ws://127.0.0.1:9090/
 ## Protocolo Comunicaciones entre Clientes y Servidor WebSocket
 
 Para comunicarse, los clientes y el servidor intercambian mensajes en formato json con dos atributos:

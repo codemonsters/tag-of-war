@@ -39,6 +39,48 @@ class Peer {
     }
 }
 
+function getFirstNonLocalIPAddress() {
+    const interfaces = require('os').networkInterfaces();
+    for (const devName in interfaces) {
+        const iface = interfaces[devName];
+        for (let i = 0; i < iface.length; i++) {
+            const alias = iface[i];
+            if (alias.family === 'IPv4' && alias.address !== '127.0.0.1' && !alias.internal) {
+                return alias.address;
+            }
+        }
+    }
+}
+
+function processLoginRequest(peer, json) {
+    const data = typeof(json['data']) === 'object' ? json['data'] : null;
+    if (data == null) {
+        throw new ProtocolError(4000, `Missing data object while parsing a login request`);
+    }
+    console.log(`data = ${data}`);
+
+    const username = typeof(data['username']) === 'string' ? data['username'] : '';
+    const password = typeof(data['password']) === 'string' ? data['password'] : '';
+    console.log(`Username = ${username}`);
+    if (username == '') {
+        throw new ProtocolError(4000, `Missing username while parsing a login request`);
+    }
+
+    if (password == '') {
+        // Login como invitado
+        console.log("Guest login request received. Username = " + data.username);
+        peer.ws.send(JSON.stringify({
+                        'cmd': 'logged_in',
+                        'success': true,
+                        'data': {}
+                    }));
+        console.log("Done");
+    } else {
+        // Login como usuario registrado
+        throw new NotImplemented("Currently only supporting guest log in");
+    }
+}
+
 function parseJsonMsg(peer, msg) {
     let json = null;
     try {
@@ -50,46 +92,18 @@ function parseJsonMsg(peer, msg) {
     }
 
     const cmd = typeof(json['cmd']) === 'string' ? json['cmd'] : '';
-    switch (cmd) {
+    switch(cmd) {
         case 'login':
             console.log('Peer wants to log in');
-            const data = typeof(json['data']) === 'object' ? json['data'] : null;
-            if (data == null) {
-                throw new ProtocolError(4000, `Missing data object while parsing a login request`);
-            }
-            console.log(`data = ${data}`);
-
-            const username = typeof(data['username']) === 'string' ? data['username'] : '';
-            const password = typeof(data['password']) === 'string' ? data['password'] : '';
-            console.log(`Username = ${username}`);
-            if (username == '') {
-                throw new ProtocolError(4000, `Missing username while parsing a login request`);
-            }
-
-            if (password == '') {
-                // Login como invitado
-                console.log("Guest login request received. Username = " + data.username);
-                peer.ws.send(JSON.stringify({
-                                'cmd': 'logged_in',
-                                'success': true,
-                                'data': {}
-                            }));
-                console.log("Done");
-            } else {
-                // Login como usuario registrado
-                throw new NotImplemented("Currently only supporting guest log in");
-            }
+            processLoginRequest(peer, json);
             break;
         default:
-            console.log(`Unknown command: ${cmd}`);
+            console.error(`Unknown command: ${cmd}`);
     }
 
     /*
-    const 
     const type = typeof (json['type']) === 'number' ? Math.floor(json['type']) : -1;
-    const id = typeof (json['id']) === 'number' ? Math.floor(json['id']) : -1;
-    const data = typeof (json['data']) === 'string' ? json['data'] : '';
-*/
+    */
 }
 
 wss.on('connection', function connection(ws) {
@@ -127,3 +141,5 @@ wss.on('connection', function connection(ws) {
 
     //ws.send('something');
 });
+
+console.log("Server listening on IP address %s and port %d (ws://%s:%d)", getFirstNonLocalIPAddress(), PORT, getFirstNonLocalIPAddress(), PORT);
