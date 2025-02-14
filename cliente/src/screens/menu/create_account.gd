@@ -1,7 +1,7 @@
 extends Node2D
 
 
-var server_list = preload("res://screens/menu/sala_espera.tscn")
+var server_list = preload("res://screens/menu/sala_espera_admin.tscn")
 var regex = RegEx.new()
 
 
@@ -20,7 +20,7 @@ func _on_btn_create_account_pressed() -> void:
 	var Account_username = str($TxtAccountName.get_text())
 	var Account_mail = str($TxtAccountMail.get_text())
 	var Account_password = str($TxtAccountPassword.get_text())
-	if str($TxtAccountName.get_text()).length() > 20 or str($TxtAccountName.get_text()).length() < 1: 
+	if str($TxtAccountName.get_text()).length() > 8 or str($TxtAccountName.get_text()).length() < 1: 
 		Account_username = null
 		$ErrorMessageNameLength.visible = true
 	else:

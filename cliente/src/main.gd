@@ -7,7 +7,7 @@ extends Node2D
 #@export var websocket_url = "ws://echo.websocket.org"
 @export var websocket_url = "ws://127.0.0.1:9090"
 
-var server_list = preload("res://screens/menu/sala_espera.tscn")
+var server_list = preload("res://screens/menu/sala_espera_admin.tscn")
 var create_account = preload("res://screens/menu/create_account.tscn")
 var recuperar_contraseña = preload("res://screens/menu/recuperar_contraseña.tscn")
 var wsc = WebSocketClient.new()

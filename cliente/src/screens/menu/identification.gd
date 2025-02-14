@@ -1,7 +1,7 @@
 extends Node2D
 
 
-var server_list = preload("res://screens/menu/sala_espera.tscn")
+var server_list = preload("res://screens/menu/sala_espera_admin.tscn")
 var create_account = preload("res://screens/menu/create_account.tscn")
 var recuperar_contraseña = preload("res://screens/menu/recuperar_contraseña.tscn")
 
@@ -26,7 +26,7 @@ func _on_boton_cuenta_pressed() -> void:
 
 func _on_btn_connect_guest_pressed() -> void:
 	var Guest_username = str($TxtGuestUser.get_text())
-	if str($TxtGuestUser.get_text()).length() > 20 or str($TxtGuestUser.get_text()).length() < 1: 
+	if str($TxtGuestUser.get_text()).length() > 8 or str($TxtGuestUser.get_text()).length() < 1: 
 		Guest_username = null
 		$ErrorMessageLength.visible = true
 	else:

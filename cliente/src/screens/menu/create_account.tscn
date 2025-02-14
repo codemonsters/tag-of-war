@@ -73,7 +73,7 @@ offset_left = 446.0
 offset_top = 262.0
 offset_right = 814.0
 offset_bottom = 312.0
-text = "Error: Invalid Username. From 1-20 characters"
+text = "Error: Invalid Username. From 1-8 characters"
 
 [node name="ErrorMessageNameInUse" type="Label" parent="."]
 visible = false
