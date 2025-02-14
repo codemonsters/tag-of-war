@@ -1,12 +1,12 @@
-[gd_scene load_steps=2 format=3 uid="uid://bhwva6j31hg72"]
+[gd_scene load_steps=2 format=3 uid="uid://b7msncmi6n5bg"]
 
-[ext_resource type="Script" path="res://screens/menu/sala_espera.gd" id="1_0ihab"]
+[ext_resource type="Script" path="res://screens/menu/sala_espera_player.gd" id="1_ufdd5"]
 
 [node name="SalaEspera" type="ColorRect"]
 offset_right = 1280.0
 offset_bottom = 720.0
 color = Color(0.301961, 0.301961, 0.301961, 1)
-script = ExtResource("1_0ihab")
+script = ExtResource("1_ufdd5")
 
 [node name="TitleBackground" type="ColorRect" parent="."]
 layout_mode = 1
