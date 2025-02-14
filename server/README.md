@@ -14,7 +14,7 @@ Initialize node and create a package.json file:
 ``npm init -y``
 
 Install ws library (a websocket implementation) and nodemon (to track changes in our code and restart the server):
-``npm install ws nodemon uuid@latest``
+``npm install ws nodemon uuid@latest sqlite3``
 
 ## Ejecutar el servidor
 

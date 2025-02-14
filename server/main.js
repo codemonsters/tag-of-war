@@ -1,11 +1,40 @@
-const WebSocket = require('ws');
-const { v4: uuidv4 } = require('uuid');
+const PORT = 9090;
+const SQLITE_FILENAME = "database.sqlite"
 const MAX_PEERS = 100;
 //const MAX_LOBBIES = 5;
-const PORT = 9090;
 
+const WebSocket = require('ws');
+const { v4: uuidv4 } = require('uuid');
 const wss = new WebSocket.Server({ port: PORT });
 const peers = new Map();
+const fs = require('fs');
+
+// initialize database
+if (fs.existsSync(SQLITE_FILENAME)) {
+    create_db_schema = false;
+} else {
+    create_db_schema = true;
+}
+const sqlite3 = require('sqlite3');
+const db = new sqlite3.Database(SQLITE_FILENAME);
+if (create_db_schema) {
+    // creamos las tablas de la base de datos
+    db.exec(
+        "CREATE TABLE active_players (id_player INTEGER PRIMARY KEY)",
+        (err) => {
+            console.error("ERROR creating db tables");
+            process.exit(1);
+        });
+        db.exec(
+            "CREATE TABLE profiles (id_player INTEGER PRIMARY KEY, username VARCHAR(8) NOT NULL UNIQUE, email VARCHAR(30) UNIQUE, password VARCHAR(32), last_connection INTEGER NOT NULL)",
+            (err) => {
+                console.error("ERROR creating db tables");
+                process.exit(1);
+            });
+}
+// TODO: Eliminar de la tabla players todos los registros
+// TODO: Eliminar de la tabla profiles todos los perfiles anónimos
+
 
 //import { NotImplemented } from './errors.js';
 //import { ProtocolError } from './errors.js';
@@ -55,7 +84,13 @@ function getFirstNonLocalIPAddress() {
 function processLoginRequest(peer, json) {
     const data = typeof(json['data']) === 'object' ? json['data'] : null;
     if (data == null) {
-        throw new ProtocolError(4000, `Missing data object while parsing a login request`);
+        //throw new ProtocolError(4000, `Missing data object while parsing a login request`);
+        peer.ws.send(JSON.stringify({
+            'cmd': 'logged_in',
+            'success': false,
+            'data': {'details': 'Missing data object in login request'}
+        }));
+        return;
     }
     console.log(`data = ${data}`);
 
@@ -63,7 +98,13 @@ function processLoginRequest(peer, json) {
     const password = typeof(data['password']) === 'string' ? data['password'] : '';
     console.log(`Username = ${username}`);
     if (username == '') {
-        throw new ProtocolError(4000, `Missing username while parsing a login request`);
+        //throw new ProtocolError(4000, `Missing username while parsing a login request`);
+        peer.ws.send(JSON.stringify({
+            'cmd': 'logged_in',
+            'success': false,
+            'data': {'details': 'Missing username'}
+        }));
+        return;
     }
 
     if (password == '') {
@@ -144,4 +185,4 @@ wss.on('connection', function connection(ws) {
 
 console.log("Server listening on IP address %s and port %d (ws://%s:%d)", getFirstNonLocalIPAddress(), PORT, getFirstNonLocalIPAddress(), PORT);
 
-// TODO: Echar un vistazo a Knex.js y a https://www.npmjs.com/package/waterline
+// TODO: llamar a db.close() cuando se detiene el servidor
