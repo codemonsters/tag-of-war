@@ -4,6 +4,8 @@ extends Node2D
 var server_list = preload("res://screens/menu/sala_espera_admin.tscn")
 var regex = RegEx.new()
 
+signal connect_to_server()
+signal send_to_server(message: Variant)
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -38,9 +40,9 @@ func _on_btn_create_account_pressed() -> void:
 	if regex.search($TxtAccountMail.get_text()) != null and str($TxtAccountPassword.get_text()).length() < 20 and str($TxtAccountPassword.get_text()).length() > 6 and str($TxtAccountName.get_text()).length() < 20 and str($TxtAccountName.get_text()).length() > 1: 
 		print("Todos los campos son correctos")
 		var login_dict = {"cmd":"login", "data": {"username": Account_username}} #Cambiar una vez exista comando para crear cuenta
-		get_parent().get_parent().connect_to_server()
+		connect_to_server.emit()
 		await get_tree().create_timer(1).timeout
-		get_parent().get_parent().send_to_server(JSON.stringify(login_dict))
+		send_to_server.emit(JSON.stringify(login_dict))
 		get_parent().change_window(get_parent().lista_servidores)
 
 

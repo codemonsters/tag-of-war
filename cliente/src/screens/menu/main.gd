@@ -6,6 +6,9 @@ var create_account = preload("res://screens/menu/create_account.tscn")
 var recuperar_contraseña = preload("res://screens/menu/recuperar_contraseña.tscn")
 var lista_servidores = preload("res://screens/menu/lista_servidores.tscn")
 
+signal screen_connect_to_server()
+signal screen_send_to_server(message: Variant)
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	change_window(identification)
@@ -20,6 +23,8 @@ func change_window(scene):
 	var s = scene.instantiate()
 	s.name = "current_screen"
 	add_child(s)
+	get_node("current_screen").connect_to_server.connect(on_connect_to_server)
+	get_node("current_screen").send_to_server.connect(on_send_to_server)
 
 func open_window(scene):
 	var n = scene.instantiate()
@@ -28,3 +33,11 @@ func open_window(scene):
 
 func close_window():
 	remove_child(get_node("current_window"))
+
+
+func on_connect_to_server():
+	screen_connect_to_server.emit()
+
+
+func on_send_to_server(message: Variant):
+	screen_send_to_server.emit(message)

@@ -36,6 +36,8 @@ func change_screen(scene, does_fade_out = true, does_screen_transition = true, s
 	add_child(s)
 	if does_fade_out: fade_out()
 	if does_screen_transition: screen_transition(s,screen_transition_direction)
+	get_node("current_screen").screen_connect_to_server.connect(on_connect_to_server)
+	get_node("current_screen").screen_send_to_server.connect(on_send_to_server)
 
 
 func show_modal_window(text: String, on_close: Callable = func(): pass, button_text: String = "Ok"):
@@ -75,12 +77,12 @@ func screen_transition(scene,direction):
 	tween.kill()
 
 
-func connect_to_server():
+func on_connect_to_server():
 	wsc.connect_to_url(websocket_url)
 	await get_tree().create_timer(1).timeout
 
 
-func send_to_server(message):
+func on_send_to_server(message: Variant):
 	if wsc.socket.get_ready_state() == wsc.socket.STATE_OPEN:
 		wsc.send(message)
 

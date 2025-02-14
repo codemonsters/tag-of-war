@@ -5,6 +5,9 @@ var server_list = preload("res://screens/menu/sala_espera_admin.tscn")
 var create_account = preload("res://screens/menu/create_account.tscn")
 var recuperar_contraseña = preload("res://screens/menu/recuperar_contraseña.tscn")
 
+signal connect_to_server()
+signal send_to_server(message: Variant)
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	$ErrorMessageLength.visible = false
@@ -31,9 +34,9 @@ func _on_btn_connect_guest_pressed() -> void:
 		$ErrorMessageLength.visible = true
 	else:
 		var login_dict = {"cmd":"login", "data": {"username": Guest_username}}
-		get_parent().get_parent().connect_to_server()
+		connect_to_server.emit()
 		await get_tree().create_timer(1).timeout
-		get_parent().get_parent().send_to_server(JSON.stringify(login_dict))
+		send_to_server.emit(JSON.stringify(login_dict))
 		get_parent().change_window(server_list)
 
 
