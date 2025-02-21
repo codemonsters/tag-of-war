@@ -1,5 +1,8 @@
 extends Control
 
+var gamemode
+var players_number
+var map_name
 var gamemodes = ["Clásico", "Supervivencia", "Infectado"]
 var gamemodes_index = 0
 var num_player = ["2", "3", "4"]
@@ -26,10 +29,12 @@ func _ready() -> void:
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	pass
+	print(players_number, gamemode, map_name)
 
 func _on_button_next_pressed() -> void:
 	if $CreateGame.visible:
+		players_number = $CreateGame/PlayerNumTxt.text
+		gamemode = $CreateGame/GamemodeNameTxt.text
 		$CreateGame.visible = false
 		$ChooseMap.visible = true
 
@@ -38,15 +43,6 @@ func _on_button_go_back_pressed() -> void:
 	if $ChooseMap.visible:
 		$CreateGame.visible = true
 		$ChooseMap.visible = false
-
-
-
-	var tumama = """if gamemodes_index == 2:
-		gamemodes_index = 0
-	else:
-		gamemodes_index += 1
-	$Gamemode.text = gamemodes[gamemodes_index]
-	$CreateGame/GamemodeDescriptionTxt.text = gamemode_description[gamemodes_index]"""
 
 
 func _on_left_arrow_txt_pressed() -> void:
@@ -70,3 +66,11 @@ func _on_num_player_r_pressed() -> void:
 	if num_player_index != 2:
 		num_player_index += 1
 		$CreateGame/PlayerNumTxt.text = num_player[num_player_index]
+
+
+func _on_button_pressed() -> void:
+	if $ChooseMap/Map1.color != Color(0.1176, 0.1961, 0.1176):
+		$ChooseMap/Map1.color = Color(0.1176, 0.1961, 0.1176)
+	else:
+		$ChooseMap/Map1.color = Color(0.1176, 0.1176, 0.1176)
+	map_name = $ChooseMap/Map1/MapName.text
