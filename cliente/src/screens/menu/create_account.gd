@@ -16,6 +16,7 @@ func _ready() -> void:
 	$ErrorMessageMail.visible = false
 	var pattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
 	var result = regex.compile(pattern)
+	get_parent().server_message_recieved.connect(on_server_message_recieved)
 
 
 func _on_btn_create_account_pressed() -> void:
@@ -48,3 +49,8 @@ func _on_btn_create_account_pressed() -> void:
 
 func _on_btn_volver_pressed() -> void:
 	get_parent().close_window()
+
+
+func on_server_message_recieved(dict: Dictionary):
+	if dict["cmd"] == "logged_in" and dict["success"]:
+		print("logged in successfully")

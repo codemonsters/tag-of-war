@@ -14,6 +14,7 @@ func _ready() -> void:
 	$ErrorMessageUsed.visible = false
 	$ErrorMessageUserAccount.visible = false
 	$ErrorMessagePasswordAccount.visible = false
+	get_parent().server_message_recieved.connect(on_server_message_recieved)
 
 
 func _on_boton_invitado_pressed() -> void:
@@ -51,3 +52,8 @@ func _on_btn_create_account_pressed() -> void:
 
 func _on_btn_password_pressed() -> void:
 	get_parent().open_window(get_parent().recuperar_contraseña)
+
+
+func on_server_message_recieved(dict: Dictionary):
+	if dict["cmd"] == "logged_in" and dict["success"]:
+		print("logged in successfully")

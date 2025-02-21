@@ -8,10 +8,12 @@ var lista_servidores = preload("res://screens/menu/lista_servidores.tscn")
 
 signal screen_connect_to_server()
 signal screen_send_to_server(message: Variant)
+signal server_message_recieved(dict: Dictionary)
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	change_window(identification)
+	get_parent().server_message_recieved.connect(on_server_message_recieved)
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -41,3 +43,7 @@ func on_connect_to_server():
 
 func on_send_to_server(message: Variant):
 	screen_send_to_server.emit(message)
+
+
+func on_server_message_recieved(dict: Dictionary):
+	server_message_recieved.emit(dict)

@@ -16,6 +16,19 @@ Initialize node and create a package.json file:
 Install ws library (a websocket implementation) and nodemon (to track changes in our code and restart the server):
 ``npm install ws nodemon uuid@latest sqlite3``
 
+Windows(en PowerShell):
+# Download and install fnm:
+winget install Schniz.fnm
+# Download and install Node.js:
+fnm install 23
+
+Initialize node and create a package.json file:
+``npm.cmd init -y``
+
+Install ws library (a websocket implementation) and nodemon (to track changes in our code and restart the server):
+``npm.cmd install ws nodemon uuid@latest sqlite3``
+
+
 ## Ejecutar el servidor
 
 node main.js

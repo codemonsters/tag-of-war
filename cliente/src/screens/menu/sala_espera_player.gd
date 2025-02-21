@@ -1,5 +1,7 @@
 extends ColorRect
 
+signal connect_to_server()
+signal send_to_server(message: Variant)
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:

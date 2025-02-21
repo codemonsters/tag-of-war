@@ -16,6 +16,8 @@ var screen_transition_duration = 1.0
 var menu_scene = preload("res://screens/menu/main.tscn")
 var modal_window = preload("res://modal_window.tscn")
 
+signal server_message_recieved(dict: Dictionary)
+
 func _ready() -> void:
 	get_node("ColorRect").set_color(Color(0, 0, 0, 0))
 	change_screen(menu_scene)
@@ -88,9 +90,9 @@ func on_send_to_server(message: Variant):
 
 
 func on_message_received(message: Variant):
-	print(message)
-	if message == "": #Actualizar cuando el server pueda responder que recibió los datos correctamente
-		pass
+	#print(message)
+	var message_dict = JSON.parse_string(message)
+	server_message_recieved.emit(message_dict)
 
 
 func on_connect():
