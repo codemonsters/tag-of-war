@@ -1,5 +1,6 @@
 extends Control
 
+var sala_espera = preload("res://screens/menu/server_list/server_list.tscn")
 var gamemode
 var players_number
 var map_name
@@ -43,6 +44,8 @@ func _on_button_go_back_pressed() -> void:
 	if $ChooseMap.visible:
 		$CreateGame.visible = true
 		$ChooseMap.visible = false
+	else:
+		get_parent().open_window(get_parent().sala_espera)
 
 
 func _on_left_arrow_txt_pressed() -> void:
