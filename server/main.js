@@ -9,6 +9,28 @@ const wss = new WebSocket.Server({ port: PORT });
 const peers = new Map();
 const fs = require('fs');
 
+function execute_sql(query) {
+    db.exec(query, (err) => {
+        if (err) {
+            console.log(err);
+            console.error("ERROR executing '" + query + "': " + err.message);
+            process.exit(1);
+        }
+    });
+}
+
+function get_all_sql_results(query, callback) {
+    db.all(query, (err, rows) => {
+        if (err) {
+            console.log(err);
+            console.error("ERROR executing '" + query + "': " + err.message);
+            process.exit(1);
+        }
+        // TODO: Investigar cómo acceder al parámetro results que hemos definido al llamar a esta función
+        return rows;
+    });
+}
+
 // initialize database
 if (fs.existsSync(SQLITE_FILENAME)) {
     create_db_schema = false;
@@ -19,22 +41,11 @@ const sqlite3 = require('sqlite3');
 const db = new sqlite3.Database(SQLITE_FILENAME);
 if (create_db_schema) {
     // creamos las tablas de la base de datos
-    db.exec(
-        "CREATE TABLE active_players (id_player INTEGER PRIMARY KEY)",
-        (err) => {
-            console.error("ERROR creating db tables");
-            process.exit(1);
-        });
-        db.exec(
-            "CREATE TABLE profiles (id_player INTEGER PRIMARY KEY, username VARCHAR(8) NOT NULL UNIQUE, email VARCHAR(30) UNIQUE, password VARCHAR(32), last_connection INTEGER NOT NULL)",
-            (err) => {
-                console.error("ERROR creating db tables");
-                process.exit(1);
-            });
+    execute_sql("CREATE TABLE active_players (id_player INTEGER PRIMARY KEY)");
+    execute_sql("CREATE TABLE profiles (id_player INTEGER PRIMARY KEY, username VARCHAR(8) NOT NULL UNIQUE, email VARCHAR(30) UNIQUE, password VARCHAR(32), last_connection_timestamp DATETIME NOT NULL, account_creation_timestamp DATETIME, account_verified BOOLEAN)");
 }
-// TODO: Eliminar de la tabla players todos los registros
-// TODO: Eliminar de la tabla profiles todos los perfiles anónimos
-
+execute_sql("DELETE FROM active_players");
+execute_sql("DELETE FROM profiles WHERE email=''")
 
 //import { NotImplemented } from './errors.js';
 //import { ProtocolError } from './errors.js';
@@ -92,11 +103,9 @@ function processLoginRequest(peer, json) {
         }));
         return;
     }
-    console.log(`data = ${data}`);
 
     const username = typeof(data['username']) === 'string' ? data['username'] : '';
     const password = typeof(data['password']) === 'string' ? data['password'] : '';
-    console.log(`Username = ${username}`);
     if (username == '') {
         //throw new ProtocolError(4000, `Missing username while parsing a login request`);
         peer.ws.send(JSON.stringify({
@@ -110,11 +119,27 @@ function processLoginRequest(peer, json) {
     if (password == '') {
         // Login como invitado
         console.log("Guest login request received. Username = " + data.username);
-        peer.ws.send(JSON.stringify({
+        // Comprobamos si el nombre de usuario que desea está disponible
+        get_all_sql_results(
+            "SELECT username FROM profiles WHERE username=\"" + username + "\"",
+            function(results) {
+                if (results.length > 0) {
+                    peer.ws.send(JSON.stringify({
+                        'cmd': 'logged_in',
+                        'success': false,
+                        'data': { 'details': 'Username already taken'}
+                    }));
+                    console.debug("Anonymous login failed: Username '" + username + "' already taken");
+                } else {
+                    peer.ws.send(JSON.stringify({
                         'cmd': 'logged_in',
                         'success': true,
-                        'data': {}
+                        'data': { 'details': 'Anonymous login sucessful'}
                     }));
+                    console.debug("Anonymous login successful for username '" + username + "'");
+                }
+            }
+        );
         console.log("Done");
     } else {
         // Login como usuario registrado
