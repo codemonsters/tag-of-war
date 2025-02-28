@@ -13,10 +13,10 @@ var recuperar_contraseña = preload("res://screens/menu/recuperar_contraseña.ts
 var wsc = WebSocketClient.new()
 var fade_duration = 1.0
 var screen_transition_duration = 1.0
-var menu_scene = preload("res://screens/menu/main.tscn")
+var menu_scene = preload("res://screens/menu/menu_main.tscn")
 var modal_window = preload("res://modal_window.tscn")
 
-signal server_message_recieved(dict: Dictionary)
+signal server_message_received(dict: Dictionary)
 
 func _ready() -> void:
 	get_node("ColorRect").set_color(Color(0, 0, 0, 0))
@@ -92,7 +92,7 @@ func on_send_to_server(message: Variant):
 func on_message_received(message: Variant):
 	#print(message)
 	var message_dict = JSON.parse_string(message)
-	server_message_recieved.emit(message_dict)
+	server_message_received.emit(message_dict)
 
 
 func on_connect():
