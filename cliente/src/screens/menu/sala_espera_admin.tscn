@@ -110,6 +110,45 @@ offset_bottom = 138.0
 theme_override_font_sizes/font_size = 30
 text = "X"
 
+[node name="ScrollContainer" type="ScrollContainer" parent="PlayerListRect"]
+layout_mode = 0
+offset_left = 54.0
+offset_top = 151.0
+offset_right = 512.0
+offset_bottom = 355.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PlayerListRect/ScrollContainer"]
+custom_minimum_size = Vector2(450, 100)
+layout_mode = 2
+
+[node name="Button" type="Button" parent="PlayerListRect/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+text = "Jugador 1"
+
+[node name="Button2" type="Button" parent="PlayerListRect/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+text = "Jugador 2"
+
+[node name="Button3" type="Button" parent="PlayerListRect/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+text = "Jugador 3"
+
+[node name="Button4" type="Button" parent="PlayerListRect/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+text = "Jugador 4"
+
+[node name="Button5" type="Button" parent="PlayerListRect/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+text = "Jugador 5"
+
+[node name="Button6" type="Button" parent="PlayerListRect/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+text = "Jugador 6"
+
+[node name="Button7" type="Button" parent="PlayerListRect/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+text = "Jugador 7"
+
 [node name="GameDataRect" type="ColorRect" parent="."]
 layout_mode = 1
 anchors_preset = 8
