@@ -3,33 +3,12 @@ const SQLITE_FILENAME = "database.sqlite"
 const MAX_PEERS = 100;
 //const MAX_LOBBIES = 5;
 
+const BetterSqlite3 = require('better-sqlite3');
 const WebSocket = require('ws');
 const { v4: uuidv4 } = require('uuid');
 const wss = new WebSocket.Server({ port: PORT });
 const peers = new Map();
 const fs = require('fs');
-
-function execute_sql(query) {
-    db.exec(query, (err) => {
-        if (err) {
-            console.log(err);
-            console.error("ERROR executing '" + query + "': " + err.message);
-            process.exit(1);
-        }
-    });
-}
-
-function get_all_sql_results(query, callback) {
-    db.all(query, (err, rows) => {
-        if (err) {
-            console.log(err);
-            console.error("ERROR executing '" + query + "': " + err.message);
-            process.exit(1);
-        }
-        // TODO: Investigar cómo acceder al parámetro results que hemos definido al llamar a esta función
-        return rows;
-    });
-}
 
 // initialize database
 if (fs.existsSync(SQLITE_FILENAME)) {
@@ -37,15 +16,15 @@ if (fs.existsSync(SQLITE_FILENAME)) {
 } else {
     create_db_schema = true;
 }
-const sqlite3 = require('sqlite3');
-const db = new sqlite3.Database(SQLITE_FILENAME);
+
+const db = new BetterSqlite3(SQLITE_FILENAME);
 if (create_db_schema) {
     // creamos las tablas de la base de datos
-    execute_sql("CREATE TABLE active_players (id_player INTEGER PRIMARY KEY)");
-    execute_sql("CREATE TABLE profiles (id_player INTEGER PRIMARY KEY, username VARCHAR(8) NOT NULL UNIQUE, email VARCHAR(30) UNIQUE, password VARCHAR(32), last_connection_timestamp DATETIME NOT NULL, account_creation_timestamp DATETIME, account_verified BOOLEAN)");
+    db.prepare("CREATE TABLE active_players (id_player INTEGER PRIMARY KEY)").run();
+    db.prepare("CREATE TABLE profiles (id_player INTEGER PRIMARY KEY, username VARCHAR(8) NOT NULL UNIQUE, email VARCHAR(30) UNIQUE, password VARCHAR(32), last_connection_timestamp DATETIME NOT NULL, account_creation_timestamp DATETIME, account_verified BOOLEAN)").run();
 }
-execute_sql("DELETE FROM active_players");
-execute_sql("DELETE FROM profiles WHERE email=''")
+db.prepare("DELETE FROM active_players").run();
+db.prepare("DELETE FROM profiles WHERE email=''").run();
 
 //import { NotImplemented } from './errors.js';
 //import { ProtocolError } from './errors.js';
@@ -120,26 +99,26 @@ function processLoginRequest(peer, json) {
         // Login como invitado
         console.log("Guest login request received. Username = " + data.username);
         // Comprobamos si el nombre de usuario que desea está disponible
-        get_all_sql_results(
-            "SELECT username FROM profiles WHERE username=\"" + username + "\"",
-            function(results) {
-                if (results.length > 0) {
-                    peer.ws.send(JSON.stringify({
-                        'cmd': 'logged_in',
-                        'success': false,
-                        'data': { 'details': 'Username already taken'}
-                    }));
-                    console.debug("Anonymous login failed: Username '" + username + "' already taken");
-                } else {
-                    peer.ws.send(JSON.stringify({
-                        'cmd': 'logged_in',
-                        'success': true,
-                        'data': { 'details': 'Anonymous login sucessful'}
-                    }));
-                    console.debug("Anonymous login successful for username '" + username + "'");
-                }
-            }
-        );
+        const rows = db.prepare("SELECT username FROM profiles WHERE username=(?)").all(username);
+        console.log("Número de usuarios con ese nombre: " + rows.length);
+        if (rows.length > 0) {
+            // El nombre de usuario estaba ocupado
+            peer.ws.send(JSON.stringify({
+                'cmd': 'logged_in',
+                'success': false,
+                'data': { 'details': 'Username already taken'}
+            }));
+            console.debug("Anonymous login failed: Username '" + username + "' already taken");
+        } else {
+            // El nombre de usuario estaba disponible
+            db.prepare("INSERT INTO profiles (username, last_connection_timestamp) VALUES (?, ?)").run(username, Date.now());
+            peer.ws.send(JSON.stringify({
+                'cmd': 'logged_in',
+                'success': true,
+                'data': { 'details': 'Anonymous login sucessful'}
+            }));
+            console.debug("Anonymous login successful for username '" + username + "'");
+        }
         console.log("Done");
     } else {
         // Login como usuario registrado
