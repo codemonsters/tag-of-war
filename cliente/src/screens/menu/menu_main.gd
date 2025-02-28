@@ -4,7 +4,6 @@ var identification = preload("res://screens/menu/identification.tscn")
 var server_list = preload("res://screens/menu/sala_espera_admin.tscn")
 var create_account = preload("res://screens/menu/create_account.tscn")
 var recuperar_contraseña = preload("res://screens/menu/recuperar_contraseña.tscn")
-var lista_servidores = preload("res://screens/menu/lista_servidores.tscn")
 
 signal screen_connect_to_server()
 signal screen_send_to_server(message: Variant)
