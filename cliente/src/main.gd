@@ -81,7 +81,6 @@ func screen_transition(scene,direction):
 
 func on_connect_to_server():
 	wsc.connect_to_url(websocket_url)
-	await get_tree().create_timer(1).timeout
 
 
 func on_send_to_server(message: Variant):

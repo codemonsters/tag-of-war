@@ -1,6 +1,5 @@
 extends Node2D
 
-
 var server_list = preload("res://screens/menu/sala_espera_admin.tscn")
 var create_account = preload("res://screens/menu/create_account.tscn")
 var recuperar_contraseña = preload("res://screens/menu/recuperar_contraseña.tscn")
@@ -14,7 +13,8 @@ func _ready() -> void:
 	$ErrorMessageUsed.visible = false
 	$ErrorMessageUserAccount.visible = false
 	$ErrorMessagePasswordAccount.visible = false
-	get_parent().server_message_received.connect(on_server_message_received)
+
+	get_parent().get_parent().server_message_received.connect(on_server_message_recieved)
 
 
 func _on_boton_invitado_pressed() -> void:
@@ -39,7 +39,6 @@ func _on_btn_connect_guest_pressed() -> void:
 		await get_tree().create_timer(1).timeout
 		send_to_server.emit(JSON.stringify(login_dict))
 		get_parent().change_window(server_list)
-
 
 
 func _on_btn_connect_account_pressed() -> void:
