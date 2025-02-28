@@ -1,9 +1,6 @@
 extends Control
 
 var sala_espera = preload("res://screens/menu/server_list/server_list.tscn")
-var gamemode
-var players_number
-var map_name
 var gamemodes = ["Clásico", "Supervivencia", "Infectado"]
 var gamemodes_index = 0
 var num_player = ["2", "3", "4"]
@@ -30,12 +27,12 @@ func _ready() -> void:
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	print(players_number, gamemode, map_name)
+	print(Globales.players_number, Globales.gamemode, Globales.map_name)
 
 func _on_button_next_pressed() -> void:
 	if $CreateGame.visible:
-		players_number = $CreateGame/PlayerNumTxt.text
-		gamemode = $CreateGame/GamemodeNameTxt.text
+		Globales.players_number = $CreateGame/PlayerNumTxt.text
+		Globales.gamemode = $CreateGame/GamemodeNameTxt.text
 		$CreateGame.visible = false
 		$ChooseMap.visible = true
 
@@ -76,4 +73,4 @@ func _on_button_pressed() -> void:
 		$ChooseMap/Map1.color = Color(0.1176, 0.1961, 0.1176)
 	else:
 		$ChooseMap/Map1.color = Color(0.1176, 0.1176, 0.1176)
-	map_name = $ChooseMap/Map1/MapName.text
+	Globales.map_name = $ChooseMap/Map1/MapName.text

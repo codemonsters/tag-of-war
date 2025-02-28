@@ -3,7 +3,9 @@ extends ColorRect
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	pass # Replace with function body.
+	$GameDataRect/NumberPlayers.text = "Numero de jugadores:\n" + str(Globales.players_number)
+	$GameDataRect/MapName.text = "Mapa:\n" + str(Globales.map_name)
+	$GameDataRect/Gamemode.text = "Modo de juego:\n" + str(Globales.gamemode)
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
