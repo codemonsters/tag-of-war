@@ -1,9 +1,9 @@
 [gd_scene load_steps=2 format=3 uid="uid://bptw6rrwn2th3"]
 
-[ext_resource type="Script" path="res://screens/menu/main.gd" id="1_nghb3"]
+[ext_resource type="Script" path="res://screens/menu/menu_main.gd" id="1_safpr"]
 
 [node name="Main" type="Node2D"]
-script = ExtResource("1_nghb3")
+script = ExtResource("1_safpr")
 
 [node name="Label" type="Label" parent="."]
 offset_right = 1152.0
