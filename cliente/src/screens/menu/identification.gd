@@ -3,6 +3,7 @@ extends Node2D
 var server_list = preload("res://screens/menu/sala_espera_admin.tscn")
 var create_account = preload("res://screens/menu/create_account.tscn")
 var recuperar_contraseña = preload("res://screens/menu/recuperar_contraseña.tscn")
+var connecting_as = "none"
 
 signal connect_to_server()
 signal send_to_server(message: Variant)
@@ -34,15 +35,21 @@ func _on_btn_connect_guest_pressed() -> void:
 		Guest_username = null
 		$ErrorMessageLength.visible = true
 	else:
+		connecting_as = "guest"
 		var login_dict = {"cmd":"login", "data": {"username": Guest_username}}
 		connect_to_server.emit()
 		await get_tree().create_timer(1).timeout
 		send_to_server.emit(JSON.stringify(login_dict))
-		get_parent().change_window(server_list)
 
 
 func _on_btn_connect_account_pressed() -> void:
-	pass # Replace with function body.
+	var account_username = str($TxtAccountUser.get_text())
+	var account_password = str($TxtPassword.get_text())
+	connecting_as = "account"
+	var login_dict = {"cmd":"login", "data": {"username": account_username, "password": account_password}}
+	connect_to_server.emit()
+	await get_tree().create_timer(1).timeout
+	send_to_server.emit(JSON.stringify(login_dict))
 
 
 func _on_btn_create_account_pressed() -> void:
@@ -53,6 +60,15 @@ func _on_btn_password_pressed() -> void:
 	get_parent().open_window(get_parent().recuperar_contraseña)
 
 
-func on_server_message_received(dict: Dictionary):
-	if dict["cmd"] == "logged_in" and dict["success"]:
-		print("logged in successfully")
+func on_server_message_recieved(dict: Dictionary):
+	if dict["cmd"] == "logged_in":
+		if dict["success"]:
+			print("logged in successfully")
+			connecting_as = "none"
+			get_parent().change_window(server_list)
+		elif connecting_as == "guest":
+			$ErrorMessageUsed.visible = true
+			$ErrorMessageUsed.text = "Error: Invalid Username" + dict["data"]["reason"]
+		elif connecting_as == "account":
+			$ErrorMessageUserAccount.visible = true
+			$ErrorMessagePasswordAccount.visible = true
