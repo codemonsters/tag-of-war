@@ -2,6 +2,7 @@ extends ColorRect
 
 signal connect_to_server()
 signal send_to_server(message: Variant)
+var valor_anterior = "LISTO"
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -22,3 +23,11 @@ func _on_leave_button_pressed() -> void:
 
 func on_server_message_recieved(dict: Dictionary):
 	pass
+
+func _on_listo_button_toggled(toggled_on: bool) -> void:
+	if valor_anterior == "LISTO":
+		$ListoButton.text = "NO LISTO"
+		valor_anterior = "NO LISTO"
+	else:
+		$ListoButton.text = "LISTO"
+		valor_anterior = "LISTO"
