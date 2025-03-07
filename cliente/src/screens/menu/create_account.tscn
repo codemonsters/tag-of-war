@@ -41,6 +41,7 @@ offset_top = 204.0
 offset_right = 696.0
 offset_bottom = 239.0
 scale = Vector2(1.5, 1.5)
+focus_next = NodePath("../TxtAccountMail")
 placeholder_text = "Nombre de Usuario"
 
 [node name="TxtAccountMail" type="LineEdit" parent="."]
@@ -49,6 +50,7 @@ offset_top = 312.0
 offset_right = 696.0
 offset_bottom = 347.0
 scale = Vector2(1.5, 1.5)
+focus_next = NodePath("../TxtAccountPassword")
 placeholder_text = "Correo electronico"
 
 [node name="TxtAccountPassword" type="LineEdit" parent="."]
@@ -57,6 +59,7 @@ offset_top = 415.0
 offset_right = 696.0
 offset_bottom = 450.0
 scale = Vector2(1.5, 1.5)
+focus_next = NodePath("../TxtAccountName")
 placeholder_text = "Contraseña"
 
 [node name="BtnCreateAccount" type="Button" parent="."]
