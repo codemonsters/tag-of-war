@@ -6,7 +6,7 @@ const MAX_PEERS = 100;
 const BetterSqlite3 = require('better-sqlite3');
 const WebSocket = require('ws');
 const { v4: uuidv4 } = require('uuid');
-const wss = new WebSocket.Server({ port: PORT });
+const wss = new WebSocket.Server({port: PORT});
 const peers = new Map();
 const fs = require('fs');
 
@@ -21,7 +21,7 @@ const db = new BetterSqlite3(SQLITE_FILENAME);
 if (create_db_schema) {
     // creamos las tablas de la base de datos
     db.prepare("CREATE TABLE active_players (id_player INTEGER PRIMARY KEY)").run();
-    db.prepare("CREATE TABLE profiles (id_player INTEGER PRIMARY KEY, username VARCHAR(8) NOT NULL UNIQUE, email VARCHAR(30) UNIQUE, password VARCHAR(32), last_connection_timestamp DATETIME NOT NULL, account_creation_timestamp DATETIME, account_verified BOOLEAN)").run();
+    db.prepare("CREATE TABLE profiles (id_player INTEGER PRIMARY KEY AUTOINCREMENT, username VARCHAR(8) NOT NULL UNIQUE, email VARCHAR(30) UNIQUE, password VARCHAR(32), last_connection_timestamp DATETIME NOT NULL, account_creation_timestamp DATETIME, account_verified BOOLEAN)").run();
 }
 db.prepare("DELETE FROM active_players").run();
 db.prepare("DELETE FROM profiles WHERE email=''").run();
@@ -71,6 +71,7 @@ function getFirstNonLocalIPAddress() {
     }
 }
 
+// procesa mensajes json que tienen el campo cmd = 'login'
 function processLoginRequest(peer, json) {
     const data = typeof(json['data']) === 'object' ? json['data'] : null;
     if (data == null) {
@@ -92,6 +93,22 @@ function processLoginRequest(peer, json) {
             'success': false,
             'data': {'details': 'Missing username'}
         }));
+        return;
+    } else if (['admin', 'administrator', 'administrador', 'codemonsters', 'guest'].includes(username)) {
+        peer.ws.send(JSON.stringify({
+            'cmd': 'logged_in',
+            'success': false,
+            'data': { 'details': 'Username not allowed'}
+        }));
+        console.debug("Login failed: Username '" + username + "' not allowed");
+        return;    
+    } else if (username.length > 8 || !/^[a-zA-Z0-9ñÑ]+$/.test(username)) {
+        peer.ws.send(JSON.stringify({
+            'cmd': 'logged_in',
+            'success': false,
+            'data': { 'details': 'Username format not allowed'}
+        }));
+        console.debug("Login failed: Username '" + username + "' format not allowed");
         return;
     }
 
