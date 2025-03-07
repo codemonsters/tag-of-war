@@ -24,7 +24,7 @@ if (create_db_schema) {
     db.prepare("CREATE TABLE profiles (id_player INTEGER PRIMARY KEY AUTOINCREMENT, username VARCHAR(8) NOT NULL UNIQUE, email VARCHAR(30) UNIQUE, password VARCHAR(32), last_connection_timestamp DATETIME NOT NULL, account_creation_timestamp DATETIME, account_verified BOOLEAN)").run();
 }
 db.prepare("DELETE FROM active_players").run();
-db.prepare("DELETE FROM profiles WHERE email=''").run();
+db.prepare("DELETE FROM profiles WHERE email IS NULL").run();
 
 //import { NotImplemented } from './errors.js';
 //import { ProtocolError } from './errors.js';
@@ -46,6 +46,7 @@ class Peer {
     constructor(id, ws) {
         this.id = id;
         this.ws = ws;
+        this.username = null;
         /*
         this.lobby = '';
         // Close connection after 1 second if client has not joined a lobby
@@ -129,6 +130,7 @@ function processLoginRequest(peer, json) {
         } else {
             // El nombre de usuario estaba disponible
             db.prepare("INSERT INTO profiles (username, last_connection_timestamp) VALUES (?, ?)").run(username, Date.now());
+            peer.username = username;
             peer.ws.send(JSON.stringify({
                 'cmd': 'logged_in',
                 'success': true,
@@ -139,7 +141,7 @@ function processLoginRequest(peer, json) {
         console.log("Done");
     } else {
         // Login como usuario registrado
-        throw new NotImplemented("Currently only supporting guest log in");
+        throw new NotImplemented("Currently only supporting guest log in"); // TODO: Implementar
     }
 }
 
