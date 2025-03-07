@@ -15,7 +15,7 @@ func _ready() -> void:
 	$ErrorMessageUserAccount.visible = false
 	$ErrorMessagePasswordAccount.visible = false
 
-	get_parent().get_parent().server_message_received.connect(on_server_message_recieved)
+	get_parent().get_parent().server_message_received.connect(on_server_message_received)
 
 
 func _on_boton_invitado_pressed() -> void:
