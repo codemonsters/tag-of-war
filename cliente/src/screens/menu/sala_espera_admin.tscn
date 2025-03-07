@@ -1,6 +1,20 @@
-[gd_scene load_steps=2 format=3 uid="uid://k13o7p4xjv3i"]
+[gd_scene load_steps=7 format=3 uid="uid://o54nfmk8w3lk"]
 
 [ext_resource type="Script" path="res://screens/menu/sala_espera_player.gd" id="1_ufdd5"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_6x0wv"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pt2k2"]
+bg_color = Color(0.739789, 3.54964e-06, 3.85046e-07, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nauep"]
+bg_color = Color(0.297021, 0.516611, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ro748"]
+bg_color = Color(0.842613, 0.000176134, 9.66465e-05, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_82ml5"]
+bg_color = Color(0.402854, 0.691491, 0, 1)
 
 [node name="SalaEspera" type="ColorRect"]
 offset_right = 1280.0
@@ -220,5 +234,33 @@ theme_override_font_sizes/font_size = 30
 text = "Mapa:"
 horizontal_alignment = 1
 
+[node name="ListoButton" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -180.0
+offset_top = 255.0
+offset_right = -42.0
+offset_bottom = 326.0
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_colors/font_hover_pressed_color = Color(0.611765, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 0.376471, 0, 1)
+theme_override_colors/font_pressed_color = Color(0.612299, 8.18223e-07, 1.44392e-07, 1)
+theme_override_colors/font_focus_color = Color(0, 0.376471, 0, 1)
+theme_override_colors/font_color = Color(2.97809e-06, 0.377955, 2.40654e-07, 1)
+theme_override_font_sizes/font_size = 20
+theme_override_styles/focus = SubResource("StyleBoxEmpty_6x0wv")
+theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_pt2k2")
+theme_override_styles/hover = SubResource("StyleBoxFlat_nauep")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_ro748")
+theme_override_styles/normal = SubResource("StyleBoxFlat_82ml5")
+toggle_mode = true
+text = "LISTO"
+
 [connection signal="pressed" from="LeaveButton" to="." method="_on_leave_button_pressed"]
 [connection signal="pressed" from="PlayerListRect/KickPlayer1" to="." method="_on_leave_button_pressed"]
+[connection signal="toggled" from="ListoButton" to="." method="_on_listo_button_toggled"]
