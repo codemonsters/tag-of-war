@@ -94,7 +94,7 @@ function processLoginRequest(peer, json) {
             'data': {'details': 'Missing username'}
         }));
         return;
-    } else if (['admin', 'administrator', 'administrador', 'codemonsters', 'guest'].includes(username)) {
+    } else if (['admin', 'administrator', 'administrador', 'codemonsters', 'guest', 'root'].includes(username)) {
         peer.ws.send(JSON.stringify({
             'cmd': 'logged_in',
             'success': false,
