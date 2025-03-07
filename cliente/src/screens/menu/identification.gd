@@ -60,7 +60,7 @@ func _on_btn_password_pressed() -> void:
 	get_parent().open_window(get_parent().recuperar_contraseña)
 
 
-func on_server_message_recieved(dict: Dictionary):
+func on_server_message_received(dict: Dictionary):
 	if dict["cmd"] == "logged_in":
 		if dict["success"]:
 			print("logged in successfully")
