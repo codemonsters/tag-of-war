@@ -95,7 +95,7 @@ offset_left = 789.0
 offset_top = 285.0
 offset_right = 1052.0
 offset_bottom = 328.0
-focus_neighbor_bottom = NodePath("../TxtPassword")
+focus_next = NodePath("../TxtPassword")
 placeholder_text = "Nombre de Usuario o Mail"
 
 [node name="TxtPassword" type="LineEdit" parent="."]
@@ -103,7 +103,7 @@ offset_left = 789.0
 offset_top = 361.0
 offset_right = 1052.0
 offset_bottom = 404.0
-focus_neighbor_top = NodePath("../TxtAccountUser")
+focus_next = NodePath("../TxtAccountUser")
 placeholder_text = "Contraseña"
 
 [node name="BtnCreateAccount" type="Button" parent="."]
