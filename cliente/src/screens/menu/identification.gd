@@ -68,7 +68,7 @@ func on_server_message_received(dict: Dictionary):
 			get_parent().change_window(server_list)
 		elif connecting_as == "guest":
 			$ErrorMessageUsed.visible = true
-			$ErrorMessageUsed.text = "Error: Invalid Username" + dict["data"]["reason"]
+			$ErrorMessageUsed.text = "Error: Invalid Username \n" + dict["data"]["details"]
 		elif connecting_as == "account":
 			$ErrorMessageUserAccount.visible = true
 			$ErrorMessagePasswordAccount.visible = true

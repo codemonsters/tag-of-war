@@ -44,7 +44,6 @@ func _on_btn_create_account_pressed() -> void:
 		connect_to_server.emit()
 		await get_tree().create_timer(1).timeout
 		send_to_server.emit(JSON.stringify(login_dict))
-		get_parent().change_window(get_parent().lista_servidores)
 
 
 func _on_btn_volver_pressed() -> void:
@@ -54,3 +53,4 @@ func _on_btn_volver_pressed() -> void:
 func on_server_message_received(dict: Dictionary):
 	if dict["cmd"] == "logged_in" and dict["success"]:
 		print("logged in successfully")
+		get_parent().change_window(get_parent().lista_servidores)

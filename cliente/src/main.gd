@@ -3,8 +3,6 @@ extends Node2D
 # Escena que está cargada siempre, independientemente de si el jugador está en el menú o jugando
 # El script instancia en current_screen la pantalla en la que está el juego en cada momento
 
-#@export var websocket_url = "ws://192.168.0.109:9090"
-#@export var websocket_url = "ws://echo.websocket.org"
 @export var websocket_url = "ws://127.0.0.1:9090"
 
 var server_list = preload("res://screens/menu/sala_espera_admin.tscn")
@@ -89,7 +87,6 @@ func on_send_to_server(message: Variant):
 
 
 func on_message_received(message: Variant):
-	#print(message)
 	var message_dict = JSON.parse_string(message)
 	server_message_received.emit(message_dict)
 
