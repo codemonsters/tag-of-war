@@ -9,6 +9,7 @@ const { v4: uuidv4 } = require('uuid');
 const wss = new WebSocket.Server({port: PORT});
 const peers = new Map();
 const fs = require('fs');
+const { NotImplemented, ProtocolError } = require("./modules/errors.js");
 
 // initialize database
 if (fs.existsSync(SQLITE_FILENAME)) {
@@ -28,19 +29,6 @@ db.prepare("DELETE FROM profiles WHERE email IS NULL").run();
 
 //import { NotImplemented } from './errors.js';
 //import { ProtocolError } from './errors.js';
-
-class ProtocolError extends Error {
-    constructor(code, message) {
-        super(message);
-        this.code = code;
-    }
-}
-
-class NotImplemented extends Error {
-    constructor(message) {
-        super(message);
-    }
-}
 
 class Peer {
     constructor(id, ws) {
