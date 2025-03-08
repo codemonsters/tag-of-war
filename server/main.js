@@ -10,6 +10,7 @@ const wss = new WebSocket.Server({port: PORT});
 const peers = new Map();
 const fs = require('fs');
 const { NotImplemented, ProtocolError } = require("./modules/errors.js");
+const { getFirstNonLocalIPAddress } = require("./modules/aux.js");
 
 // initialize database
 if (fs.existsSync(SQLITE_FILENAME)) {
@@ -26,9 +27,6 @@ if (create_db_schema) {
 }
 db.prepare("DELETE FROM active_players").run();
 db.prepare("DELETE FROM profiles WHERE email IS NULL").run();
-
-//import { NotImplemented } from './errors.js';
-//import { ProtocolError } from './errors.js';
 
 class Peer {
     constructor(id, ws) {
@@ -47,18 +45,6 @@ class Peer {
     }
 }
 
-function getFirstNonLocalIPAddress() {
-    const interfaces = require('os').networkInterfaces();
-    for (const devName in interfaces) {
-        const iface = interfaces[devName];
-        for (let i = 0; i < iface.length; i++) {
-            const alias = iface[i];
-            if (alias.family === 'IPv4' && alias.address !== '127.0.0.1' && !alias.internal) {
-                return alias.address;
-            }
-        }
-    }
-}
 
 // procesa mensajes json que tienen el campo cmd = 'login'
 function processLoginRequest(peer, json) {
