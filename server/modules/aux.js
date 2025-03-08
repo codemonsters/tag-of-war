@@ -11,5 +11,4 @@ function getFirstNonLocalIPAddress() {
     }
 }
 
-
 module.exports = { getFirstNonLocalIPAddress };
