@@ -46,7 +46,7 @@ class Peer {
 }
 
 
-// procesa mensajes json que tienen el campo cmd = 'login'
+// procesa mensajes json con el campo cmd = 'login'
 function processLoginRequest(peer, json) {
     const data = typeof(json['data']) === 'object' ? json['data'] : null;
     if (data == null) {
@@ -90,11 +90,11 @@ function processLoginRequest(peer, json) {
     if (password == '') {
         // Login como invitado
         console.log("Guest login request received. Username = " + data.username);
-        // Comprobamos si el nombre de usuario que desea está disponible
+        // Comprobamos si el nombre de usuario está disponible
         const rows = db.prepare("SELECT username FROM profiles WHERE username=(?)").all(username);
         console.log("Número de usuarios con ese nombre: " + rows.length);
         if (rows.length > 0) {
-            // El nombre de usuario estaba ocupado
+            // El nombre de usuario está ocupado
             peer.ws.send(JSON.stringify({
                 'cmd': 'logged_in',
                 'success': false,
@@ -102,7 +102,7 @@ function processLoginRequest(peer, json) {
             }));
             console.debug("Anonymous login failed: Username '" + username + "' already taken");
         } else {
-            // El nombre de usuario estaba disponible
+            // El nombre de usuario está disponible
             db.prepare("INSERT INTO profiles (username, last_connection_timestamp) VALUES (?, ?)").run(username, Date.now());
             peer.username = username;
             peer.ws.send(JSON.stringify({
@@ -138,10 +138,7 @@ function parseJsonMsg(peer, msg) {
         default:
             console.error(`Unknown command: ${cmd}`);
     }
-
-    /*
-    const type = typeof (json['type']) === 'number' ? Math.floor(json['type']) : -1;
-    */
+    //const type = typeof (json['type']) === 'number' ? Math.floor(json['type']) : -1;
 }
 
 wss.on('connection', function connection(ws) {
@@ -156,7 +153,6 @@ wss.on('connection', function connection(ws) {
     console.log('Peer connected (id: %s)', peer.id);
     
     ws.on('message', function message(data, isBinary) {
-        //console.log('received: %s', data);
         const message = isBinary ? data : data.toString();
         try {
             parseJsonMsg(peer, message);
@@ -170,14 +166,11 @@ wss.on('connection', function connection(ws) {
             }
         }
     });
-    //ws.send("Pong! (test answer)");
 
     ws.on("close", function close(code, data) {
         console.log(`Peer disconnected (id: ${peer.id}, code: ${code}, reason: ${data.toString()})`);
         peers.delete(peer);
     });
-
-    //ws.send('something');
 });
 
 console.log("Server listening on IP address %s and port %d (ws://%s:%d)", getFirstNonLocalIPAddress(), PORT, getFirstNonLocalIPAddress(), PORT);
