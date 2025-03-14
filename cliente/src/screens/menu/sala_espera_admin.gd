@@ -9,8 +9,13 @@ func _ready() -> void:
 	$GameDataRect/NumberPlayers.text = "Numero de jugadores:\n" + str(Globales.players_number)
 	$GameDataRect/MapName.text = "Mapa:\n" + str(Globales.map_name)
 	$GameDataRect/Gamemode.text = "Modo de juego:\n" + str(Globales.gamemode)
-	get_parent().get_parent().server_message_recieved.connect(on_server_message_recieved)
-
+	#get_parent().get_parent().server_message_recieved.connect(on_server_message_recieved)
+	for child in $PlayerListRect/ScrollContainer/VBoxContainer.get_children():
+		child.queue_free()
+	#for name in player_names:
+		#var button = Button.new()
+		#button.text = name
+		#$VBoxContainer.add_child(button)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
