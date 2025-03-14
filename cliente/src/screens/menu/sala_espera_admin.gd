@@ -9,7 +9,7 @@ func _ready() -> void:
 	$GameDataRect/NumberPlayers.text = "Numero de jugadores:\n" + str(Globales.players_number)
 	$GameDataRect/MapName.text = "Mapa:\n" + str(Globales.map_name)
 	$GameDataRect/Gamemode.text = "Modo de juego:\n" + str(Globales.gamemode)
-	get_parent().get_parent().server_message_recieved.connect(on_server_message_recieved)
+	#get_parent().get_parent().server_message_recieved.connect(on_server_message_recieved)
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
