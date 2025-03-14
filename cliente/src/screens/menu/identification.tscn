@@ -1,4 +1,4 @@
-[gd_scene load_steps=2 format=3 uid="uid://drgbmgqnsdkfr"]
+[gd_scene load_steps=2 format=3 uid="uid://bwogjgbyjt3iy"]
 
 [ext_resource type="Script" path="res://screens/menu/identification.gd" id="1_6yiyv"]
 
@@ -6,7 +6,7 @@
 script = ExtResource("1_6yiyv")
 
 [node name="VerticalLine" type="Line2D" parent="."]
-position = Vector2(-45, 0)
+position = Vector2(-17, 0)
 points = PackedVector2Array(637, 36, 637, 720)
 
 [node name="LblPlayAsGuest" type="Label" parent="."]
@@ -43,9 +43,9 @@ offset_right = 409.0
 offset_bottom = 43.0
 
 [node name="LblAccountAcces" type="Label" parent="."]
-offset_left = 642.0
+offset_left = 665.0
 offset_top = 174.0
-offset_right = 1152.0
+offset_right = 1175.0
 offset_bottom = 237.0
 text = "Accede a tu cuenta"
 horizontal_alignment = 1
@@ -53,18 +53,18 @@ horizontal_alignment = 1
 [node name="AccountRectBorder" type="ColorRect" parent="LblAccountAcces"]
 show_behind_parent = true
 layout_mode = 0
-offset_left = 159.0
+offset_left = 158.0
 offset_top = -22.0
-offset_right = 350.0
+offset_right = 349.0
 offset_bottom = 49.0
 color = Color(0.218056, 0.00040064, 0.561593, 1)
 
 [node name="AccountRect" type="ColorRect" parent="LblAccountAcces"]
 show_behind_parent = true
 layout_mode = 0
-offset_left = 166.0
+offset_left = 165.0
 offset_top = -16.0
-offset_right = 343.0
+offset_right = 342.0
 offset_bottom = 42.0
 color = Color(0.258814, 0.196818, 1, 1)
 
@@ -107,23 +107,23 @@ focus_neighbor_top = NodePath("../TxtAccountUser")
 placeholder_text = "Contraseña"
 
 [node name="BtnCreateAccount" type="Button" parent="."]
-offset_left = 925.0
+offset_left = 935.0
 offset_top = 477.0
-offset_right = 1093.0
+offset_right = 1103.0
 offset_bottom = 531.0
 text = "Crear cuenta"
 
 [node name="BtnConnectAccount" type="Button" parent="."]
-offset_left = 713.0
+offset_left = 725.0
 offset_top = 476.0
-offset_right = 881.0
+offset_right = 893.0
 offset_bottom = 530.0
 text = "Conectar"
 
 [node name="BtnPassword" type="Button" parent="."]
-offset_left = 819.0
+offset_left = 825.0
 offset_top = 565.0
-offset_right = 987.0
+offset_right = 1006.0
 offset_bottom = 619.0
 text = "Recuperar Contraseña"
 

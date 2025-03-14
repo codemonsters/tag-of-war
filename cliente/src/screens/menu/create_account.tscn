@@ -1,4 +1,4 @@
-[gd_scene load_steps=2 format=3 uid="uid://cp3y8nsyepam6"]
+[gd_scene load_steps=2 format=3 uid="uid://b7xl7nanqwd5"]
 
 [ext_resource type="Script" path="res://screens/menu/create_account.gd" id="1_iaqr4"]
 
@@ -76,13 +76,11 @@ offset_bottom = 312.0
 text = "Error: Invalid Username. From 1-8 characters"
 
 [node name="ErrorMessageNameInUse" type="Label" parent="."]
-visible = false
 modulate = Color(0.980221, 0.30239, 0.267759, 1)
 offset_left = 491.0
 offset_top = 262.0
 offset_right = 737.0
 offset_bottom = 312.0
-text = "Error: Username already exists."
 
 [node name="ErrorMessagePasswordLength" type="Label" parent="."]
 modulate = Color(0.980221, 0.30239, 0.267759, 1)
