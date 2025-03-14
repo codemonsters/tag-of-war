@@ -8,6 +8,7 @@ function processLoginRequest(json, peer, db) {
             'success': false,
             'data': {'details': 'Missing data object in login request'}
         }));
+        logging.debug("Login failed: Missing data object in login request")
         return;
     }
 
@@ -20,6 +21,7 @@ function processLoginRequest(json, peer, db) {
             'success': false,
             'data': {'details': 'Missing username'}
         }));
+        logging.debug("Login failed: Missing username");
         return;
     } else if (['admin', 'administrator', 'administrador', 'codemonsters', 'guest', 'root'].includes(username)) {
         peer.ws.send(JSON.stringify({
@@ -29,7 +31,7 @@ function processLoginRequest(json, peer, db) {
         }));
         console.debug("Login failed: Username '" + username + "' not allowed");
         return;    
-    } else if (username.length > 10 || !/^[a-zA-Z0-9ñÑ]+$/.test(username)) {
+    } else if (username.length > 20 || !/^[a-zA-Z0-9ñÑ]+$/.test(username)) {
         peer.ws.send(JSON.stringify({
             'cmd': 'logged_in',
             'success': false,
@@ -64,7 +66,6 @@ function processLoginRequest(json, peer, db) {
             }));
             console.debug("Anonymous login successful for username '" + username + "'");
         }
-        console.log("Done");
     } else {
         // Login como usuario registrado
         throw new NotImplemented("Currently only supporting guest log in"); // TODO: Implementar

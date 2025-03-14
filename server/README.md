@@ -81,6 +81,39 @@ Respuesta con error:
 {
     "cmd": "logged_in",
     "success": false,
-    "data": { "reason": "username already taken" }
+    "data": { "details": "username already taken" }
+}
+```
+
+### create_room
+
+Cada cliente identificado pueden crear como máximo una habitación.
+
+Solicitud de ejemplo:
+
+```json
+{
+    "cmd": "create_room",
+    "data": { "name": "room1" }
+}
+```
+
+Respuesta OK:
+
+```json
+{
+    "cmd": "create_room",
+    "success": true,
+    "data": {}
+}
+```
+
+Respuesta con error:
+
+```json
+{
+    "cmd": "create_room",
+    "success": false,
+    "data": { "details": "room name already used" }
 }
 ```

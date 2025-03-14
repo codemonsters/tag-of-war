@@ -1,4 +1,5 @@
 const { processLoginRequest } = require("./process_login_request.js");
+const { processCreateRoomRequest } = require("./process_create_room_request.js");
 
 function processRequest(msg, peer, db) {
     let json = null;
@@ -15,6 +16,10 @@ function processRequest(msg, peer, db) {
         case 'login':
             console.log('Peer wants to log in');
             processLoginRequest(json, peer, db);
+            break;
+        case 'create_room':
+            console.log('Peer wants to create a room');
+            processCreateRoomRequest(json, peer, db);
             break;
         default:
             console.error(`Unknown command: ${cmd}`);
