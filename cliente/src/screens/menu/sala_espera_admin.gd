@@ -3,23 +3,29 @@ extends ColorRect
 signal connect_to_server()
 signal send_to_server(message: Variant)
 var valor_anterior = "LISTO"
+var player_names = ["matador 57", "hola", "a", "b", "c", "Rufo", "adios", "d", "e", "f", "g", "h", "i", "j"]
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	$AloneTab.visible = false
 	$GameDataRect/NumberPlayers.text = "Numero de jugadores:\n" + str(Globales.players_number)
 	$GameDataRect/MapName.text = "Mapa:\n" + str(Globales.map_name)
 	$GameDataRect/Gamemode.text = "Modo de juego:\n" + str(Globales.gamemode)
 	#get_parent().get_parent().server_message_recieved.connect(on_server_message_recieved)
 	for child in $PlayerListRect/ScrollContainer/VBoxContainer.get_children():
 		child.queue_free()
-	#for name in player_names:
-		#var button = Button.new()
-		#button.text = name
-		#$VBoxContainer.add_child(button)
+	for name in player_names:
+		var button = Button.new()
+		button.text = name
+		button.pressed.connect(self._on_button_pressed.bind(button))
+		$PlayerListRect/ScrollContainer/VBoxContainer.add_child(button)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	pass
+	if player_names.size() == 0:
+		$AloneTab.visible = true
+	else:
+		$AloneTab.visible = false
 
 
 func _on_leave_button_pressed() -> void:
@@ -36,3 +42,13 @@ func _on_listo_button_toggled(toggled_on: bool) -> void:
 	else:
 		$ListoButton.text = "LISTO"
 		valor_anterior = "LISTO"
+		
+func _on_button_pressed(button: Button):
+	player_names.erase(button.text)
+	for child in $PlayerListRect/ScrollContainer/VBoxContainer.get_children():
+		child.queue_free()
+	for name in player_names:
+		button = Button.new()
+		button.text = name
+		button.pressed.connect(self._on_button_pressed.bind(button))
+		$PlayerListRect/ScrollContainer/VBoxContainer.add_child(button)
