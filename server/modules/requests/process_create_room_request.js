@@ -31,7 +31,17 @@ function processCreateRoomRequest(json, peer, db) {
         return;
     }
 
-    console.log("Create roomrequest received. Room name = " + data.roomName);
+    if (!peer.username) {
+        peer.ws.send(JSON.stringify({
+            'cmd': 'create_room',
+            'success': false,
+            'data': { 'details': 'Please login before creating a room'}
+        }));
+        console.debug("Create room failed: User did not login before creating a room");
+        return;
+    }
+
+    console.log("Create room request received. Room name = " + data.roomName);
     // Comprobamos si el nombre de habitación está disponible
     const rows = db.prepare("SELECT name FROM rooms WHERE name=(?)").all(roomName);
     if (rows.length > 0) {
