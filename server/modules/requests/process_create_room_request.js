@@ -31,6 +31,8 @@ function processCreateRoomRequest(json, peer, db) {
         return;
     }
 
+    console.log("Create room request received. Room name = " + data.roomName);
+
     if (!peer.username) {
         peer.ws.send(JSON.stringify({
             'cmd': 'create_room',
@@ -41,9 +43,21 @@ function processCreateRoomRequest(json, peer, db) {
         return;
     }
 
-    console.log("Create room request received. Room name = " + data.roomName);
+    // Comprobamos si el usuario actual no tiene ya creada una habitación
+    const rows = db.prepare("SELECT name FROM rooms WHERE admin_player_id=(SELECT player_id FROM profiles WHERE username=(?)").all(peer.username);
+    if (rows.length > 0) {
+        // El usuario actual ya tiene una habitación
+        peer.ws.send(JSON.stringify({
+            'cmd': 'create_room',
+            'success': false,
+            'data': { 'details': 'Room name already taken'}
+        }));
+        console.debug("Create room failed: Room name '" + roomName + "' already taken");
+        return;
+    }
+
     // Comprobamos si el nombre de habitación está disponible
-    const rows = db.prepare("SELECT name FROM rooms WHERE name=(?)").all(roomName);
+    rows = db.prepare("SELECT name FROM rooms WHERE name=(?)").all(roomName);
     if (rows.length > 0) {
         // El nombre de habitación está ocupado
         peer.ws.send(JSON.stringify({
@@ -56,7 +70,9 @@ function processCreateRoomRequest(json, peer, db) {
     }
 
     // El nombre de habitación está disponible y el usuario actual no tiene ninguna habitación creada previamente
-    db.prepare("INSERT INTO rooms (name, admin_player_id) VALUES (?, ?)").run(roomName, peer.id);
+    //const rows = db.prepare("SELECT player_id FROM usernames WHERE username=(?)").all(roomName);
+    db.prepare("INSERT INTO rooms (name, admin_player_id) VALUES (?, (SELECT player_id FROM profiles WHERE username=?));").run(roomName, peer.username);
+    //db.prepare("INSERT INTO rooms (name, admin_player_id) VALUES (?, ?)").run(roomName, peer.username);
     peer.ws.send(JSON.stringify({
         'cmd': 'create_room',
         'success': true,
