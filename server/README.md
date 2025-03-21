@@ -117,3 +117,7 @@ Respuesta con error:
     "data": { "details": "room name already used" }
 }
 ```
+
+### create_room
+
+Los clientes que previamente hayan hecho login y que no sean propietarios de una
