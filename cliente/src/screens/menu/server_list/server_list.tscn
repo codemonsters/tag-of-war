@@ -4,6 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://cu06f8uhhrvym" path="res://screens/menu/server_list/empty_lobby.tscn" id="2_knhi0"]
 
 [node name="Main" type="Control"]
+custom_minimum_size = Vector2(1000, 500)
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
