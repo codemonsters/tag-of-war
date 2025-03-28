@@ -4,12 +4,11 @@
 [ext_resource type="Texture2D" uid="uid://djidx5o7vdn1v" path="res://assets/test_map_image.webp" id="2_3i8gr"]
 
 [node name="CreateGameScene" type="Control"]
+custom_minimum_size = Vector2(1280, 720)
 layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+anchors_preset = 0
+offset_right = 1280.0
+offset_bottom = 720.0
 script = ExtResource("1_skxpg")
 
 [node name="ChooseMap" type="Control" parent="."]
@@ -374,5 +373,5 @@ text = "VOLVER"
 [connection signal="pressed" from="CreateGame/NumPlayerL" to="." method="_on_num_player_l_pressed"]
 [connection signal="pressed" from="CreateGame/NumPlayerR" to="." method="_on_num_player_r_pressed"]
 [connection signal="pressed" from="ButtonNext" to="." method="_on_button_next_pressed"]
-[connection signal="pressed" from="ButtonGoBack" to="." method="_on_button_go_back_pressed"]
 [connection signal="pressed" from="ButtonGoBack" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="ButtonGoBack" to="." method="_on_button_go_back_pressed"]

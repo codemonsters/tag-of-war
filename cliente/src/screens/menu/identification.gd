@@ -1,6 +1,6 @@
 extends Node2D
 
-var server_list = preload("res://screens/menu/sala_espera_admin.tscn")
+var server_list = preload("res://screens/menu/server_list/server_list.tscn")
 var create_account = preload("res://screens/menu/create_account.tscn")
 var recuperar_contraseña = preload("res://screens/menu/recuperar_contraseña.tscn")
 var connecting_as = "none"
@@ -37,6 +37,7 @@ func _on_btn_connect_guest_pressed() -> void:
 	else:
 		connecting_as = "guest"
 		var login_dict = {"cmd":"login", "data": {"username": Guest_username}}
+		#get_parent().change_window(server_list)
 		connect_to_server.emit()
 		await get_tree().create_timer(1).timeout
 		send_to_server.emit(JSON.stringify(login_dict))

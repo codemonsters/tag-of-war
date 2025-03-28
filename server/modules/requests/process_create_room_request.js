@@ -31,7 +31,7 @@ function processCreateRoomRequest(json, peer, db) {
         return;
     }
 
-    console.log("Create room request received. Room name = " + data.roomName);
+    console.log("Create room request received. Room name = " + roomName);
 
     if (!peer.username) {
         peer.ws.send(JSON.stringify({
@@ -44,7 +44,7 @@ function processCreateRoomRequest(json, peer, db) {
     }
 
     // Comprobamos si el usuario actual no tiene ya creada una habitación
-    const rows = db.prepare("SELECT name FROM rooms WHERE admin_player_id=(SELECT player_id FROM profiles WHERE username=(?)").all(peer.username);
+    rows = db.prepare("SELECT name FROM rooms WHERE admin_player_id=(SELECT player_id FROM profiles WHERE username=(?))").all(peer.username);
     if (rows.length > 0) {
         // El usuario actual ya tiene una habitación
         peer.ws.send(JSON.stringify({
