@@ -30,7 +30,6 @@ function processJoinRoomRequest(json, peer, db) {
     }
 
     // Comprobamos si el nombre de habitación existe
-    //TODO: Alex, revisar a partir de aquí!!!
     const rows = db.prepare("SELECT name FROM rooms WHERE name=(?)").all(roomName);
     if (rows.length == 0) {
         // El nombre de habitación no existe

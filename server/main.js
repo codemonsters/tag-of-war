@@ -4,7 +4,7 @@ const MAX_PEERS = 100;
 
 const WebSocket = require('ws');
 const { v4: uuidv4 } = require('uuid');
-const wss = new WebSocket.Server({port: PORT});
+const server = new WebSocket.Server({port: PORT});
 const { Peer } = require("./modules/peer.js");
 const peers = new Map();
 const { NotImplemented, ProtocolError } = require("./modules/errors.js");
@@ -12,7 +12,7 @@ const { getFirstNonLocalIPAddress } = require("./modules/aux.js");
 const { db } = require("./modules/database.js");
 const { processRequest } = require("./modules/requests/process_request.js");
 
-wss.on('connection', function connection(ws) {
+server.on('connection', function connection(ws) {
     if (peers.size >= MAX_PEERS) {
         ws.close(4000, "Too many peers connected");
         console.log('Connection refused (too many peeers connected)');
