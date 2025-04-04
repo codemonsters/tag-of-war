@@ -1,5 +1,7 @@
 extends Control
 
+signal send_to_server(message: Variant)
+
 var sala_espera = preload("res://screens/menu/server_list/server_list.tscn")
 var gamemodes = ["Clásico", "Supervivencia", "Infectado"]
 var gamemodes_index = 0
@@ -24,7 +26,9 @@ func _ready() -> void:
 	$CreateGame/GamemodeDescriptionTxt.text = clasico_descripcion
 	$CreateGame/GamemodeNameTxt.text = gamemodes[gamemodes_index]
 	
-	
+	get_parent().get_parent().server_message_received.connect(on_server_message_received)
+
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	print(Globales.players_number, Globales.gamemode, Globales.map_name)
@@ -35,6 +39,10 @@ func _on_button_next_pressed() -> void:
 		Globales.gamemode = $CreateGame/GamemodeNameTxt.text
 		$CreateGame.visible = false
 		$ChooseMap.visible = true
+	else:
+		var room_name = "room1"
+		var create_room_dict = {"cmd": "create_room", "data": {"room_name": room_name}}
+		send_to_server.emit(JSON.stringify(create_room_dict))
 
 
 func _on_button_go_back_pressed() -> void:
@@ -42,7 +50,7 @@ func _on_button_go_back_pressed() -> void:
 		$CreateGame.visible = true
 		$ChooseMap.visible = false
 	else:
-		get_parent().open_window(get_parent().sala_espera)
+		get_parent().change_window(get_parent().server_list)
 
 
 func _on_left_arrow_txt_pressed() -> void:
@@ -74,3 +82,12 @@ func _on_button_pressed() -> void:
 	else:
 		$ChooseMap/Map1.color = Color(0.1176, 0.1176, 0.1176)
 	Globales.map_name = $ChooseMap/Map1/MapName.text
+
+
+func on_server_message_received(dict: Dictionary):
+	if dict["cmd"] == "create_room":
+		if dict["success"]:
+			print("created room successfully")
+			get_parent().change_window(get_parent().sala_espera_admin)
+		else:
+			print("hola")

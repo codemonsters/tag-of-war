@@ -1,5 +1,5 @@
 // procesa mensajes json con el campo cmd = 'login'
-function processLoginRequest(json, peer, db) {
+function processLoginRequest(json, peer, server) {
     const data = typeof(json['data']) === 'object' ? json['data'] : null;
     if (data == null) {
         //throw new ProtocolError(4000, `Missing data object while parsing a login request`);
@@ -44,27 +44,21 @@ function processLoginRequest(json, peer, db) {
     if (password == '') {
         // Login como invitado
         console.log("Guest login request received. Username = " + data.username);
-        // Comprobamos si el nombre de usuario está disponible
-        const rows = db.prepare("SELECT username FROM profiles WHERE username=(?)").all(username);
-        console.log("Número de usuarios con ese nombre: " + rows.length);
-        if (rows.length > 0) {
-            // El nombre de usuario está ocupado
-            peer.ws.send(JSON.stringify({
-                'cmd': 'logged_in',
-                'success': false,
-                'data': { 'details': 'Username already taken'}
-            }));
-            console.debug("Anonymous login failed: Username '" + username + "' already taken");
-        } else {
-            // El nombre de usuario está disponible
-            db.prepare("INSERT INTO profiles (username, last_connection_timestamp) VALUES (?, ?)").run(username, Date.now());
-            peer.username = username;
+        try {
+            server.guest_login(peer, username);
             peer.ws.send(JSON.stringify({
                 'cmd': 'logged_in',
                 'success': true,
                 'data': { 'details': 'Anonymous login sucessful'}
             }));
             console.debug("Anonymous login successful for username '" + username + "'");
+        } catch(err) {
+            peer.ws.send(JSON.stringify({
+                'cmd': 'logged_in',
+                'success': false,
+                'data': { 'details': err.message}
+            }));
+            console.debug(`Anonymous login failed: ${err.message}`);
         }
     } else {
         // Login como usuario registrado

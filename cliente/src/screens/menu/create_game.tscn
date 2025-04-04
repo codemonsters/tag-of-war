@@ -1,15 +1,14 @@
-[gd_scene load_steps=3 format=3 uid="uid://d00hun8subt3l"]
+[gd_scene load_steps=3 format=3 uid="uid://hcrj04mv00x1"]
 
 [ext_resource type="Script" path="res://screens/menu/create_game.gd" id="1_skxpg"]
 [ext_resource type="Texture2D" uid="uid://djidx5o7vdn1v" path="res://assets/test_map_image.webp" id="2_3i8gr"]
 
 [node name="CreateGameScene" type="Control"]
+custom_minimum_size = Vector2(1280, 720)
 layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+anchors_preset = 0
+offset_right = 1280.0
+offset_bottom = 720.0
 script = ExtResource("1_skxpg")
 
 [node name="ChooseMap" type="Control" parent="."]

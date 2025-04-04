@@ -1,12 +1,19 @@
 extends Control
 
 signal send_to_server(message: Variant)
-
-#-- Variables
-
 var empty_lobby = preload("res://screens/menu/server_list/empty_lobby.tscn")
 
-#-- Funciones
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	get_parent().get_parent().server_message_received.connect(on_server_message_received)
+	var list_request = {"cmd":"list_request"}
+	send_to_server.emit(JSON.stringify(list_request))
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta: float) -> void:
+	pass
+
 
 func add_lobby(lobby_parameters: Dictionary = {}):
 	var new = empty_lobby.instantiate()
@@ -17,16 +24,7 @@ func add_lobby(lobby_parameters: Dictionary = {}):
 		new.get_node("Time").text = lobby_parameters["Time"]
 		new.get_node("Players").text = lobby_parameters["Players"]
 		new.get_node("Ping").text = lobby_parameters["Ping"]
-	%Casual.add_child(new)
-
-#-- Principal
-
-func _ready() -> void:
-	get_parent().get_parent().server_message_received.connect(on_server_message_received)
-	var list_request = {"cmd":"list_request"}
-	send_to_server.emit(JSON.stringify(list_request))
-	for i in range(34):
-		add_lobby()
+	$Tabla/Partidas.add_child(new)
 
 
 func on_server_message_received(dict: Dictionary):
@@ -36,5 +34,5 @@ func on_server_message_received(dict: Dictionary):
 			add_lobby(lobby)
 
 
-func _on_create_room_pressed() -> void:
+func _on_button_pressed() -> void:
 	get_parent().change_window(get_parent().create_game)

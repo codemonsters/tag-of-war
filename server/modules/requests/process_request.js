@@ -1,7 +1,8 @@
-const { processLoginRequest } = require("./process_login_request.js");
-const { processCreateRoomRequest } = require("./process_create_room_request.js");
+_processLoginRequest = require("./process_login_request.js").processLoginRequest;
+_processCreateRoomRequest = require("./process_create_room_request.js").processCreateRoomRequest
+_processJoinRoomRequest = require("./process_join_room_request.js").processJoinRoomRequest;
 
-function processRequest(msg, peer, db) {
+function processRequest(msg, peer, server) {
     let json = null;
     try {
         json = JSON.parse(msg);
@@ -15,11 +16,15 @@ function processRequest(msg, peer, db) {
     switch(cmd) {
         case 'login':
             console.log('Peer wants to log in');
-            processLoginRequest(json, peer, db);
+            _processLoginRequest(json, peer, server);
             break;
         case 'create_room':
             console.log('Peer wants to create a room');
-            processCreateRoomRequest(json, peer, db);
+            _processCreateRoomRequest(json, peer, server);
+            break;
+        case 'join_room':
+            console.log('Peer wants to join a room');
+            _processJoinRoomRequest(json, peer, server);
             break;
         default:
             console.error(`Unknown command: ${cmd}`);

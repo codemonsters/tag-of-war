@@ -1,10 +1,11 @@
 extends Node2D
 
 var identification = preload("res://screens/menu/identification.tscn")
-var server_list = preload("res://screens/menu/sala_espera_admin.tscn")
+var sala_espera_admin = preload("res://screens/menu/sala_espera_admin.tscn")
 var create_account = preload("res://screens/menu/create_account.tscn")
 var recuperar_contraseña = preload("res://screens/menu/recuperar_contraseña.tscn")
-var lista_servidores = preload("res://screens/menu/server_list/server_list.tscn")
+var server_list = preload("res://screens/menu/server_list/server_list.tscn")
+var create_game = preload("res://screens/menu/create_game.tscn")
 var utilities = Utilities.new()
 
 signal screen_connect_to_server()
@@ -26,7 +27,7 @@ func change_window(scene):
 	add_child(s)
 	if utilities.object_has_signal(get_node("current_screen"),"connect_to_server"):
 		get_node("current_screen").connect_to_server.connect(on_connect_to_server)
-	if utilities.object_has_signal(get_node("current_screen"),"connect_to_server"):
+	if utilities.object_has_signal(get_node("current_screen"),"send_to_server"):
 		get_node("current_screen").send_to_server.connect(on_send_to_server)
 
 func open_window(scene):

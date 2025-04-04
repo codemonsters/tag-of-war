@@ -1,12 +1,14 @@
-[gd_scene format=3 uid="uid://bme4hgj88elrb"]
+[gd_scene load_steps=2 format=3 uid="uid://bme4hgj88elrb"]
+
+[ext_resource type="Script" path="res://screens/menu/lista_servidores.gd" id="1_dq6en"]
 
 [node name="Principal" type="Control"]
+custom_minimum_size = Vector2(1280, 720)
 layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+anchors_preset = 0
+offset_right = 1280.0
+offset_bottom = 720.0
+script = ExtResource("1_dq6en")
 
 [node name="Tabla" type="Control" parent="."]
 layout_mode = 1
@@ -101,3 +103,13 @@ grow_horizontal = 2
 grow_vertical = 2
 text = "Casual
 "
+
+[node name="Button" type="Button" parent="Tabla"]
+layout_mode = 0
+offset_left = 275.0
+offset_top = 530.0
+offset_right = 406.0
+offset_bottom = 561.0
+text = "Create Room"
+
+[connection signal="pressed" from="Tabla/Button" to="." method="_on_button_pressed"]
