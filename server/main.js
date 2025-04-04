@@ -24,7 +24,7 @@ wss.on('connection', function connection(ws) {
         } catch (ex) {
             if (ex instanceof ProtocolError) {
                 const code = ex.code || 4000;
-                console.log(`Error parsing message from peer id ${peer.id}: ${message}\n`);
+                console.log(`Error processing message from peer id ${peer.id}: ${message}\n`);
                 ws.close(code, ex.message);
             } else {
                 throw ex;

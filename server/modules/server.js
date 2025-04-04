@@ -6,6 +6,8 @@ server.peerModule = require("./peer.js").Peer;
 const { v4: uuidv4 } = require('uuid');
 server.uuidv4Module = uuidv4;
 server.peers = new Map();
+const NotImplemented = require("./errors.js").NotImplemented;
+const ProtocolError = require("./errors.js").ProtocolError;
 
 server.start = function() {
     console.log("Arrancando servidor...");
@@ -36,13 +38,25 @@ server.processRequest = function(msg, peer) {
 
 server._username_exists = function(username) {
     const rows = server.db.sqlite.prepare("SELECT username FROM profiles WHERE username=(?)").all(username);
-    console.log("Número de usuarios con ese nombre: " + rows.length);
     return rows.length > 0;
 }
 
+server._username_format_valid = function(username) {
+    return (username.length >= 3 && username.length <= 20 && /^[a-zA-Z0-9ñÑ]+$/).test(username);
+}
+
 server.guest_login = function(peer, username) {
+    if (username == '') {
+        throw new ProtocolError(4000, `Missing username`);
+    }
+    if (!server._username_format_valid(username)) {
+        throw new ProtocolError(4000, `Username format not valid`);
+    }
+    if (['admin', 'administrator', 'administrador', 'codemonsters', 'guest', 'root'].includes(username)) {
+        throw new ProtocolError(4000, `Username not allowed`);
+    }
     if (this._username_exists(username)) {
-        throw new Error("Username already taken");
+        throw new ProtocolError(4000, "Username already taken");
     }
     // Añadimos el nombre de usuario a la tabla profiles
     this.db.sqlite.prepare("INSERT INTO profiles (username, last_connection_timestamp) VALUES (?, ?)").run(username, Date.now());

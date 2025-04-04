@@ -1,3 +1,5 @@
+const {NotImplemented, ProtocolError} = require("../errors.js");
+
 // procesa mensajes json con el campo cmd = 'login'
 function processLoginRequest(json, peer, server) {
     const data = typeof(json['data']) === 'object' ? json['data'] : null;
@@ -13,33 +15,7 @@ function processLoginRequest(json, peer, server) {
     }
 
     const username = typeof(data['username']) === 'string' ? data['username'] : '';
-    const password = typeof(data['password']) === 'string' ? data['password'] : '';
-    if (username == '') {
-        //throw new ProtocolError(4000, `Missing username while parsing a login request`);
-        peer.ws.send(JSON.stringify({
-            'cmd': 'logged_in',
-            'success': false,
-            'data': {'details': 'Missing username'}
-        }));
-        logging.debug("Login failed: Missing username");
-        return;
-    } else if (['admin', 'administrator', 'administrador', 'codemonsters', 'guest', 'root'].includes(username)) {
-        peer.ws.send(JSON.stringify({
-            'cmd': 'logged_in',
-            'success': false,
-            'data': { 'details': 'Username not allowed'}
-        }));
-        console.debug("Login failed: Username '" + username + "' not allowed");
-        return;    
-    } else if (username.length > 20 || !/^[a-zA-Z0-9ñÑ]+$/.test(username)) {
-        peer.ws.send(JSON.stringify({
-            'cmd': 'logged_in',
-            'success': false,
-            'data': { 'details': 'Username format not allowed'}
-        }));
-        console.debug("Login failed: Username '" + username + "' format not allowed");
-        return;
-    }
+    const password = typeof(data['password']) === 'string' ? data['password'] : ''; 
 
     if (password == '') {
         // Login como invitado
@@ -53,12 +29,16 @@ function processLoginRequest(json, peer, server) {
             }));
             console.debug("Anonymous login successful for username '" + username + "'");
         } catch(err) {
-            peer.ws.send(JSON.stringify({
-                'cmd': 'logged_in',
-                'success': false,
-                'data': { 'details': err.message}
-            }));
-            console.debug(`Anonymous login failed: ${err.message}`);
+            if (err instanceof ProtocolError) {
+                peer.ws.send(JSON.stringify({
+                    'cmd': 'logged_in',
+                    'success': false,
+                    'data': { 'details': err.message}
+                }));
+                console.debug(`Anonymous login failed: ${err.message}`);
+            } else {
+                throw err;
+            }
         }
     } else {
         // Login como usuario registrado
