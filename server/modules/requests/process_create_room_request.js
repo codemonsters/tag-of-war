@@ -13,15 +13,6 @@ function processCreateRoomRequest(json, peer, server) {
     }
 
     const roomName = typeof(data['name']) === 'string' ? data['name'] : '';
-    if (roomName == '') {
-        peer.ws.send(JSON.stringify({
-            'cmd': 'create_room',
-            'success': false,
-            'data': {'details': 'Missing room_name'}
-        }));
-        console.debug("Create room failed: Missing room name");
-        return;
-    }
     console.log("Create room request received. Room name = " + roomName);
     try {
         server.create_room(peer, roomName);
