@@ -66,7 +66,7 @@ server.create_room = function(peer, roomName) {
     }
 
     // comprobamos si el usuario actual no tiene ya creada una habitación
-    rows = db.sqlite.prepare("SELECT name FROM rooms WHERE admin_player_id=(SELECT player_id FROM profiles WHERE username=(?))").all(peer.username);
+    rows = this.db.sqlite.prepare("SELECT name FROM rooms WHERE admin_player_id=(SELECT player_id FROM profiles WHERE username=(?))").all(peer.username);
     if (rows.length > 0) {
         throw new Error("You already have a room! (max 1 room per player)");
     }
@@ -79,6 +79,18 @@ server.create_room = function(peer, roomName) {
     // Creamos la habitación
     this.db.sqlite.prepare("INSERT INTO rooms (name, admin_player_id) VALUES (?, (SELECT player_id FROM profiles WHERE username=?));").run(roomName, peer.username);
     //db.prepare("INSERT INTO rooms (name, admin_player_id) VALUES (?, ?)").run(roomName, peer.username);
+}
+
+server.join_room = function(peer, roomName) {
+    if (!peer.username) {
+        throw new Error('Please login before joining a room');
+    }
+
+    if (!this._room_exists(roomName)) {
+        throw new Error('Room name does not exist');
+    }
+
+    // TODO: Añadir al usuario actual a la habitación seleccionada y enviar un mensaje a todos los otros jugadores de la habitación informando sobre esto
 }
 
 server.start();

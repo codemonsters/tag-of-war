@@ -12,7 +12,7 @@ function processCreateRoomRequest(json, peer, server) {
         return;
     }
 
-    const roomName = typeof(data['room_name']) === 'string' ? data['room_name'] : '';
+    const roomName = typeof(data['name']) === 'string' ? data['name'] : '';
     if (roomName == '') {
         peer.ws.send(JSON.stringify({
             'cmd': 'create_room',
