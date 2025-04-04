@@ -1,36 +1,30 @@
 const PORT = 9090;
-const MAX_PEERS = 100;
-//const MAX_LOBBIES = 5;
 
 const WebSocket = require('ws');
-const { v4: uuidv4 } = require('uuid');
 const wss = new WebSocket.Server({port: PORT});
-const { Peer } = require("./modules/peer.js");
-const peers = new Map();
 const { NotImplemented, ProtocolError } = require("./modules/errors.js");
 const { getFirstNonLocalIPAddress } = require("./modules/aux.js");
-const { db } = require("./modules/database.js");
-const { processRequest } = require("./modules/requests/process_request.js");
+
+const { server } = require("./modules/server.js");
 
 wss.on('connection', function connection(ws) {
-    if (peers.size >= MAX_PEERS) {
-        ws.close(4000, "Too many peers connected");
-        console.log('Connection refused (too many peeers connected)');
+    try {
+        peer = server.connect_peer_by_websocket(ws);
+        console.log(`Peer connected (id: ${peer.id})`);
+    } catch(err) {
+        ws.close(4000, err.message);
+        console.log(`Connection refused (${err.message})`);
         return;
     }
-    const id = uuidv4();
-    const peer = new Peer(id, ws);
-    peers.set(peer);
-    console.log('Peer connected (id: %s)', peer.id);
     
     ws.on('message', function message(data, isBinary) {
         const message = isBinary ? data : data.toString();
         try {
-            processRequest(message, peer, db);
+            server.processRequest(message, peer);
         } catch (ex) {
             if (ex instanceof ProtocolError) {
                 const code = ex.code || 4000;
-                console.log(`Error parsing message from peer id ${id}: ${message}\n`);
+                console.log(`Error parsing message from peer id ${peer.id}: ${message}\n`);
                 ws.close(code, ex.message);
             } else {
                 throw ex;
@@ -40,7 +34,7 @@ wss.on('connection', function connection(ws) {
 
     ws.on("close", function close(code, data) {
         console.log(`Peer disconnected (id: ${peer.id}, code: ${code}, reason: ${data.toString()})`);
-        peers.delete(peer);
+        server.disconnect_peer(peer);
     });
 });
 

@@ -113,6 +113,15 @@ Respuesta con error:
 }
 ```
 
-### create_room
+### join_room
 
-Los clientes que previamente hayan hecho login y que no sean propietarios de una
+Los clientes que previamente hayan hecho login y que no sean propietarios de una habitación, pueden entrar en otra habitación
+
+Solicitud de ejemplo:
+
+```json
+{
+    "cmd": "join_room",
+    "data": { "name": "room1" }
+}
+```

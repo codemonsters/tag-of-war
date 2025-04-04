@@ -1,6 +1,6 @@
 //  procesa mensajes json con el campo cmd = 'join_room'
 
-function send_error_response(peer, cmd, detaiils) {
+function send_error_response(peer, cmd, details) {
     peer.ws.send(JSON.stringify({
         'cmd': cmd,
         'success': false,
@@ -9,14 +9,14 @@ function send_error_response(peer, cmd, detaiils) {
     console.debug(cmd + ": " + details);
 }
 
-function processJoinRoomRequest(json, peer, db) {
+function processJoinRoomRequest(json, peer, server) {
     const data = typeof(json['data']) === 'object' ? json['data'] : null;
     if (data == null) {
         send_error(peer, 'join_room', 'Missing data object in join room request');
         return;
     }
 
-    const roomName = typeof(data['room_name']) === 'string' ? data['room_name'] : '';
+    const roomName = typeof(data['name']) === 'string' ? data['name'] : '';
     if (roomName == '') {
         send_error_response(peer, 'join_room', 'Missing room_name');
         return;
@@ -24,25 +24,17 @@ function processJoinRoomRequest(json, peer, db) {
 
     console.log("Join room request received. Room name = " + roomName);
 
-    if (!peer.username) {
-        send_error_response(peer, 'join_room', 'Please login before joining a room');
+    try {
+        server.join_room(peer, roomName);
+        peer.ws.send(JSON.stringify({
+            'cmd': 'join_room',
+            'success': true,
+            'data': { 'details': 'Room joined successfully', 'room_name': roomName}
+        }));
+    } catch (err) {
+        send_error_response(peer, 'join_room', err.message);
         return;
     }
-
-    // Comprobamos si el nombre de habitación existe
-    const rows = db.prepare("SELECT name FROM rooms WHERE name=(?)").all(roomName);
-    if (rows.length == 0) {
-        // El nombre de habitación no existe
-        send_error_response(peer, 'join_room', 'Room name does not exist');
-        return;
-    }
-
-    // El nombre de habitación existe
-    peer.ws.send(JSON.stringify({
-        'cmd': 'join_room',
-        'success': true,
-        'data': { 'details': 'Room joined successfully', 'room_name': roomName}
-    }));
 };
 
 module.exports = { processJoinRoomRequest };
