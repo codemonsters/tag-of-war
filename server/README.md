@@ -8,31 +8,26 @@ Arch Linux: yay -S npm nodejs
 
 ## Preparación del entorno de desarollo
 
-Primero, instalar NodeJS y NPM
+### Linux y Mac:
 
-Initialize node and create a package.json file:
-``npm init -y``
+1. Instalar NodeJS y NPM
+2. Inicializar Node y crear el archivo package.json: ``server$ npm init -y``
+3. Instalar las librerías necesarias (ws es una implementación de websocket, nodemon reinicia automáticamente el servidor Node cuando detecta cambios en el código, better-sqlite3 permite trabajar de manera síncrona con bases de datos SQLite3): ``server $ npm install ws nodemon uuid@latest better-sqlite3``
 
-Install ws library (a websocket implementation) and nodemon (to track changes in our code and restart the server):
-``npm install ws nodemon uuid@latest better-sqlite3``
+### Windows:
 
-Windows(en PowerShell):
-# Download and install fnm:
-winget install Schniz.fnm
-# Download and install Node.js:
-fnm install 23
-
-Initialize node and create a package.json file:
-``npm.cmd init -y``
-
-Install ws library (a websocket implementation) and nodemon (to track changes in our code and restart the server):
-``npm.cmd install ws nodemon uuid@latest sqlite3``
-
+Desde una terminal PowerShell:
+1. Instalar fnm (Fast Node Manager): ``server$ winget install Schniz.fnm``
+2. Instalar Node.js: ``fnm install 23``
+3. Inicializar Node y crear el archivo package.json: ``server$ npm.cmd init -y``
+4. Instalar las librerías necesarias: ``server$ npm.cmd install ws nodemon uuid@latest better-sqlite3``
 
 ## Ejecutar el servidor
 
-node main.js
-ws://127.0.0.1:9090/
+``server$ node main.js``
+
+Se puede acceder a él desde la URL: ``ws://127.0.0.1:9090``
+
 ## Protocolo Comunicaciones entre Clientes y Servidor WebSocket
 
 Para comunicarse, los clientes y el servidor intercambian mensajes en formato json con dos atributos:
