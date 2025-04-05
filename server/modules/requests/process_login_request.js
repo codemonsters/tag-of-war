@@ -1,10 +1,10 @@
-const {NotImplemented, ProtocolError} = require("../errors.js");
+const {NotImplementedException, ProtocolException} = require("../exceptions.js");
 
 // procesa mensajes json con el campo cmd = 'login'
 function processLoginRequest(json, peer, server) {
     const data = typeof(json['data']) === 'object' ? json['data'] : null;
     if (data == null) {
-        server._throw_protocol_error(peer, 'logged_in', 'Missing data object in login request');
+        throw new ProtocolException("Missing data object in login request", "login");
     }
 
     const username = typeof(data['username']) === 'string' ? data['username'] : '';
@@ -22,7 +22,7 @@ function processLoginRequest(json, peer, server) {
         console.debug("Anonymous login successful for username '" + username + "'");
     } else {
         // Login como usuario registrado
-        throw new NotImplemented("Currently only supporting guest log in"); // TODO: Implementar
+        throw new NotImplementedException("Currently only guest login is supported"); // TODO: Implementar
     }
 }
 

@@ -6,18 +6,7 @@ server.peerModule = require("./peer.js").Peer;
 const { v4: uuidv4 } = require('uuid');
 server.uuidv4Module = uuidv4;
 server.peers = new Map();
-const NotImplemented = require("./errors.js").NotImplemented;
-const ProtocolError = require("./errors.js").ProtocolError;
-
-server._throw_protocol_error = function(peer, cmd, details) {
-    peer.ws.send(JSON.stringify({
-        'cmd': cmd,
-        'success': false,
-        'data': {'details': details}
-    }));
-    console.debug(`Protocol error: ${cmd}: ${details}`);
-    throw new ProtocolError(4000, cmd, details);
-}
+const {ServerBaseException, ProtocolException} = require("./exceptions.js");
 
 server.start = function() {
     console.log("Arrancando servidor...");
@@ -27,7 +16,7 @@ server.start = function() {
 
 server.connect_peer_by_websocket = function(ws) {
     if (this.peers.size >= this.MAX_PEERS) {
-        throw new Error("Too many peers connected");
+        throw new ServerBaseException("Too many peers connected");
     }
     const id = this.uuidv4Module();
     const peer = new this.peerModule(id, ws);
@@ -57,19 +46,19 @@ server._username_format_valid = function(username) {
 
 server.guest_login = function(peer, username) {
     if (username == '') {
-        this._throw_protocol_error(peer, 'login', 'Missing username');
+        throw new ProtocolException("Missing username", "login");
     }
     if (!this._username_format_valid(username)) {
-        this._throw_protocol_error(peer, 'login', 'Username format not valid');
+        throw new ProtocolException("Username format not valid", "login");
     }
     if (['admin', 'administrator', 'administrador', 'codemonsters', 'guest', 'root'].includes(username)) {
-        this._throw_protocol_error(peer, 'login', 'Username not allowed');
+        throw new ProtocolException("Username not allowed", "login");
     }
     if (peer.username) {
-        this._throw_protocol_error(peer, 'login', 'You are already logged in. Please, logout first');
+        throw new ProtocolException("You are already logged in", "login");
     }
     if (this._username_exists(username)) {
-        this._throw_protocol_error(peer, 'login', 'Username already taken');
+        throw new ProtocolException("Username already taken", "login");
     }
     // Añadimos el nombre de usuario a la tabla profiles
     this.db.sqlite.prepare("INSERT INTO profiles (username, last_connection_timestamp) VALUES (?, ?)").run(username, Date.now());
@@ -88,46 +77,43 @@ server._room_name_format_valid = function(roomName) {
 server.create_room = function(peer, roomName) {
     // comprobamos el formato del nombre de la habitación indicado
     if (roomName == '') {
-        throw new ProtocolError(4000, "Missing room_name");
+        throw new ProtocolException("Missing room_name", "create_room");
     }
     if (!this._roomname_format_valid(roomName)) {
-        throw new ProtocolError(4000, "Room name format not allowed");
+        throw new ProtocolException("Room name format not allowed", "create_room");
     }
     // comprobamos si el usuario actual está logeado
     if (!peer.username) {
-        throw new Error( "Please login before creating a room")
+        throw new ProtocolException("Please login before creating a room", "create_room");
     }
     // comprobamos si el usuario actual no tiene ya creada una habitación
     rows = this.db.sqlite.prepare("SELECT name FROM rooms WHERE admin_player_id=(SELECT player_id FROM profiles WHERE username=(?))").all(peer.username);
     if (rows.length > 0) {
-        throw new Error("You already have a room! (max 1 room per player)");
+        throw new ProtocolException("You already have a room! (max 1 room per player)", "create_room");
     }
     // Comprobamos si el nombre de habitación está disponible
     if (this._room_exists(roomName)) {
-        throw new Error("Room name already taken");
+        throw new ProtocolException("Room name already taken", "create_room");
     }
 
     // Creamos la habitación
     this.db.sqlite.prepare("INSERT INTO rooms (name, admin_player_id) VALUES (?, (SELECT player_id FROM profiles WHERE username=?));").run(roomName, peer.username);
     //db.prepare("INSERT INTO rooms (name, admin_player_id) VALUES (?, ?)").run(roomName, peer.username);
+    // TODO: Enviar un mensaje a todos los usuarios conectados informando sobre la creación de esta habitación?
 }
 
 server.join_room = function(peer, roomName) {
     if (roomName == '') {
-        this._send_error_response(peer, 'join_room', 'Missing room_name');
-        return;
+        throw ProtocolException("Missing room name", "join_room");
     }
     if (!peer.username) {
-        this._send_error_response(peer, 'join_room', 'Please login before joining a room');
-        return;
+        throw ProtocolError("lease login before joining a room", "join_room");
     }
     if (this._current_room_of(peer.username) != "") {
-        this._send_error_response(peer, 'join_room', 'You are already in a room');
-        return;
+        throw ProtocolException("You are already in a room", "join_room");
     }
     if (!this._room_exists(roomName)) {
-        this._send_error_response(peer, 'join_room', 'That room does not exist');
-        return;
+        throw ProtocolException("That room does not exist", "join_room");
     }
     // TODO: Añadir al usuario actual a la habitación seleccionada y enviar un mensaje a todos los otros jugadores de la habitación informando sobre esto
 }

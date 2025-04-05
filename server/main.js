@@ -2,19 +2,28 @@ const PORT = 9090;
 
 const WebSocket = require('ws');
 const wss = new WebSocket.Server({port: PORT});
-const { NotImplemented, ProtocolError } = require("./modules/errors.js");
-const { getFirstNonLocalIPAddress } = require("./modules/aux.js");
-
-const { server } = require("./modules/server.js");
+const {ServerBaseException, ProtocolException} = require("./modules/exceptions.js");
+const {getFirstNonLocalIPAddress} = require("./modules/aux.js");
+const {server} = require("./modules/server.js");
 
 wss.on('connection', function connection(ws) {
     try {
         peer = server.connect_peer_by_websocket(ws);
         console.log(`Peer connected (id: ${peer.id})`);
-    } catch(err) {
-        ws.close(4000, err.message);
-        console.log(`Connection refused (${err.message})`);
-        return;
+    } catch(ex) {
+        if (ex instanceof ProtocolException) {
+            peer.ws.send(JSON.stringify({
+                'cmd': ex.cmd,
+                'success': false,
+                'data': {'details': ex.message}
+            }));
+        } else if (ex instanceof ServerBaseException) {
+            ws.close(4000, ex.message);
+            console.log(`Connection refused: ${ex.message}`);
+            return;
+        } else {
+            throw ex;
+        }
     }
     
     ws.on('message', function message(data, isBinary) {
@@ -22,10 +31,15 @@ wss.on('connection', function connection(ws) {
         try {
             server.processRequest(message, peer);
         } catch (ex) {
-            if (ex instanceof ProtocolError) {
-                const code = ex.code || 4000;
-                console.log(`Error processing message from peer id ${peer.id}: ${message}\n`);
-                ws.close(code, ex.message);
+            if (ex instanceof ProtocolException) {
+                peer.ws.send(JSON.stringify({
+                    'cmd': ex.cmd,
+                    'success': false,
+                    'data': {'details': ex.message}
+                }));
+                console.log(`Error processing "${ex.cmd}" request from ${peer.id}. Reason: ${ex.message}\n`)
+                //console.log(`Error ${ex.code} processing message from peer id = ${peer.id}: cmd = ${ex.cmd}, message = ${message}\n`);
+                //ws.close(ex.code, ex.message);
             } else {
                 throw ex;
             }
