@@ -15,7 +15,7 @@ function processLoginRequest(json, peer, server) {
         console.log("Guest login request received. Username = " + data.username);
         server.guest_login(peer, username);
         peer.ws.send(JSON.stringify({
-            'cmd': 'logged_in',
+            'cmd': 'login',
             'success': true,
             'data': { 'details': 'Anonymous login sucessful'}
         }));

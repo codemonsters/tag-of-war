@@ -38,14 +38,12 @@ wss.on('connection', function connection(ws) {
                     'data': {'details': ex.message}
                 }));
                 console.log(`Error processing "${ex.cmd}" request from ${peer.id}. Reason: ${ex.message}\n`)
-                //console.log(`Error ${ex.code} processing message from peer id = ${peer.id}: cmd = ${ex.cmd}, message = ${message}\n`);
-                //ws.close(ex.code, ex.message);
             } else {
                 throw ex;
             }
         }
     });
-
+    
     ws.on("close", function close(code, data) {
         console.log(`Peer disconnected (id: ${peer.id}, code: ${code}, reason: ${data.toString()})`);
         server.disconnect_peer(peer);
