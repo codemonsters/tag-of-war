@@ -3,6 +3,8 @@ _processCreateAndJoinRoomRequest = require("./process_create_and_join_room_reque
 _processJoinRoomRequest = require("./process_join_room_request.js").processJoinRoomRequest;
 _processLeaveCurrentRoomRequest = require("./process_leave_current_room_request.js").processLeaveCurrentRoomRequest;
 _processKickFromCurrentRoomRequest = require("./process_kick_from_current_room_request.js").processKickFromCurrentRoomRequest
+_processGetRoomDetailsRequest = require("./process_get_room_details_request.js").processGetRoomDetailsRequest;
+_processSendMessageToCurrentRoom = require("./process_send_message_to_current_room.js").processSendMessageToCurrentRoomRequest;
 
 const {ProtocolException} = require("../exceptions.js");
 
@@ -26,6 +28,10 @@ function processRequest(msg, peer, server) {
             console.debug('Peer wants to create a room');
             _processCreateAndJoinRoomRequest(json, peer, server);
             break;
+        case 'get_room_details':
+            console.debug('Peer wants to get room details');
+            _processGetRoomDetailsRequest(json, peer, server);
+            break;
         case 'join_room':
             console.debug('Peer wants to join a room');
             _processJoinRoomRequest(json, peer, server);
@@ -37,6 +43,10 @@ function processRequest(msg, peer, server) {
         case 'kick_from_current_room':
             console.debug('Peer wants to kick a player from the current room');
             _processKickFromCurrentRoomRequest(json, peer, server);
+            break;
+        case 'send_message_to_current_room':
+            console.debug('Peer wants to send a message to the current room');
+            _processSendMessageToCurrentRoom(json, peer, server);
             break;
         default:
             console.error(`Unknown command: ${cmd}`);

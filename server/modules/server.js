@@ -27,7 +27,7 @@ server.connect_peer_by_websocket = function(ws) {
 }
 
 server.disconnect_peer = function(peer) {
-    // TODO: Actualizar la base de datos para que el peer salga de la habitación (y la destruya si él es el admin)
+    // TODO: Actualizar la base de datos para que el peer salga de la habitación (y la destruya si él es el propietario)
     this.peers.delete(peer);
 }
 
@@ -109,7 +109,7 @@ server.create_and_join_room = function(peer, roomName) {
         throw new ProtocolException("Please login before creating a room", "create_and_join_room");
     }
     // comprobamos si el usuario actual no tiene ya creada una habitación
-    rows = this.db.sqlite.prepare("SELECT name FROM rooms WHERE admin_player_id=(SELECT player_id FROM profiles WHERE username=(?))").all(peer.username);
+    rows = this.db.sqlite.prepare("SELECT name FROM rooms WHERE owner_player_id=(SELECT player_id FROM profiles WHERE username=(?))").all(peer.username);
     if (rows.length > 0) {
         throw new ProtocolException("You already have a room! (max 1 room per player)", "create_and_join_room");
     }
@@ -121,9 +121,9 @@ server.create_and_join_room = function(peer, roomName) {
         throw new ProtocolException("Maximum number of rooms reached", "create_and_join_room");
     }
 
-    // Creamos la habitación
-    this.db.sqlite.prepare("INSERT INTO rooms (name, admin_player_id) VALUES (?, (SELECT player_id FROM profiles WHERE username=?));").run(roomName, peer.username);
-    //db.prepare("INSERT INTO rooms (name, admin_player_id) VALUES (?, ?)").run(roomName, peer.username);
+    // Creamos la habitación y añadimos al propietario a la lista de jugadores
+    this.db.sqlite.prepare("INSERT INTO rooms (name, owner_player_id) VALUES (?, (SELECT player_id FROM profiles WHERE username=?));").run(roomName, peer.username);
+    this.join_room(peer, roomName);
 }
 
 server.join_room = function(peer, roomName) {
@@ -131,7 +131,7 @@ server.join_room = function(peer, roomName) {
         throw ProtocolException("Missing room name", "join_room");
     }
     if (!peer.username) {
-        throw ProtocolError("lease login before joining a room", "join_room");
+        throw ProtocolException("Please login before joining a room", "join_room");
     }
     if (this._current_room_name_of(peer.username) != "") {
         throw ProtocolException("You are already in a room", "join_room");
@@ -143,6 +143,113 @@ server.join_room = function(peer, roomName) {
         throw ProtocolException("The room is full", "join_room");
     }
     this.db.sqlite.prepare("INSERT INTO rooms_players (room_id, player_id) VALUES (?, SELECT player_id FROM profiles WHERE username=?)").run(roomName, peer.username);
+}
+
+server._get_current_room_name_of = function(username) {
+    let room_name = this.db.sqlite.prepare("SELECT name FROM rooms LEFT JOIN rooms_players ON rooms.room_id=")
+}
+
+// 'peer' abandola la habitación (y si es el propietario, la habitación es eliminada)
+// Devuelve la lista de usuarios que han salido de la habitación
+// (pueden ser varios porque la habitación será destruida en caso de que quien salga sea el propietario)
+server.leave_current_room = function(peer) {
+    if (roomName == '') {
+        throw ProtocolException("Missing room name", "leave_current_room");
+    }
+    if (!peer.username) {
+        throw ProtocolError("Please login before leaving a room", "leave_current_room");
+    }
+    let room_name = this._current_room_name_of(peer.username);
+    if (!room_name) {
+        throw ProtocolException("You are not in a room (nothing to leave)", "leave_current_room");
+    }
+    let room_owner_username = this._get_room_owner_username(room_name);
+
+    let affected_usernames = [];
+    let destroy_room = false;
+    if (peer.username != room_owner_username) {
+        affected_usernames = [room_owner_username];
+    } else {
+        destroy_room = true;
+        affected_usernames = this._get_usernames_in_room(room_name);
+    }
+    for (username in affected_usernames) {
+        this._remove_username_from_room(username, room_name);
+    }
+    this.destroy_room(room_name);
+    return affected_usernames;
+}
+
+server._remove_username_from_room = function(username, roomName) {
+    this.db.sqlite.prepare("DELETE FROM room_players WHERE room_id=(SELECT room_id FROM rooms WHERE name=?) AND player_id=(SELECT player_id FROM profiles WHERE username=?)").run(roomName, username);
+}
+
+server.kick_username_from_current_room = function(peer, username) {
+    if (!peer.username) {
+        throw ProtocolExcception("Please login before kicking from current root");
+    }
+    let current_room_name = this._current_room_name_of(peer.username);
+    if (!current_room_name) {
+        throw ProtocolException("You are not in a room", "kick_from_current_room");
+    }
+    let room_owner_username = this._get_room_owner_username(current_room_name);
+    if (peer.username != room_owner_username) {
+        throw ProtocolException("You are not the room owner", "kick_from_current_room");
+    }
+    if (!this._username_in_room(username, current_room_name)) {
+        throw ProtocolException(`Username ${username} is not in room ${current_room_name}`, "kick_from_current_room");
+    }
+    this._remove_username_from_room(username, current_room_name);
+}
+
+server.get_room_details = function(peer, roomName) {
+    if (!this._room_name_format_valid(roomName)) {
+        throw ProtocolException("Room name format not allowed", "get_room_details");
+    }
+    if (!peer.username) {
+        throw ProtocolException("Please login before getting room details", "get_room_details");
+    }
+    if (!this._room_exists(roomName)) {
+        throw ProtocolException("Room not found", "get_room_details")
+    }
+
+    let room_details = this.db.sqlite.prepare("SELECT name, ownner FROM rooms WHERE name=(?)").get(roomName);
+    room_details['players'] = this._get_usernames_in_room(roomName);
+    return room_details;    
+}
+
+server._get_room_peers = function(room) {
+    let peers = new Set();
+    // select all the username
+    let rows = this.db.sqlite.prepare("SELECT username FROM players LEFT JOIN rooms_players ON players.player_id=rooms_players.player_id LEFT JOIN rooms ON rooms_players.room_id=rooms.room_id WHERE rooms.name=(?)").all(room);
+    for (row in rows) {
+        let username = row['username'];
+        for (p in this.peers) {
+            if (p.username == username) {
+                peers.add(p);
+            }
+        }
+    }
+    return peers;
+}
+
+// comprueba si sería válido que el peer pueda enviar el mensaje a su habitación actual
+// devuelve la lista de peers que deberían recibir el mensaje
+server.send_message_to_current_room = function(peer, message) {
+    if (!peer.username) {
+        throw ProtocolException("Please login before sending a message", "send_message_to_current_room");
+    }
+    if (!peer.message) {
+        throw ProtocolException("Missing message", "send_message_to_current_room");
+    }
+    let current_room = this._current_room_name_of(peer.username);
+    if (!current_room) {
+        throw ProtocolException("You are not in a room", "send_message_to_current_room");
+    }
+
+    let peer_recipients = this._get_room_peers(current_room);
+    peer_recipients.delete(peer);
+    return peer_recipients;
 }
 
 server.start();

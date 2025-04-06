@@ -160,14 +160,14 @@ Inmediatamente después de que un jugador entre en una habitación, el servidor 
 
 ```json
 {
-    "cmd": "new_player_joined",
+    "cmd": "player_joined_current_room",
     "data": { "username": "matador53" }
 }
 ```
 
 ### leave_current_room
 
-Los jugadores que estén en una habitación pueden abandonarla enviando este mensaje. Si quien abandona es el administrador, la habitación será eliminada (ver más abajo).
+Los jugadores que estén en una habitación pueden abandonarla enviando este mensaje. Si quien abandona es el propietario, la habitación será eliminada (ver más abajo).
 
 Solicitud de ejemplo:
 
@@ -183,7 +183,7 @@ Respuesta OK:
 {
     "cmd": "leave_current_room",
     "success": true,
-    "data": {}
+    "data": { "name": "room1" }
 }
 ```
 
@@ -197,7 +197,7 @@ Respuesta con error:
 }
 ```
 
-Si quien abandona la habitación es el administrador, esta será destruida, echando a todos los jugadores que estén en ella. Además, cada uno de los demás jugadores recibirán el siguiente menaje:
+Si quien abandona la habitación es su propietario, esta será destruida, echando a todos los jugadores que estén en ella. Además, cada uno de los demás jugadores recibirán el siguiente menaje:
 
 ```json
 {
@@ -206,9 +206,49 @@ Si quien abandona la habitación es el administrador, esta será destruida, echa
 }
 ```
 
+### get_room_details
+
+Los usuarios logeados pueden solicita al servidor detalles sobre el estado actual de cualquier habitación.
+
+Solicitud de ejemplo:
+
+```json
+{
+    "cmd": "get_room_details",
+    "data": { "name": "room1" }
+}
+```
+
+Respuesta OK:
+
+```json
+{
+    "cmd": "get_room_details",
+    "success": true,
+    "data": {
+        "name": "room1",
+        "owner": "matador53",
+        "players": [
+            "matador53",
+            "matador54"
+        ]
+    }
+}
+```
+
+Respuesta con error:
+
+```json
+{
+    "cmd": "get_room_details",
+    "success": false,
+    "data": { "details": "Room not found" }
+}
+```
+
 ### kick_from_current_room
 
-Los administradores de una habitación pueden echar a cualquier jugador de la misma.
+El propietario de una habitación puede echar a un jugador de ella.
 
 Solicitud de ejemplo:
 
@@ -245,5 +285,47 @@ Si un jugador es echado de una habitación, tanto el jugador que fue echado como
 {
     "cmd": "player_kicked_from_current_room",
     "data": { "username": "matador53" }
+}
+```
+
+### send_message_to_current_room
+
+Envía un mensaje de texto que recibirán el resto de jugadores de la misma habitación.
+
+Solicitud de ejemplo:
+
+```json
+{
+    "cmd": "send_message_to_current_room",
+    "data": { "message": "Hello world!" }
+}
+```
+
+Respuesta OK:
+
+```json
+{
+    "cmd": "send_message_to_current_room",
+    "success": true,
+    "data": {}
+}
+```
+
+Respuesta con error:
+
+```json
+{
+    "cmd": "send_message_to_current_room",
+    "success": false,
+    "data": { "details": "You are not in a room (nothing to send)" }
+}
+```
+
+Tras el envío de un mensaje, el resto de los jugadores de la habitación recibirán un mensaje como este:
+
+```json
+{
+    "cmd": "room_message",
+    "data": { "from": "matador53", "message": "Hello world!" }
 }
 ```

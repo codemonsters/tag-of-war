@@ -18,7 +18,7 @@ database.init = function() {
         // creamos las tablas de la base de datos
         //this.sqlite.prepare("CREATE TABLE active_players (player_id INTEGER PRIMARY KEY)").run();
         this.sqlite.prepare("CREATE TABLE profiles (player_id INTEGER PRIMARY KEY AUTOINCREMENT, username VARCHAR(20) NOT NULL UNIQUE, email VARCHAR(30) UNIQUE, password VARCHAR(32), last_connection_timestamp DATETIME NOT NULL, account_creation_timestamp DATETIME, account_verified BOOLEAN)").run();
-        this.sqlite.prepare("CREATE TABLE rooms (room_id INTEGER PRIMARY KEY AUTOINCREMENT, name VARCHAR(32) NOT NULL UNIQUE, admin_player_id INTEGER NOT NULL UNIQUE)").run();
+        this.sqlite.prepare("CREATE TABLE rooms (room_id INTEGER PRIMARY KEY AUTOINCREMENT, name VARCHAR(32) NOT NULL UNIQUE, owner_player_id INTEGER NOT NULL UNIQUE)").run();
         this.sqlite.prepare("CREATE TABLE rooms_players (room_id INTEGER NOT NULL, player_id INTEGER NOT NULL)").run();
         console.debug("Base de datos creada");
     }

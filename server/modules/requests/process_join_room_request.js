@@ -20,7 +20,7 @@ function processJoinRoomRequest(json, peer, server) {
     for (p in room_peers) {
         if (p.username && p.username != peer.username) {
             p.ws.send(JSON.stringify({
-                'cmd': 'new_player_joined',
+                'cmd': 'player_joined_current_room',
                 'data' : {
                     'username': peer.username
                 }
