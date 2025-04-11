@@ -2,8 +2,9 @@ extends ColorRect
 
 signal connect_to_server()
 signal send_to_server(message: Variant)
+signal change_in_player_list(button)
 var valor_anterior = "LISTO"
-var player_names = ["matador 57", "hola", "a", "b", "c", "Rufo", "adios", "d", "e", "f", "g", "h", "i", "j"]
+var player_names = ["matador 57", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j"]
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -45,6 +46,9 @@ func _on_listo_button_toggled(toggled_on: bool) -> void:
 		
 func _on_button_pressed(button: Button):
 	player_names.erase(button.text)
+	change_in_player_list.emit(button)
+
+func _on_change_in_player_list(button) -> void:
 	for child in $PlayerListRect/ScrollContainer/VBoxContainer.get_children():
 		child.queue_free()
 	for name in player_names:
