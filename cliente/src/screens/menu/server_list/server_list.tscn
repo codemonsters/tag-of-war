@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://chqkxfbrrqsbe"]
 
-[ext_resource type="Script" path="res://screens/menu/server_list/server_list.gd" id="1_hiyl5"]
+[ext_resource type="Script" uid="uid://cdkt5hslm5r8i" path="res://screens/menu/server_list/server_list.gd" id="1_hiyl5"]
 [ext_resource type="PackedScene" uid="uid://cu06f8uhhrvym" path="res://screens/menu/server_list/empty_lobby.tscn" id="2_knhi0"]
 
 [node name="Main" type="Control"]

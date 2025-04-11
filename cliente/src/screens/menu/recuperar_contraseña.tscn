@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://ct3o6bvauusv7"]
 
-[ext_resource type="Script" path="res://screens/menu/recuperar_contraseña.gd" id="1_s754y"]
+[ext_resource type="Script" uid="uid://b4vk577uyvxke" path="res://screens/menu/recuperar_contraseña.gd" id="1_s754y"]
 
 [node name="RecuperarContraseña" type="ColorRect"]
 offset_right = 1280.0

@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://hcrj04mv00x1"]
 
-[ext_resource type="Script" path="res://screens/menu/create_game.gd" id="1_skxpg"]
+[ext_resource type="Script" uid="uid://crcl7d7reanwe" path="res://screens/menu/create_game.gd" id="1_skxpg"]
 [ext_resource type="Texture2D" uid="uid://djidx5o7vdn1v" path="res://assets/test_map_image.webp" id="2_3i8gr"]
 
 [node name="CreateGameScene" type="Control"]

@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://devtjakyp0866"]
 
-[ext_resource type="Script" path="res://modal_window.gd" id="1_iih3f"]
+[ext_resource type="Script" uid="uid://d0wgj3roaeih6" path="res://modal_window.gd" id="1_iih3f"]
 
 [node name="ModalWindow" type="Node2D"]
 process_mode = 3
