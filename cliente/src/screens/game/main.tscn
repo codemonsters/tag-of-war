@@ -1,10 +1,12 @@
-[gd_scene load_steps=4 format=3 uid="uid://dapnk86gfef7f"]
+[gd_scene load_steps=5 format=3 uid="uid://dapnk86gfef7f"]
 
+[ext_resource type="Script" uid="uid://bdhotj45jq6c6" path="res://screens/game/main.gd" id="1_ldyrl"]
 [ext_resource type="PackedScene" uid="uid://dt2w36dilagbl" path="res://screens/game/map.tscn" id="1_teanv"]
 [ext_resource type="PackedScene" uid="uid://cct0t2jpyj5cg" path="res://screens/game/player.tscn" id="2_ldyrl"]
 [ext_resource type="PackedScene" uid="uid://c36658qretke6" path="res://screens/game/hud.tscn" id="3_6xclv"]
 
 [node name="Main" type="Node2D"]
+script = ExtResource("1_ldyrl")
 
 [node name="Map" parent="." instance=ExtResource("1_teanv")]
 
