@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://k13o7p4xjv3i"]
 
-[ext_resource type="Script" path="res://screens/menu/sala_espera_admin.gd" id="1_qhs5g"]
+[ext_resource type="Script" uid="uid://d1a5w3n5falu6" path="res://screens/menu/sala_espera_admin.gd" id="1_qhs5g"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_6x0wv"]
 

@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://c36658qretke6"]
+
+[node name="Hud" type="Node2D"]
+
+[node name="Label" type="Label" parent="."]
+offset_left = 1213.0
+offset_top = 16.0
+offset_right = 1253.0
+offset_bottom = 39.0
+text = "TIME"

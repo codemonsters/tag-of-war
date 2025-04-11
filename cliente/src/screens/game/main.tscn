@@ -1,0 +1,15 @@
+[gd_scene load_steps=4 format=3 uid="uid://dapnk86gfef7f"]
+
+[ext_resource type="PackedScene" uid="uid://dt2w36dilagbl" path="res://screens/game/map.tscn" id="1_teanv"]
+[ext_resource type="PackedScene" uid="uid://cct0t2jpyj5cg" path="res://screens/game/player.tscn" id="2_ldyrl"]
+[ext_resource type="PackedScene" uid="uid://c36658qretke6" path="res://screens/game/hud.tscn" id="3_6xclv"]
+
+[node name="Main" type="Node2D"]
+
+[node name="Map" parent="." instance=ExtResource("1_teanv")]
+
+[node name="Players" type="Node" parent="."]
+
+[node name="Player" parent="Players" instance=ExtResource("2_ldyrl")]
+
+[node name="Hud" parent="." instance=ExtResource("3_6xclv")]

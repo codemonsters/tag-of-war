@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://b7xl7nanqwd5"]
 
-[ext_resource type="Script" path="res://screens/menu/create_account.gd" id="1_iaqr4"]
+[ext_resource type="Script" uid="uid://bntir5kjh4pcm" path="res://screens/menu/create_account.gd" id="1_iaqr4"]
 
 [node name="CrearCuenta" type="Node2D"]
 script = ExtResource("1_iaqr4")
