@@ -31,7 +31,7 @@ func _on_boton_cuenta_pressed() -> void:
 
 func _on_btn_connect_guest_pressed() -> void:
 	var Guest_username = str($TxtGuestUser.get_text())
-	if str($TxtGuestUser.get_text()).length() > 8 or str($TxtGuestUser.get_text()).length() < 1: 
+	if str($TxtGuestUser.get_text()).length() > 8 or str($TxtGuestUser.get_text()).length() < 3: 
 		Guest_username = null
 		$ErrorMessageLength.visible = true
 	else:
