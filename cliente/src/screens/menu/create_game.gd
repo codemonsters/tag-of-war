@@ -31,12 +31,12 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	print(Globales.players_number, Globales.gamemode, Globales.map_name)
+	print(Globals.players_number, Globals.gamemode, Globals.map_name)
 
 func _on_button_next_pressed() -> void:
 	if $CreateGame.visible:
-		Globales.players_number = $CreateGame/PlayerNumTxt.text
-		Globales.gamemode = $CreateGame/GamemodeNameTxt.text
+		Globals.players_number = $CreateGame/PlayerNumTxt.text
+		Globals.gamemode = $CreateGame/GamemodeNameTxt.text
 		$CreateGame.visible = false
 		$ChooseMap.visible = true
 	else:
@@ -81,7 +81,7 @@ func _on_button_pressed() -> void:
 		$ChooseMap/Map1.color = Color(0.1176, 0.1961, 0.1176)
 	else:
 		$ChooseMap/Map1.color = Color(0.1176, 0.1176, 0.1176)
-	Globales.map_name = $ChooseMap/Map1/MapName.text
+	Globals.map_name = $ChooseMap/Map1/MapName.text
 
 
 func on_server_message_received(dict: Dictionary):

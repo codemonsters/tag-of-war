@@ -11,8 +11,9 @@
   "license": "ISC",
   "dependencies": {
     "better-sqlite3": "^11.9.1",
-    "nodemon": "^3.1.9",
+    "nodemon": "^3.1.10",
     "uuid": "^11.1.0",
     "ws": "^8.18.1"
-  }
+  },
+  "type": "commonjs"
 }

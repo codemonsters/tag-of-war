@@ -11,8 +11,8 @@ var recuperar_contraseña = preload("res://screens/menu/recuperar_contraseña.ts
 var wsc = WebSocketClient.new()
 var fade_duration = 1.0
 var screen_transition_duration = 1.0
-var menu_scene = preload("res://screens/menu/menu_main.tscn")
-var modal_window = preload("res://modal_window.tscn")
+var menu_scene = preload("res://screens/menu/main.tscn")
+var modal_window = preload("res://misc/modal_window.tscn")
 
 signal server_message_received(dict: Dictionary)
 

@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://k13o7p4xjv3i"]
 
-[ext_resource type="Script" path="res://screens/menu/sala_espera_admin.gd" id="1_qhs5g"]
+[ext_resource type="Script" uid="uid://d1a5w3n5falu6" path="res://screens/menu/sala_espera_admin.gd" id="1_qhs5g"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_6x0wv"]
 
@@ -199,9 +199,9 @@ grow_horizontal = 0
 grow_vertical = 2
 theme_override_colors/font_hover_pressed_color = Color(0.611765, 0, 0, 1)
 theme_override_colors/font_hover_color = Color(0, 0.376471, 0, 1)
-theme_override_colors/font_pressed_color = Color(0.612299, 8.18223e-07, 1.44392e-07, 1)
-theme_override_colors/font_focus_color = Color(0, 0.376471, 0, 1)
 theme_override_colors/font_color = Color(2.97809e-06, 0.377955, 2.40654e-07, 1)
+theme_override_colors/font_focus_color = Color(0, 0.376471, 0, 1)
+theme_override_colors/font_pressed_color = Color(0.612299, 8.18223e-07, 1.44392e-07, 1)
 theme_override_font_sizes/font_size = 20
 theme_override_styles/focus = SubResource("StyleBoxEmpty_6x0wv")
 theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_pt2k2")

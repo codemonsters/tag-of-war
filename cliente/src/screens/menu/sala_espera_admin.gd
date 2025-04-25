@@ -10,9 +10,9 @@ var player_names = [admin_name]
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	$AloneTab.visible = false
-	$GameDataRect/NumberPlayers.text = "Numero de jugadores:\n" + str(Globales.players_number)
-	$GameDataRect/MapName.text = "Mapa:\n" + str(Globales.map_name)
-	$GameDataRect/Gamemode.text = "Modo de juego:\n" + str(Globales.gamemode)
+	$GameDataRect/NumberPlayers.text = "Numero de jugadores:\n" + str(Globals.players_number)
+	$GameDataRect/MapName.text = "Mapa:\n" + str(Globals.map_name)
+	$GameDataRect/Gamemode.text = "Modo de juego:\n" + str(Globals.gamemode)
 	#get_parent().get_parent().server_message_recieved.connect(on_server_message_recieved)
 	for child in $PlayerListRect/ScrollContainer/VBoxContainer.get_children():
 		child.queue_free()
