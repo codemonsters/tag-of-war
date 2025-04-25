@@ -21,7 +21,7 @@ func _process(delta: float) -> void:
 	pass
 
 func change_window(scene):
-	remove_child(get_node("current_screen"))
+	if get_node_or_null("current_screen") != null: remove_child(get_node("current_screen"))
 	var s = scene.instantiate()
 	s.name = "current_screen"
 	add_child(s)
