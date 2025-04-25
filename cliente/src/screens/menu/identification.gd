@@ -31,7 +31,7 @@ func _on_boton_cuenta_pressed() -> void:
 
 func _on_btn_connect_guest_pressed() -> void:
 	var Guest_username = str($TxtGuestUser.get_text())
-	if str($TxtGuestUser.get_text()).length() > 8 or str($TxtGuestUser.get_text()).length() < 3: 
+	if str($TxtGuestUser.get_text()).length() > 8 or str($TxtGuestUser.get_text()).length() < 1: 
 		Guest_username = null
 		$ErrorMessageLength.visible = true
 	else:
@@ -62,7 +62,7 @@ func _on_btn_password_pressed() -> void:
 
 
 func on_server_message_received(dict: Dictionary):
-	if dict["cmd"] == "login":
+	if dict["cmd"] == "logged_in":
 		if dict["success"]:
 			print("logged in successfully")
 			connecting_as = "none"
