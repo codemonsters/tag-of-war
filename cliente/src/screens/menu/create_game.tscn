@@ -373,5 +373,5 @@ text = "VOLVER"
 [connection signal="pressed" from="CreateGame/NumPlayerL" to="." method="_on_num_player_l_pressed"]
 [connection signal="pressed" from="CreateGame/NumPlayerR" to="." method="_on_num_player_r_pressed"]
 [connection signal="pressed" from="ButtonNext" to="." method="_on_button_next_pressed"]
-[connection signal="pressed" from="ButtonGoBack" to="." method="_on_button_pressed"]
 [connection signal="pressed" from="ButtonGoBack" to="." method="_on_button_go_back_pressed"]
+[connection signal="pressed" from="ButtonGoBack" to="." method="_on_button_pressed"]

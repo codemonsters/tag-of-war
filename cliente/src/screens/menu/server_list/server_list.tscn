@@ -190,4 +190,5 @@ offset_right = 863.0
 offset_bottom = 557.0
 text = "Create room"
 
+[connection signal="pressed" from="Table/Lobbies/Casual/Lobby" to="." method="_on_lobby_pressed"]
 [connection signal="pressed" from="Table/CreateRoom" to="." method="_on_create_room_pressed"]

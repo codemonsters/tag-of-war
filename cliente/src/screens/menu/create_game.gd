@@ -31,7 +31,7 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	print(Globals.players_number, Globals.gamemode, Globals.map_name)
+	pass
 
 func _on_button_next_pressed() -> void:
 	if $CreateGame.visible:
@@ -41,7 +41,7 @@ func _on_button_next_pressed() -> void:
 		$ChooseMap.visible = true
 	else:
 		var room_name = "room1"
-		var create_room_dict = {"cmd": "create_room", "data": {"room_name": room_name}}
+		var create_room_dict = {"cmd": "create_and_join_room", "data": {"room_name": room_name}}
 		send_to_server.emit(JSON.stringify(create_room_dict))
 
 
@@ -85,9 +85,8 @@ func _on_button_pressed() -> void:
 
 
 func on_server_message_received(dict: Dictionary):
-	if dict["cmd"] == "create_room":
+	if dict["cmd"] == "create_and_join_room":
 		if dict["success"]:
-			print("created room successfully")
 			get_parent().change_window(get_parent().sala_espera_admin)
 		else:
-			print("hola")
+			printerr(dict["data"]["details"])

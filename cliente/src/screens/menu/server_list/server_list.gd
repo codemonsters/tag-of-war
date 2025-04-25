@@ -17,6 +17,7 @@ func add_lobby(lobby_parameters: Dictionary = {}):
 		new.get_node("Time").text = lobby_parameters["Time"]
 		new.get_node("Players").text = lobby_parameters["Players"]
 		new.get_node("Ping").text = lobby_parameters["Ping"]
+	new.send_to_server.connect(on_send_to_server)
 	%Casual.add_child(new)
 
 #-- Principal
@@ -38,3 +39,7 @@ func on_server_message_received(dict: Dictionary):
 
 func _on_create_room_pressed() -> void:
 	get_parent().change_window(get_parent().create_game)
+
+
+func on_send_to_server(message: Variant):
+	send_to_server.emit(message)

@@ -1,5 +1,5 @@
 _processLoginRequest = require("./process_login_request.js").processLoginRequest;
-_processCreateAndJoinRoomRequest = require("./process_create_and_join_room_request.js").processCreateRoomRequest
+_processCreateAndJoinRoomRequest = require("./process_create_and_join_room_request.js").processCreateAndJoinRoomRequest;
 _processJoinRoomRequest = require("./process_join_room_request.js").processJoinRoomRequest;
 _processLeaveCurrentRoomRequest = require("./process_leave_current_room_request.js").processLeaveCurrentRoomRequest;
 _processKickFromCurrentRoomRequest = require("./process_kick_from_current_room_request.js").processKickFromCurrentRoomRequest

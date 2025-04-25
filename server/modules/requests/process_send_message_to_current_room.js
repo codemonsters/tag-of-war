@@ -2,7 +2,7 @@
 
 const {ProtocolException} = require("../exceptions.js");
 
-function processSendMessageToCurrentRoom(json, peer, server) {
+function processSendMessageToCurrentRoomRequest(json, peer, server) {
     const data = typeof(json['data']) === 'object' ? json['data'] : null;
     if (data == null) {
         throw new ProtocolException("Missing data object in send message to current room request", "send_message_to_current_room");
@@ -23,4 +23,4 @@ function processSendMessageToCurrentRoom(json, peer, server) {
     }
 }
 
-module.exports = { processSendMessageToCurrentRoom };
+module.exports = { processSendMessageToCurrentRoomRequest };
