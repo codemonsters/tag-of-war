@@ -9,8 +9,7 @@ function processCreateAndJoinRoomRequest(json, peer, server) {
 
     const roomName = typeof(data['name']) === 'string' ? data['name'] : '';
     console.log("Create room request received. Room name = " + roomName);
-    server.create_room(peer, roomName);
-    server.join_room(peer, roomName);
+    server.create_and_join_room(peer, roomName);
     peer.ws.send(JSON.stringify({
         'cmd': 'create_room',
         'success': true,

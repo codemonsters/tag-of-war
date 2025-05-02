@@ -41,7 +41,7 @@ func _on_button_next_pressed() -> void:
 		$ChooseMap.visible = true
 	else:
 		var room_name = "room1"
-		var create_room_dict = {"cmd": "create_and_join_room", "data": {"room_name": room_name}}
+		var create_room_dict = {"cmd": "create_and_join_room", "data": {"name": room_name}}
 		send_to_server.emit(JSON.stringify(create_room_dict))
 
 
