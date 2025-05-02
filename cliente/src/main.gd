@@ -30,7 +30,7 @@ func _process(delta: float) -> void:
 
 
 func change_screen(scene, does_fade_out = true, does_screen_transition = true, screen_transition_direction = 1):
-	remove_child(get_node("current_screen"))
+	if get_node_or_null("current_screen") != null: remove_child(get_node("current_screen"))
 	var s = scene.instantiate()
 	s.name = "current_screen"
 	add_child(s)

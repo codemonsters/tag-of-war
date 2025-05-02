@@ -69,6 +69,9 @@ server.guest_login = function(peer, username) {
 
 server._current_room_name_of = function(username) {
     const row = this.db.sqlite.prepare("SELECT name FROM rooms LEFT JOIN rooms_players ON rooms.room_id=rooms_players.room_id LEFT JOIN profiles ON rooms_players.player_id=profiles.player_id WHERE username=(?)").get(username);
+    if (row == undefined) {
+        return undefined;
+    }
     return row['name'];
 }
 
@@ -123,6 +126,7 @@ server.create_and_join_room = function(peer, roomName) {
 
     // Creamos la habitación y añadimos al propietario a la lista de jugadores
     this.db.sqlite.prepare("INSERT INTO rooms (name, owner_player_id) VALUES (?, (SELECT player_id FROM profiles WHERE username=?));").run(roomName, peer.username);
+    console.log("se crea una room");
     this.join_room(peer, roomName);
 }
 
@@ -133,7 +137,7 @@ server.join_room = function(peer, roomName) {
     if (!peer.username) {
         throw ProtocolException("Please login before joining a room", "join_room");
     }
-    if (this._current_room_name_of(peer.username) != "") {
+    if (this._current_room_name_of(peer.username) != undefined) {
         throw ProtocolException("You are already in a room", "join_room");
     }
     if (!this._room_exists(roomName)) {
@@ -142,7 +146,9 @@ server.join_room = function(peer, roomName) {
     if (this._get_num_players_in_room(roomName) >= this.MAX_PLAYERS_PER_ROOM) {
         throw ProtocolException("The room is full", "join_room");
     }
-    this.db.sqlite.prepare("INSERT INTO rooms_players (room_id, player_id) VALUES (?, SELECT player_id FROM profiles WHERE username=?)").run(roomName, peer.username);
+    console.log("se inserta en rooms_players");
+    console.log(peer);
+    this.db.sqlite.prepare("INSERT INTO rooms_players (room_id, player_id) VALUES (?, (SELECT player_id FROM profiles WHERE username=?))").run(roomName, peer.username);
 }
 
 server._get_current_room_name_of = function(username) {
