@@ -1,22 +1,10 @@
 [gd_scene load_steps=2 format=3 uid="uid://cu06f8uhhrvym"]
 
-[sub_resource type="GDScript" id="GDScript_s5v60"]
-script/source = "extends Button
-
-
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	pass # Replace with function body.
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
-"
+[ext_resource type="Script" uid="uid://dwipfsis5gfxd" path="res://screens/menu/server_list/empty_lobby.gd" id="1_4jpa7"]
 
 [node name="Lobby" type="Button"]
 custom_minimum_size = Vector2(0, 40)
-script = SubResource("GDScript_s5v60")
+script = ExtResource("1_4jpa7")
 
 [node name="Background" type="ColorRect" parent="."]
 layout_mode = 1
@@ -25,6 +13,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 color = Color(0, 0, 0, 0.392157)
 
 [node name="ServerName" type="Label" parent="."]
@@ -105,3 +94,5 @@ text = "9999
 horizontal_alignment = 1
 vertical_alignment = 1
 clip_text = true
+
+[connection signal="pressed" from="." to="." method="_on_pressed"]
