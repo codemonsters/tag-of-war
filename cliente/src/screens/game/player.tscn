@@ -2,9 +2,8 @@
 
 [ext_resource type="Script" uid="uid://b02ego3xeec2d" path="res://screens/game/player.gd" id="1_04piu"]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_2j468"]
-radius = 15.0
-height = 62.0
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_04piu"]
+size = Vector2(32, 64)
 
 [node name="Player" type="Node2D"]
 script = ExtResource("1_04piu")
@@ -16,7 +15,7 @@ scale = Vector2(2, 2)
 
 [node name="Hipcast" type="ShapeCast2D" parent="."]
 unique_name_in_owner = true
-shape = SubResource("CapsuleShape2D_2j468")
+shape = SubResource("RectangleShape2D_04piu")
 target_position = Vector2(0, 0)
 
 [node name="Camera2D" type="Camera2D" parent="."]

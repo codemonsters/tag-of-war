@@ -4,7 +4,7 @@ extends Node2D
 
 ##Pixels per tick
 @export var walkspeed: float = 8
-@export var gravity: float = 1
+@export var gravity: float = 0.5
 
 ### Activos
 
@@ -23,7 +23,7 @@ func _physics_process(delta):
 	var right = false
 	var left = false
 	
-	$Hipcast.target_position = Vector2.DOWN
+	$Hipcast.target_position = Vector2.DOWN * velocity_y
 	$Hipcast.force_shapecast_update()
 	for i in $Hipcast.collision_result:
 		if i["point"].y > position.y:
@@ -54,5 +54,6 @@ func _physics_process(delta):
 		position.x += walkspeed
 	
 	if not down:
-		#velocity_y += gravity
-		position.y += gravity
+		if velocity_y != 8:
+			velocity_y += gravity
+		position.y += velocity_y
