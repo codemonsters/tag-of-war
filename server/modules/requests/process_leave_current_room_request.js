@@ -11,7 +11,7 @@ function processLeaveCurrentRoomRequest(json, peer, server) {
         throw new ProtocolException("Please login before leaving a room", "leave_current_room");
     }
 
-    let current_room_name = server._get_current_room_name_of(peer.username);
+    let current_room_name = server.get_name_of_room_player_is_in(peer.username);
 
     let destroy_room = false;
     if (peer.username == server._get_room_owner_username(current_room_name)) {

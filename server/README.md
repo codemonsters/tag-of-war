@@ -329,3 +329,44 @@ Tras el envío de un mensaje, el resto de los jugadores de la habitación recibi
     "data": { "from": "matador53", "message": "Hello world!" }
 }
 ```
+
+### start_match
+
+El propietario de una habitación debe enviar este mensaje al servidor en el momento que quiera que el juego comience.
+
+Solicitud de ejemplo:
+
+```json
+{
+    "cmd": "start_match"
+}
+```
+
+Respuesta OK:
+
+```json
+{
+    "cmd": "start_match",
+    "success": true,
+    "data": {}
+}
+```
+
+Respuesta con error:
+
+```json
+{
+    "cmd": "start_match",
+    "success": false,
+    "data": { "details": "You don't own any room" }
+}
+```
+
+Antes de que el servidor envíe la anterior respuesta, cada uno de los jugadores de la habitación recibirá un mensaje como el siguiente, en el cual se incluye la ip y el puerto al que tendrán que conectarse para unirse a la partida:
+
+```json
+{
+    "cmd": "match_started",
+    "data": { "ip": "192.168.0.1", "port": "7000" }
+}
+```

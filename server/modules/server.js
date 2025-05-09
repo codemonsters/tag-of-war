@@ -67,8 +67,17 @@ server.guest_login = function(peer, username) {
     peer.username = username;
 }
 
-server._current_room_name_of = function(username) {
-    const row = this.db.sqlite.prepare("SELECT name FROM rooms LEFT JOIN rooms_players ON rooms.room_id=rooms_players.room_id LEFT JOIN profiles ON rooms_players.player_id=profiles.player_id WHERE username=(?)").get(username);
+// devuelve el nombre de la habitación en la que se encuentra actualmente un jugador
+server.get_name_of_room_player_is_in = function(username) {
+    let row = this.db.sqlite.prepare("SELECT name FROM rooms LEFT JOIN rooms_players ON rooms.room_id=rooms_players.room_id LEFT JOIN profiles ON rooms_players.player_id=profiles.player_id WHERE username=(?)").get(username);
+    if (row == undefined) {
+        return undefined;
+    }
+    return row['name'];
+}
+
+server.get_name_of_room_owned_by = function(username) {
+    const row = this.db.sqlite.prepare("SELECT name FROM rooms LEFT JOIN players on rooms.owner_player_id=players.player_id WHERE players.username=(?)").get(username);
     if (row == undefined) {
         return undefined;
     }
@@ -137,7 +146,7 @@ server.join_room = function(peer, roomName) {
     if (!peer.username) {
         throw ProtocolException("Please login before joining a room", "join_room");
     }
-    if (this._current_room_name_of(peer.username) != undefined) {
+    if (this.get_name_of_room_owned_by(peer.username) != undefined) {
         throw ProtocolException("You are already in a room", "join_room");
     }
     if (!this._room_exists(roomName)) {
@@ -151,10 +160,6 @@ server.join_room = function(peer, roomName) {
     this.db.sqlite.prepare("INSERT INTO rooms_players (room_id, player_id) VALUES (?, (SELECT player_id FROM profiles WHERE username=?))").run(roomName, peer.username);
 }
 
-server._get_current_room_name_of = function(username) {
-    let room_name = this.db.sqlite.prepare("SELECT name FROM rooms LEFT JOIN rooms_players ON rooms.room_id=")
-}
-
 // 'peer' abandola la habitación (y si es el propietario, la habitación es eliminada)
 // Devuelve la lista de usuarios que han salido de la habitación
 // (pueden ser varios porque la habitación será destruida en caso de que quien salga sea el propietario)
@@ -165,7 +170,7 @@ server.leave_current_room = function(peer) {
     if (!peer.username) {
         throw ProtocolError("Please login before leaving a room", "leave_current_room");
     }
-    let room_name = this._current_room_name_of(peer.username);
+    let room_name = this.get_name_of_room_player_is_in(peer.username);
     if (!room_name) {
         throw ProtocolException("You are not in a room (nothing to leave)", "leave_current_room");
     }
@@ -194,7 +199,7 @@ server.kick_username_from_current_room = function(peer, username) {
     if (!peer.username) {
         throw ProtocolExcception("Please login before kicking from current root");
     }
-    let current_room_name = this._current_room_name_of(peer.username);
+    let current_room_name = this.get_name_of_room_player_is_in(peer.username);
     if (!current_room_name) {
         throw ProtocolException("You are not in a room", "kick_from_current_room");
     }
@@ -224,7 +229,7 @@ server.get_room_details = function(peer, roomName) {
     return room_details;    
 }
 
-server._get_room_peers = function(room) {
+server.get_room_peers = function(room) {
     let peers = new Set();
     // select all the username
     let rows = this.db.sqlite.prepare("SELECT username FROM players LEFT JOIN rooms_players ON players.player_id=rooms_players.player_id LEFT JOIN rooms ON rooms_players.room_id=rooms.room_id WHERE rooms.name=(?)").all(room);
@@ -248,14 +253,18 @@ server.send_message_to_current_room = function(peer, message) {
     if (!peer.message) {
         throw ProtocolException("Missing message", "send_message_to_current_room");
     }
-    let current_room = this._current_room_name_of(peer.username);
+    let current_room = this.get_name_of_room_player_is_in(peer.username);
     if (!current_room) {
         throw ProtocolException("You are not in a room", "send_message_to_current_room");
     }
 
-    let peer_recipients = this._get_room_peers(current_room);
+    let peer_recipients = this.get_room_peers(current_room);
     peer_recipients.delete(peer);
     return peer_recipients;
+}
+
+server.start_match = function(room_name) {
+
 }
 
 server.start();
