@@ -1,59 +1,41 @@
-extends Node2D
+extends CharacterBody2D
 
-### Config
+@export var walkspeed = 320
+##Pixels per second
+@export var acceleration = 640
+##Pixels per second
+@export var deceleration = 640
 
-##Pixels per tick
-@export var walkspeed: float = 8
-@export var gravity: float = 0.5
+@export var jump = 250
+@export var gravity = 5
+@export var terminal_velocity = 400
 
-### Activos
+var speed = 0
+var walk_direction = 1
 
-var velocity_y: float = 0
-var velocity_x: float = 0
+func _ready() -> void:
+	velocity.y += 100
 
-func _physics_process(delta):
+func _physics_process(delta: float) -> void:
 	
-	print("Checks started")
+	var on_floor = is_on_floor()
 	
-	# AGONY
-	# collisiones
+	if Input.is_action_pressed("walk_right"):
+		walk_direction = 1
+		speed = clamp(speed + (acceleration * delta), 0, walkspeed)
+	elif Input.is_action_pressed("walk_left"):
+		walk_direction = -1
+		speed = clamp(speed + (acceleration * delta), 0, walkspeed)
+	else:
+		speed = clamp(speed - (deceleration * delta), 0, walkspeed)
 	
-	var down = false
-	var up = false
-	var right = false
-	var left = false
+	if Input.is_action_pressed("jump") and on_floor:
+		velocity.y -= jump
 	
-	$Hipcast.target_position = Vector2.DOWN * velocity_y
-	$Hipcast.force_shapecast_update()
-	for i in $Hipcast.collision_result:
-		if i["point"].y > position.y:
-			down = true
+	velocity.x = speed * walk_direction
 	
-	$Hipcast.target_position = Vector2.RIGHT
-	$Hipcast.force_shapecast_update()
-	for i in $Hipcast.collision_result:
-		if i["point"].x > position.x:
-			right = true
+	if not on_floor:
+		if velocity.y <= terminal_velocity:
+			velocity.y += gravity
 	
-	$Hipcast.target_position = Vector2.LEFT
-	$Hipcast.force_shapecast_update()
-	for i in $Hipcast.collision_result:
-		if i["point"].x <= position.x:
-			left = true
-	
-	$Hipcast.target_position = Vector2.UP
-	$Hipcast.force_shapecast_update()
-	for i in $Hipcast.collision_result:
-		if i["point"].y < position.y:
-			up = true
-	
-	
-	if Input.is_action_pressed("walk_left") and not left:
-		position.x -= walkspeed
-	if Input.is_action_pressed("walk_right") and not right:
-		position.x += walkspeed
-	
-	if not down:
-		if velocity_y != 8:
-			velocity_y += gravity
-		position.y += velocity_y
+	move_and_slide()
