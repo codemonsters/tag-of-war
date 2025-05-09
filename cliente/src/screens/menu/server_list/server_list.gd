@@ -35,6 +35,9 @@ func on_server_message_received(dict: Dictionary):
 		var lobby_list = dict[""]
 		for lobby in lobby_list:
 			add_lobby(lobby)
+	elif dict["cmd"] == "join_room":
+		if dict["success"] == "true":
+			get_parent().change_window(get_parent().sala_espera_admin)
 
 
 func _on_create_room_pressed() -> void:

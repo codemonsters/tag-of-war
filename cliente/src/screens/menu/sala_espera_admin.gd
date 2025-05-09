@@ -13,7 +13,7 @@ func _ready() -> void:
 	$GameDataRect/NumberPlayers.text = "Numero de jugadores:\n" + str(Globals.players_number)
 	$GameDataRect/MapName.text = "Mapa:\n" + str(Globals.map_name)
 	$GameDataRect/Gamemode.text = "Modo de juego:\n" + str(Globals.gamemode)
-	#get_parent().get_parent().server_message_recieved.connect(on_server_message_recieved)
+	get_parent().get_parent().server_message_recieved.connect(on_server_message_recieved)
 	for child in $PlayerListRect/ScrollContainer/VBoxContainer.get_children():
 		child.queue_free()
 	for name in player_names:
@@ -35,7 +35,8 @@ func _on_leave_button_pressed() -> void:
 
 
 func on_server_message_recieved(dict: Dictionary):
-	pass
+	if dict["cmd"] == "":
+		Lobby.join_game(dict["data"])
 
 func _on_listo_button_toggled(toggled_on: bool) -> void:
 	if valor_anterior == "LISTO":
@@ -60,3 +61,9 @@ func _on_change_in_player_list(button) -> void:
 		button.text = name
 		button.pressed.connect(self._on_button_pressed.bind(button))
 		$PlayerListRect/ScrollContainer/VBoxContainer.add_child(button)
+
+
+func _on_iniciar_partida_button_pressed() -> void:
+	Lobby.create_game()
+	var create_game_dict = {"cmd":"start_matchup"}
+	send_to_server.emit(JSON.stringify(create_game_dict))
