@@ -1,0 +1,42 @@
+[gd_scene load_steps=11 format=3 uid="uid://c3d0atfenyyj4"]
+
+[ext_resource type="Script" uid="uid://ckc4qtxa04o1e" path="res://entities/player/main.gd" id="1_hnbpq"]
+[ext_resource type="Script" uid="uid://c3we2j2r854p4" path="res://entities/player/state_machine.gd" id="2_ru21k"]
+[ext_resource type="Script" uid="uid://btuqfkhuaqv6i" path="res://entities/player/states/idle.gd" id="3_4v6pj"]
+[ext_resource type="Script" uid="uid://1j3qjpbgm8fl" path="res://entities/player/states/run.gd" id="4_o28kw"]
+[ext_resource type="Script" uid="uid://be5pup58ry360" path="res://entities/player/states/duck_idle.gd" id="5_ri15e"]
+[ext_resource type="Script" uid="uid://dfxmjceufu648" path="res://entities/player/states/duck_run.gd" id="6_ep5jq"]
+[ext_resource type="Script" uid="uid://biywf1mqju8a7" path="res://entities/player/states/jump.gd" id="7_wtx7f"]
+[ext_resource type="Script" uid="uid://b1chu1sxepfg7" path="res://entities/player/states/glide.gd" id="8_s6rpc"]
+[ext_resource type="Script" uid="uid://yrlpvkmvk12q" path="res://entities/player/states/fall.gd" id="9_xus3s"]
+[ext_resource type="Script" uid="uid://ba8qvkqjebusk" path="res://entities/player/states/ease_down.gd" id="10_jcv00"]
+
+[node name="Player" type="Node2D"]
+script = ExtResource("1_hnbpq")
+
+[node name="StateMachine" type="Node" parent="."]
+script = ExtResource("2_ru21k")
+
+[node name="Idle" type="Node" parent="StateMachine"]
+script = ExtResource("3_4v6pj")
+
+[node name="Run" type="Node" parent="StateMachine"]
+script = ExtResource("4_o28kw")
+
+[node name="DuckIdle" type="Node" parent="StateMachine"]
+script = ExtResource("5_ri15e")
+
+[node name="DuckRun" type="Node" parent="StateMachine"]
+script = ExtResource("6_ep5jq")
+
+[node name="Jump" type="Node" parent="StateMachine"]
+script = ExtResource("7_wtx7f")
+
+[node name="Glide" type="Node" parent="StateMachine"]
+script = ExtResource("8_s6rpc")
+
+[node name="Fall" type="Node" parent="StateMachine"]
+script = ExtResource("9_xus3s")
+
+[node name="EaseDown" type="Node" parent="StateMachine"]
+script = ExtResource("10_jcv00")
