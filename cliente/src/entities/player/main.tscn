@@ -1,6 +1,7 @@
-[gd_scene load_steps=11 format=3 uid="uid://c3d0atfenyyj4"]
+[gd_scene load_steps=13 format=3 uid="uid://c3d0atfenyyj4"]
 
 [ext_resource type="Script" uid="uid://ckc4qtxa04o1e" path="res://entities/player/main.gd" id="1_hnbpq"]
+[ext_resource type="PackedScene" uid="uid://rkj5oav0o5jv" path="res://entities/player/rig.tscn" id="2_4v6pj"]
 [ext_resource type="Script" uid="uid://c3we2j2r854p4" path="res://entities/player/state_machine.gd" id="2_ru21k"]
 [ext_resource type="Script" uid="uid://btuqfkhuaqv6i" path="res://entities/player/states/idle.gd" id="3_4v6pj"]
 [ext_resource type="Script" uid="uid://1j3qjpbgm8fl" path="res://entities/player/states/run.gd" id="4_o28kw"]
@@ -11,17 +12,24 @@
 [ext_resource type="Script" uid="uid://yrlpvkmvk12q" path="res://entities/player/states/fall.gd" id="9_xus3s"]
 [ext_resource type="Script" uid="uid://ba8qvkqjebusk" path="res://entities/player/states/ease_down.gd" id="10_jcv00"]
 
-[node name="Player" type="Node2D"]
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_4v6pj"]
+radius = 16.0
+height = 64.0
+
+[node name="Player" type="CharacterBody2D"]
 script = ExtResource("1_hnbpq")
 
-[node name="StateMachine" type="Node" parent="."]
+[node name="Hitbox" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_4v6pj")
+
+[node name="Rig" parent="." instance=ExtResource("2_4v6pj")]
+
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
 script = ExtResource("2_ru21k")
+initial_state = NodePath("Idle")
 
 [node name="Idle" type="Node" parent="StateMachine"]
 script = ExtResource("3_4v6pj")
-
-[node name="Run" type="Node" parent="StateMachine"]
-script = ExtResource("4_o28kw")
 
 [node name="DuckIdle" type="Node" parent="StateMachine"]
 script = ExtResource("5_ri15e")
@@ -40,3 +48,6 @@ script = ExtResource("9_xus3s")
 
 [node name="EaseDown" type="Node" parent="StateMachine"]
 script = ExtResource("10_jcv00")
+
+[node name="Run" type="Node" parent="StateMachine"]
+script = ExtResource("4_o28kw")
