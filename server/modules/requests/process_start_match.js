@@ -3,7 +3,8 @@
 const {ProtocolException} = require("../exceptions.js");
 
 function processStartMatchRequest(json, peer, server) {
-    var room_name = server.get_name_of_room_owned_by(peer.name);
+    // TODO: comprobar si está logeado
+    var room_name = server.get_name_of_room_owned_by(peer.username);
     if (room_name == undefined) {
         peer.ws.send(JSON.stringify({
             'cmd': 'start_match',
@@ -13,18 +14,25 @@ function processStartMatchRequest(json, peer, server) {
             }
         }));
     } else {
-        var peers = server.get_room_peers(room_name);
-        for (peer in peers) {
-            if (peer.username != peer.name) {    
-                // TODO: SEGUIR AQUÍ. Enviar un mensaje a cada peer indicando que empieza la partida y cuál es la ip y el puerto del servidor
-                peer.ws.send(JSON.stringify({
-                    'cmd': 'match_starting',
-                    'data': ''
-                }));
+        //var peers = server.get_room_peers(room_name);
+        var usernames = server.get_room_usernames(room_name);
+        for (const username of usernames) {
+
+            for (let [p, value] of server.peers) {
+                if (p.username == username) {
+                    p.ws.send(JSON.stringify({
+                        'cmd': 'start_match',
+                        'success': true,
+                        'data': {
+                            'host_ip': peer.ws.host_ip, // TODO: Corregir esto, aquí no está la IP origen del websocket
+                            'host_port': 7000
+                        }
+                    }));
+                    break;
+                }
             }
         }
     }
-    
 }
 
 module.exports = { processStartMatchRequest };

@@ -77,7 +77,7 @@ server.get_name_of_room_player_is_in = function(username) {
 }
 
 server.get_name_of_room_owned_by = function(username) {
-    const row = this.db.sqlite.prepare("SELECT name FROM rooms LEFT JOIN players on rooms.owner_player_id=players.player_id WHERE players.username=(?)").get(username);
+    const row = this.db.sqlite.prepare("SELECT name FROM rooms LEFT JOIN profiles on rooms.owner_player_id=profiles.player_id WHERE profiles.username=(?)").get(username);
     if (row == undefined) {
         return undefined;
     }
@@ -135,7 +135,6 @@ server.create_and_join_room = function(peer, roomName) {
 
     // Creamos la habitación y añadimos al propietario a la lista de jugadores
     this.db.sqlite.prepare("INSERT INTO rooms (name, owner_player_id) VALUES (?, (SELECT player_id FROM profiles WHERE username=?));").run(roomName, peer.username);
-    console.log("se crea una room");
     this.join_room(peer, roomName);
 }
 
@@ -146,7 +145,7 @@ server.join_room = function(peer, roomName) {
     if (!peer.username) {
         throw ProtocolException("Please login before joining a room", "join_room");
     }
-    if (this.get_name_of_room_owned_by(peer.username) != undefined) {
+    if (this.get_name_of_room_player_is_in(peer.username) != undefined) {
         throw ProtocolException("You are already in a room", "join_room");
     }
     if (!this._room_exists(roomName)) {
@@ -155,9 +154,9 @@ server.join_room = function(peer, roomName) {
     if (this._get_num_players_in_room(roomName) >= this.MAX_PLAYERS_PER_ROOM) {
         throw ProtocolException("The room is full", "join_room");
     }
-    console.log("se inserta en rooms_players");
     console.log(peer);
-    this.db.sqlite.prepare("INSERT INTO rooms_players (room_id, player_id) VALUES (?, (SELECT player_id FROM profiles WHERE username=?))").run(roomName, peer.username);
+    let roomId = this.db.sqlite.prepare("SELECT room_id FROM rooms WHERE name=(?)").get(roomName)['room_id'];
+    this.db.sqlite.prepare("INSERT INTO rooms_players (room_id, player_id) VALUES (?, (SELECT player_id FROM profiles WHERE username=?))").run(roomId, peer.username);
 }
 
 // 'peer' abandola la habitación (y si es el propietario, la habitación es eliminada)
@@ -228,20 +227,14 @@ server.get_room_details = function(peer, roomName) {
     room_details['players'] = this._get_usernames_in_room(roomName);
     return room_details;    
 }
-
-server.get_room_peers = function(room) {
-    let peers = new Set();
-    // select all the username
-    let rows = this.db.sqlite.prepare("SELECT username FROM players LEFT JOIN rooms_players ON players.player_id=rooms_players.player_id LEFT JOIN rooms ON rooms_players.room_id=rooms.room_id WHERE rooms.name=(?)").all(room);
-    for (row in rows) {
-        let username = row['username'];
-        for (p in this.peers) {
-            if (p.username == username) {
-                peers.add(p);
-            }
-        }
+server.get_room_usernames = function(roomName) {
+    let peers_in_room = new Set();
+    let rows = this.db.sqlite.prepare("SELECT username FROM profiles LEFT JOIN rooms_players ON profiles.player_id=rooms_players.player_id LEFT JOIN rooms ON rooms_players.room_id=rooms.room_id WHERE rooms.name=(?)").all(roomName);
+    const usernames = new Set();
+    for (const row of rows) {
+        usernames.add(row.username);
     }
-    return peers;
+    return usernames;
 }
 
 // comprueba si sería válido que el peer pueda enviar el mensaje a su habitación actual

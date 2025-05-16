@@ -367,6 +367,6 @@ Antes de que el servidor envíe la anterior respuesta, cada uno de los jugadores
 ```json
 {
     "cmd": "match_started",
-    "data": { "ip": "192.168.0.1", "port": "7000" }
+    "data": { "host_ip": "192.168.0.1", "host_port": "7000" }
 }
 ```

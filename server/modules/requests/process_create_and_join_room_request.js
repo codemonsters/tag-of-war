@@ -15,6 +15,7 @@ function processCreateAndJoinRoomRequest(json, peer, server) {
         'success': true,
         'data': { 'details': 'Room created successfully', 'room_name': roomName}
     }));
+    
     console.debug("Room '" + roomName + "' created successfully");
     // enviamos un mensaje a todos los clientes logeados informando sobre esto
     for (p in server.peers) {
