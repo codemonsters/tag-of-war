@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://rkj5oav0o5jv"]
 
-[ext_resource type="Texture2D" uid="uid://c0hhtrra10var" path="res://Generic.png" id="1_bxwal"]
+[ext_resource type="Texture2D" uid="uid://cqysx8eerhu2q" path="res://assets/cubo_verde.png" id="1_u3cgb"]
 
 [sub_resource type="Animation" id="Animation_4dl5e"]
 resource_name = "test"
@@ -19,46 +19,46 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_rvjxd"]
 _data = {
-"test": SubResource("Animation_4dl5e")
+&"test": SubResource("Animation_4dl5e")
 }
 
 [node name="Rig" type="Node2D"]
 
 [node name="Body" type="Sprite2D" parent="."]
 texture_filter = 1
-texture = ExtResource("1_bxwal")
+texture = ExtResource("1_u3cgb")
 region_enabled = true
-region_rect = Rect2(16, 0, 16, 32)
+region_rect = Rect2(32, 16, 16, 24)
 
 [node name="HandLeft" type="Sprite2D" parent="."]
 texture_filter = 1
 position = Vector2(12, 4)
-texture = ExtResource("1_bxwal")
+texture = ExtResource("1_u3cgb")
 region_enabled = true
-region_rect = Rect2(39, 5, 5, 5)
+region_rect = Rect2(56, 16, 8, 8)
 
 [node name="HandRight" type="Sprite2D" parent="."]
 texture_filter = 1
 position = Vector2(-12, 4)
-texture = ExtResource("1_bxwal")
+texture = ExtResource("1_u3cgb")
 region_enabled = true
-region_rect = Rect2(4, 5, 5, 5)
+region_rect = Rect2(16, 16, 8, 8)
 
 [node name="FootLeft" type="Sprite2D" parent="."]
 texture_filter = 1
 position = Vector2(5, 14)
-texture = ExtResource("1_bxwal")
+texture = ExtResource("1_u3cgb")
 region_enabled = true
-region_rect = Rect2(32, 44, 7, 4)
+region_rect = Rect2(48, 40, 8, 8)
 
 [node name="FootRight" type="Sprite2D" parent="."]
 texture_filter = 1
 position = Vector2(-5, 14)
-texture = ExtResource("1_bxwal")
+texture = ExtResource("1_u3cgb")
 region_enabled = true
-region_rect = Rect2(9, 44, 7, 4)
+region_rect = Rect2(24, 40, 8, 8)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
-"": SubResource("AnimationLibrary_rvjxd")
+&"": SubResource("AnimationLibrary_rvjxd")
 }
