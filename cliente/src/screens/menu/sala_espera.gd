@@ -4,11 +4,12 @@ signal connect_to_server()
 signal send_to_server(message: Variant)
 signal change_in_player_list(button)
 var valor_anterior = "LISTO"
-var admin_name = "admin" + " (admin)"
-var player_names = [admin_name]
+var player_names = []
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	var room_details_dict = {"cmd": "get_room_details", "data": { "name": Globals.room_name }}
+	send_to_server.emit(JSON.stringify(room_details_dict))
 	$AloneTab.visible = false
 	$GameDataRect/NumberPlayers.text = "Numero de jugadores:\n" + str(Globals.players_number)
 	$GameDataRect/MapName.text = "Mapa:\n" + str(Globals.map_name)
@@ -19,7 +20,6 @@ func _ready() -> void:
 	for name in player_names:
 		var button = Button.new()
 		button.text = name
-		button.pressed.connect(self._on_button_pressed.bind(button))
 		$PlayerListRect/ScrollContainer/VBoxContainer.add_child(button)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -31,19 +31,27 @@ func _process(delta: float) -> void:
 
 
 func _on_leave_button_pressed() -> void:
-	var destroy_room_dict = {"cmd": "room_destroyed", "data": { "name": Globals.room_name}}
-	send_to_server.emit(JSON.stringify(destroy_room_dict))
-	Globals.room_name = null
-	get_parent().change_window(get_parent().server_list)
+	var leave_room_dict = {"cmd": "leave_current_room"}
+	send_to_server.emit(JSON.stringify(leave_room_dict))
 
 
 func on_server_message_recieved(dict: Dictionary):
-	if dict["cmd"] == "start_match" and dict["success"]:
-		Lobby.create_game()
+	if dict["cmd"] == "match_started":
+		Lobby.join_game(dict["data"]["host_ip"])
+	elif dict["cmd"] == "leave_current_room" and dict["success"]:
+		Globals.room_name = null
+		get_parent().change_window(get_parent().server_list)
 	elif dict["cmd"] == "player_joined_current_room":
 		player_names.append(dict["data"]["username"])
-	else:
-		print(dict)
+	elif dict["cmd"] == "get_room_details" and dict["success"]:
+		player_names.append(dict["data"]["owner"])
+		player_names.append_array(dict["data"]["players"])
+	elif dict["cmd"] == "player_kicked_from_current_room":
+		if dict["data"]["username"] == Globals.username:
+			Globals.room_name = null
+			get_parent().change_window(get_parent().server_list)
+		else:
+			player_names.erase(dict["data"]["username"])
 
 func _on_listo_button_toggled(toggled_on: bool) -> void:
 	if valor_anterior == "LISTO":
@@ -52,26 +60,3 @@ func _on_listo_button_toggled(toggled_on: bool) -> void:
 	else:
 		$ListoButton.text = "LISTO"
 		valor_anterior = "LISTO"
-		
-func _on_button_pressed(button: Button):
-	if button.text == admin_name:
-		pass
-	else:
-		var kick_player_dict = {"cmd": "kick_from_current_room", "data": { "username": button.text }}
-		send_to_server.emit(JSON.stringify(kick_player_dict))
-		player_names.erase(button.text)
-		change_in_player_list.emit(button)
-
-func _on_change_in_player_list(button) -> void:
-	for child in $PlayerListRect/ScrollContainer/VBoxContainer.get_children():
-		child.queue_free()
-	for name in player_names:
-		button = Button.new()
-		button.text = name
-		button.pressed.connect(self._on_button_pressed.bind(button))
-		$PlayerListRect/ScrollContainer/VBoxContainer.add_child(button)
-
-
-func _on_iniciar_partida_button_pressed() -> void:
-	var create_game_dict = {"cmd":"start_match"}
-	send_to_server.emit(JSON.stringify(create_game_dict))

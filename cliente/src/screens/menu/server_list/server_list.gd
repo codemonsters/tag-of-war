@@ -36,8 +36,10 @@ func on_server_message_received(dict: Dictionary):
 		for lobby in lobby_list:
 			add_lobby(lobby)
 	elif dict["cmd"] == "join_room":
-		if dict["success"] == "true":
+		if dict["success"]:
 			get_parent().change_window(get_parent().sala_espera_admin)
+		else:
+			Globals.room_name = null
 
 
 func _on_create_room_pressed() -> void:

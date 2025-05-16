@@ -1,3 +1,230 @@
-[gd_scene format=3 uid="uid://basmda87k66qy"]
+[gd_scene load_steps=7 format=3 uid="uid://clmwm2mh61u0i"]
 
-[node name="SalaEspera" type="Node2D"]
+[ext_resource type="Script" uid="uid://0o7s00dvdkgb" path="res://screens/menu/sala_espera.gd" id="1_bvn1b"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_6x0wv"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pt2k2"]
+bg_color = Color(0.739789, 3.54964e-06, 3.85046e-07, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nauep"]
+bg_color = Color(0.297021, 0.516611, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ro748"]
+bg_color = Color(0.842613, 0.000176134, 9.66465e-05, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_82ml5"]
+bg_color = Color(0.402854, 0.691491, 0, 1)
+
+[node name="SalaEspera" type="ColorRect"]
+offset_right = 1280.0
+offset_bottom = 720.0
+color = Color(0.301961, 0.301961, 0.301961, 1)
+script = ExtResource("1_bvn1b")
+
+[node name="TitleBackground" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -189.0
+offset_top = -350.0
+offset_right = 191.0
+offset_bottom = -260.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.188235, 0.188235, 0.188235, 1)
+
+[node name="Title" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -174.0
+offset_top = 20.0
+offset_right = 176.0
+offset_bottom = 90.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 50
+text = "Sala de Espera"
+horizontal_alignment = 1
+
+[node name="Code" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = 207.0
+offset_top = 33.0
+offset_right = 621.0
+offset_bottom = 102.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 35
+text = "Code:"
+horizontal_alignment = 1
+
+[node name="LeaveButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 40.0
+offset_top = 615.0
+offset_right = 178.0
+offset_bottom = 686.0
+text = "ABANDONAR"
+
+[node name="PlayerListRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -595.0
+offset_top = -210.0
+offset_right = -31.0
+offset_bottom = 169.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.188235, 0.188235, 0.188235, 1)
+
+[node name="PlayerListTitle" type="Label" parent="PlayerListRect"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -262.0
+offset_top = 18.0
+offset_right = 2.0
+offset_bottom = 60.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 30
+text = "Jugadores Activos:"
+horizontal_alignment = 1
+
+[node name="ScrollContainer" type="ScrollContainer" parent="PlayerListRect"]
+layout_mode = 0
+offset_left = 54.0
+offset_top = 84.0
+offset_right = 512.0
+offset_bottom = 355.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PlayerListRect/ScrollContainer"]
+custom_minimum_size = Vector2(450, 100)
+layout_mode = 2
+
+[node name="GameDataRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 35.0
+offset_top = -210.0
+offset_right = 599.0
+offset_bottom = 169.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.188235, 0.188235, 0.188235, 1)
+
+[node name="PlayerListTitle2" type="Label" parent="GameDataRect"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -182.0
+offset_top = 18.0
+offset_right = 186.0
+offset_bottom = 88.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 30
+text = "Parámetros de la Partida:"
+horizontal_alignment = 1
+
+[node name="NumberPlayers" type="Label" parent="GameDataRect"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -182.0
+offset_top = 78.0
+offset_right = 186.0
+offset_bottom = 148.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 30
+text = "Numero de jugadores: "
+horizontal_alignment = 1
+
+[node name="Gamemode" type="Label" parent="GameDataRect"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -182.0
+offset_top = 178.0
+offset_right = 186.0
+offset_bottom = 248.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 30
+text = "Modo de juego: "
+horizontal_alignment = 1
+
+[node name="MapName" type="Label" parent="GameDataRect"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -182.0
+offset_top = 278.0
+offset_right = 186.0
+offset_bottom = 348.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 30
+text = "Mapa:"
+horizontal_alignment = 1
+
+[node name="ListoButton" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -180.0
+offset_top = 255.0
+offset_right = -42.0
+offset_bottom = 326.0
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_colors/font_hover_pressed_color = Color(0.611765, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 0.376471, 0, 1)
+theme_override_colors/font_color = Color(2.97809e-06, 0.377955, 2.40654e-07, 1)
+theme_override_colors/font_focus_color = Color(0, 0.376471, 0, 1)
+theme_override_colors/font_pressed_color = Color(0.612299, 8.18223e-07, 1.44392e-07, 1)
+theme_override_font_sizes/font_size = 20
+theme_override_styles/focus = SubResource("StyleBoxEmpty_6x0wv")
+theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_pt2k2")
+theme_override_styles/hover = SubResource("StyleBoxFlat_nauep")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_ro748")
+theme_override_styles/normal = SubResource("StyleBoxFlat_82ml5")
+toggle_mode = true
+text = "LISTO"
+
+[node name="AloneTab" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -491.0
+offset_top = 253.0
+offset_right = -151.0
+offset_bottom = 295.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 30
+text = "De momento estás solo"
+horizontal_alignment = 1
+
+[connection signal="change_in_player_list" from="." to="." method="_on_change_in_player_list"]
+[connection signal="pressed" from="LeaveButton" to="." method="_on_leave_button_pressed"]
+[connection signal="toggled" from="ListoButton" to="." method="_on_listo_button_toggled"]

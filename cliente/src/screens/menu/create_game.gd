@@ -20,6 +20,7 @@ infectado_descripcion]
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	$ChooseMap/SelectName/ErrorMissingName.visible = false
 	$CreateGame.visible = true
 	$ChooseMap.visible = false
 	$CreateGame/GamemodeNameTxt.text = gamemodes[gamemodes_index]
@@ -40,9 +41,13 @@ func _on_button_next_pressed() -> void:
 		$CreateGame.visible = false
 		$ChooseMap.visible = true
 	else:
-		var room_name = "room1"
-		var create_room_dict = {"cmd": "create_and_join_room", "data": {"name": room_name}}
-		send_to_server.emit(JSON.stringify(create_room_dict))
+		$ChooseMap/SelectName/ErrorMissingName.visible = false
+		if $ChooseMap/SelectName/RoomName.text != "":
+			Globals.room_name = $ChooseMap/SelectName/RoomName.text
+			var create_room_dict = {"cmd": "create_and_join_room", "data": {"name": Globals.room_name}}
+			send_to_server.emit(JSON.stringify(create_room_dict))
+		else:
+			$ChooseMap/SelectName/ErrorMissingName.visible = true
 
 
 func _on_button_go_back_pressed() -> void:
