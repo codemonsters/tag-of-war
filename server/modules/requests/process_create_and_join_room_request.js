@@ -6,7 +6,7 @@ function processCreateAndJoinRoomRequest(json, peer, server) {
     if (data == null) {
         throw new ProtocolException("Missing data object in create room request", "create_room");
     }
-
+    
     const roomName = typeof(data['name']) === 'string' ? data['name'] : '';
     console.log("Create room request received. Room name = " + roomName);
     server.create_and_join_room(peer, roomName);

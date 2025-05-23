@@ -165,6 +165,38 @@ Inmediatamente después de que un jugador entre en una habitación, el servidor 
 }
 ```
 
+### get_room_names
+
+Solicita al servidor una lista con los nombres de habitaciones que actualmente existen.
+
+Solicitud de ejemplo:
+
+```json
+{
+    "cmd": "get_room_names"
+}
+```
+
+Respuesta OK:
+
+```json
+{
+    "cmd": "get_room_names",
+    "success": true,
+    "data": { "rooms_names": ["room1", "room2", "room3"] }
+}
+```
+
+Respuesta con error:
+
+```json
+{
+    "cmd": "get_room_names",
+    "success": false,
+    "data": { "details": "Please login to get the list of rooms" }
+}
+```
+
 ### leave_current_room
 
 Los jugadores que estén en una habitación pueden abandonarla enviando este mensaje. Si quien abandona es el propietario, la habitación será eliminada (ver más abajo).
