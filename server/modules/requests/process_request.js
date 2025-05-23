@@ -1,9 +1,10 @@
-_processLoginRequest = require("./process_login_request.js").processLoginRequest;
 _processCreateAndJoinRoomRequest = require("./process_create_and_join_room_request.js").processCreateAndJoinRoomRequest;
-_processJoinRoomRequest = require("./process_join_room_request.js").processJoinRoomRequest;
-_processLeaveCurrentRoomRequest = require("./process_leave_current_room_request.js").processLeaveCurrentRoomRequest;
-_processKickFromCurrentRoomRequest = require("./process_kick_from_current_room_request.js").processKickFromCurrentRoomRequest
 _processGetRoomDetailsRequest = require("./process_get_room_details_request.js").processGetRoomDetailsRequest;
+_processGetRoomNamesRequest = require("./process_get_room_names_request.js").processGetRoomNamesRequest;
+_processJoinRoomRequest = require("./process_join_room_request.js").processJoinRoomRequest;
+_processKickFromCurrentRoomRequest = require("./process_kick_from_current_room_request.js").processKickFromCurrentRoomRequest
+_processLeaveCurrentRoomRequest = require("./process_leave_current_room_request.js").processLeaveCurrentRoomRequest;
+_processLoginRequest = require("./process_login_request.js").processLoginRequest;
 _processSendMessageToCurrentRoom = require("./process_send_message_to_current_room.js").processSendMessageToCurrentRoomRequest;
 _processStartMatch = require("./process_start_match.js").processStartMatchRequest;
 
@@ -28,6 +29,10 @@ function processRequest(msg, peer, server) {
         case 'get_room_details':
             console.debug('Peer wants to get room details');
             _processGetRoomDetailsRequest(json, peer, server);
+            break;
+        case 'get_room_names':
+            console.debug('Peer wants to get room names');
+            _processGetRoomNamesRequest(json, peer, server);
             break;
         case 'join_room':
             console.debug('Peer wants to join a room');
