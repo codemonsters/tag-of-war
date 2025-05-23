@@ -1,6 +1,6 @@
 _processCreateAndJoinRoomRequest = require("./process_create_and_join_room_request.js").processCreateAndJoinRoomRequest;
 _processGetRoomDetailsRequest = require("./process_get_room_details_request.js").processGetRoomDetailsRequest;
-_processGetRoomNamesRequest = require("./process_get_room_names_request.js").processGetRoomNamesRequest;
+_processGetRoomsRequest = require("./process_get_rooms_request.js").processGetRoomsRequest;
 _processJoinRoomRequest = require("./process_join_room_request.js").processJoinRoomRequest;
 _processKickFromCurrentRoomRequest = require("./process_kick_from_current_room_request.js").processKickFromCurrentRoomRequest
 _processLeaveCurrentRoomRequest = require("./process_leave_current_room_request.js").processLeaveCurrentRoomRequest;
@@ -30,9 +30,9 @@ function processRequest(msg, peer, server) {
             console.debug('Peer wants to get room details');
             _processGetRoomDetailsRequest(json, peer, server);
             break;
-        case 'get_room_names':
+        case 'get_rooms':
             console.debug('Peer wants to get room names');
-            _processGetRoomNamesRequest(json, peer, server);
+            _processGetRoomsRequest(json, peer, server);
             break;
         case 'join_room':
             console.debug('Peer wants to join a room');
