@@ -84,7 +84,7 @@ server.get_name_of_room_owned_by = function(username) {
     return row['name'];
 }
 
-server._get_room_names = function() {
+server.get_room_names = function() {
     const rows = this.db.sqlite.prepare("SELECT name FROM rooms").all();
     return rows.map(row => row['name']);
 }
