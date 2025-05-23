@@ -3,10 +3,10 @@
 [ext_resource type="Script" uid="uid://ckc4qtxa04o1e" path="res://entities/player/main.gd" id="1_hnbpq"]
 [ext_resource type="PackedScene" uid="uid://rkj5oav0o5jv" path="res://entities/player/rig.tscn" id="2_4v6pj"]
 [ext_resource type="Script" uid="uid://c3we2j2r854p4" path="res://entities/player/state_machine.gd" id="2_ru21k"]
-[ext_resource type="Script" uid="uid://btuqfkhuaqv6i" path="res://entities/player/states/idle.gd" id="3_4v6pj"]
+[ext_resource type="Script" uid="uid://btuqfkhuaqv6i" path="res://entities/player/states/Idle.gd" id="3_4v6pj"]
 [ext_resource type="Script" uid="uid://1j3qjpbgm8fl" path="res://entities/player/states/run.gd" id="4_o28kw"]
-[ext_resource type="Script" uid="uid://be5pup58ry360" path="res://entities/player/states/duck_idle.gd" id="5_ri15e"]
-[ext_resource type="Script" uid="uid://dfxmjceufu648" path="res://entities/player/states/duck_run.gd" id="6_ep5jq"]
+[ext_resource type="Script" uid="uid://be5pup58ry360" path="res://entities/player/states/DuckIdle.gd" id="5_ri15e"]
+[ext_resource type="Script" uid="uid://dfxmjceufu648" path="res://entities/player/states/DuckRun.gd" id="6_ep5jq"]
 [ext_resource type="Script" uid="uid://biywf1mqju8a7" path="res://entities/player/states/jump.gd" id="7_wtx7f"]
 [ext_resource type="Script" uid="uid://b1chu1sxepfg7" path="res://entities/player/states/glide.gd" id="8_s6rpc"]
 [ext_resource type="Script" uid="uid://yrlpvkmvk12q" path="res://entities/player/states/fall.gd" id="9_xus3s"]
@@ -30,6 +30,7 @@ initial_state = NodePath("Idle")
 
 [node name="Idle" type="Node" parent="StateMachine"]
 script = ExtResource("3_4v6pj")
+animation_id = "Idle"
 
 [node name="DuckIdle" type="Node" parent="StateMachine"]
 script = ExtResource("5_ri15e")

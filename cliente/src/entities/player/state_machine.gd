@@ -11,6 +11,10 @@ func ready():
 			child.Transition.connect(on_child_transition)
 
 func _process(delta: float):
+#	if Input.is_action_pressed("walk_left"):
+#		on_child_transition(current_state, "Run")
+#	if Input.is_action_just_pressed("walk_right"):
+#		on_child_transition(current_state, "")
 	if current_state:
 		current_state.process(delta)
 		
@@ -22,7 +26,7 @@ func _physics_process(delta: float):
 	if current_state:
 		current_state.Physics_process(delta)
 
-func on_child_transition(state, new_state_name):
+func on_child_transition(state : State, new_state_name : String):
 	if state != current_state:
 		return
 	var new_state = state.get(new_state_name)
