@@ -11,7 +11,7 @@ function processCreateAndJoinRoomRequest(json, peer, server) {
     console.log("Create room request received. Room name = " + roomName);
     server.create_and_join_room(peer, roomName);
     peer.ws.send(JSON.stringify({
-        'cmd': 'create_room',
+        'cmd': 'create_and_join_room',
         'success': true,
         'data': { 'details': 'Room created successfully', 'room_name': roomName}
     }));
