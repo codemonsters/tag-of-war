@@ -92,6 +92,7 @@ func _on_button_pressed() -> void:
 func on_server_message_received(dict: Dictionary):
 	if dict["cmd"] == "create_and_join_room":
 		if dict["success"]:
+			print("room created successfully")
 			get_parent().change_window(get_parent().sala_espera_admin)
 		else:
 			printerr(dict["data"]["details"])

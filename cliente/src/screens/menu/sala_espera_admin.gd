@@ -9,11 +9,11 @@ var player_names = [admin_name]
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	get_parent().get_parent().server_message_received.connect(on_server_message_received)
 	$AloneTab.visible = false
 	$GameDataRect/NumberPlayers.text = "Numero de jugadores:\n" + str(Globals.players_number)
 	$GameDataRect/MapName.text = "Mapa:\n" + str(Globals.map_name)
 	$GameDataRect/Gamemode.text = "Modo de juego:\n" + str(Globals.gamemode)
-	get_parent().get_parent().server_message_recieved.connect(on_server_message_recieved)
 	for child in $PlayerListRect/ScrollContainer/VBoxContainer.get_children():
 		child.queue_free()
 	for name in player_names:
@@ -37,13 +37,12 @@ func _on_leave_button_pressed() -> void:
 	get_parent().change_window(get_parent().server_list)
 
 
-func on_server_message_recieved(dict: Dictionary):
+func on_server_message_received(dict: Dictionary):
 	if dict["cmd"] == "start_match" and dict["success"]:
 		Lobby.create_game()
 	elif dict["cmd"] == "player_joined_current_room":
 		player_names.append(dict["data"]["username"])
-	else:
-		print(dict)
+
 
 func _on_listo_button_toggled(toggled_on: bool) -> void:
 	if valor_anterior == "LISTO":
