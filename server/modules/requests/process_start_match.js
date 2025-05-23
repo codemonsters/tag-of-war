@@ -14,7 +14,6 @@ function processStartMatchRequest(json, peer, server) {
             }
         }));
     } else {
-        //var peers = server.get_room_peers(room_name);
         var usernames = server.get_room_usernames(room_name);
         for (const username of usernames) {
 
@@ -24,7 +23,7 @@ function processStartMatchRequest(json, peer, server) {
                         'cmd': 'start_match',
                         'success': true,
                         'data': {
-                            'host_ip': peer.ws.host_ip, // TODO: Corregir esto, aquí no está la IP origen del websocket
+                            'host_ip': peer.ip_address,
                             'host_port': 7000
                         }
                     }));
