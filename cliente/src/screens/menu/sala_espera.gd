@@ -8,6 +8,7 @@ var player_names = []
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	Globals.players_number = 0
 	var room_details_dict = {"cmd": "get_room_details", "data": { "name": Globals.room_name }}
 	send_to_server.emit(JSON.stringify(room_details_dict))
 	$AloneTab.visible = false
@@ -38,20 +39,25 @@ func _on_leave_button_pressed() -> void:
 func on_server_message_recieved(dict: Dictionary):
 	if dict["cmd"] == "match_started":
 		Lobby.join_game(dict["data"]["host_ip"])
+		get_parent().get_parent().change_screen(get_parent().get_parent().game_scene, true, true)
 	elif dict["cmd"] == "leave_current_room" and dict["success"]:
 		Globals.room_name = null
 		get_parent().change_window(get_parent().server_list)
 	elif dict["cmd"] == "player_joined_current_room":
 		player_names.append(dict["data"]["username"])
+		Globals.players_number += 1
 	elif dict["cmd"] == "get_room_details" and dict["success"]:
 		player_names.append(dict["data"]["owner"])
 		player_names.append_array(dict["data"]["players"])
+		Globals.players_number += len(dict["data"]["players"])
 	elif dict["cmd"] == "player_kicked_from_current_room":
 		if dict["data"]["username"] == Globals.username:
 			Globals.room_name = null
 			get_parent().change_window(get_parent().server_list)
+			Globals.players_number = 0
 		else:
 			player_names.erase(dict["data"]["username"])
+			Globals.players_number -= 1
 
 func _on_listo_button_toggled(toggled_on: bool) -> void:
 	if valor_anterior == "LISTO":

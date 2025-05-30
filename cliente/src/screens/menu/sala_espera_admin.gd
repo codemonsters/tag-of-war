@@ -9,6 +9,7 @@ var player_names = [admin_name]
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	Globals.players_number = 1
 	get_parent().get_parent().server_message_received.connect(on_server_message_received)
 	$AloneTab.visible = false
 	$GameDataRect/NumberPlayers.text = "Numero de jugadores:\n" + str(Globals.players_number)
@@ -34,14 +35,17 @@ func _on_leave_button_pressed() -> void:
 	var destroy_room_dict = {"cmd": "room_destroyed", "data": { "name": Globals.room_name}}
 	send_to_server.emit(JSON.stringify(destroy_room_dict))
 	Globals.room_name = null
+	Globals.players_number = 0 
 	get_parent().change_window(get_parent().server_list)
 
 
 func on_server_message_received(dict: Dictionary):
 	if dict["cmd"] == "start_match" and dict["success"]:
 		Lobby.create_game()
+		get_parent().get_parent().change_screen(get_parent().get_parent().game_scene, true, true)
 	elif dict["cmd"] == "player_joined_current_room":
 		player_names.append(dict["data"]["username"])
+		Globals.players_number += 1
 
 
 func _on_listo_button_toggled(toggled_on: bool) -> void:
@@ -60,6 +64,8 @@ func _on_button_pressed(button: Button):
 		send_to_server.emit(JSON.stringify(kick_player_dict))
 		player_names.erase(button.text)
 		change_in_player_list.emit(button)
+		Globals.players_number -= 1
+
 
 func _on_change_in_player_list(button) -> void:
 	for child in $PlayerListRect/ScrollContainer/VBoxContainer.get_children():

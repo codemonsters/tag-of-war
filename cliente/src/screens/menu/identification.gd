@@ -64,7 +64,7 @@ func _on_btn_password_pressed() -> void:
 
 
 func on_server_message_received(dict: Dictionary):
-	if dict["cmd"] == "logged_in":
+	if dict["cmd"] == "login":
 		if dict["success"]:
 			print("logged in successfully")
 			connecting_as = "none"
