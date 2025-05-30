@@ -12,9 +12,9 @@ function processKickFromCurrentRoomRequest(json, peer, server) {
     peer.ws.send(JSON.stringify({
         'cmd': 'kick_from_current_room',
         'success': true,
-        'data': { 'details': `Username "${username}" was kicked from room "${server._current_room_name_of(peer.username)}"`}
+        'data': { 'details': `Username "${username}" was kicked from room "${server.get_name_of_room_player_is_in(peer.username)}"`}
     }));
-    console.debug(`Username "${username}" was kicked from room "${server._current_room_name_of(peer.username)}"`);
+    console.debug(`Username "${username}" was kicked from room "${server.get_name_of_room_player_is_in(peer.username)}"`);
 }
 
 module.exports = { processKickFromCurrentRoomRequest };

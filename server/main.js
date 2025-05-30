@@ -6,10 +6,11 @@ const {ServerBaseException, ProtocolException} = require("./modules/exceptions.j
 const {getFirstNonLocalIPAddress} = require("./modules/aux.js");
 const {server} = require("./modules/server.js");
 
-wss.on('connection', function connection(ws) {
+wss.on('connection', function connection(ws, req) {
     try {
         peer = server.connect_peer_by_websocket(ws);
-        console.log(`Peer connected (id: ${peer.id})`);
+        peer.ip_address = req.socket.remoteAddress.replace('::ffff:', '');
+        console.log(`Peer connected (id: ${peer.id}, ip addres: ${peer.ip_address})`);
     } catch(ex) {
         if (ex instanceof ProtocolException) {
             peer.ws.send(JSON.stringify({

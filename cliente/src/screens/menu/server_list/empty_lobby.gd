@@ -13,5 +13,6 @@ func _process(delta: float) -> void:
 
 
 func _on_pressed() -> void:
+	Globals.room_name = get_node("ServerName").text
 	var join_room = {"cmd": "join_room", "data": { "name": get_node("ServerName").text}}
 	send_to_server.emit(JSON.stringify(join_room))

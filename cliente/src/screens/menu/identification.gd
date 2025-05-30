@@ -36,6 +36,7 @@ func _on_btn_connect_guest_pressed() -> void:
 		$ErrorMessageLength.visible = true
 	else:
 		connecting_as = "guest"
+		Globals.username = Guest_username
 		var login_dict = {"cmd":"login", "data": {"username": Guest_username}}
 		#get_parent().change_window(server_list)
 		connect_to_server.emit()
@@ -47,6 +48,7 @@ func _on_btn_connect_account_pressed() -> void:
 	var account_username = str($TxtAccountUser.get_text())
 	var account_password = str($TxtPassword.get_text())
 	connecting_as = "account"
+	Globals.username = account_username
 	var login_dict = {"cmd":"login", "data": {"username": account_username, "password": account_password}}
 	connect_to_server.emit()
 	await get_tree().create_timer(1).timeout
@@ -68,8 +70,10 @@ func on_server_message_received(dict: Dictionary):
 			connecting_as = "none"
 			get_parent().change_window(server_list)
 		elif connecting_as == "guest":
+			Globals.username = null
 			$ErrorMessageUsed.visible = true
 			$ErrorMessageUsed.text = "Error: Invalid Username \n" + dict["data"]["details"]
 		elif connecting_as == "account":
+			Globals.username = null
 			$ErrorMessageUserAccount.visible = true
 			$ErrorMessagePasswordAccount.visible = true
