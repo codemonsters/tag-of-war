@@ -1,4 +1,3 @@
-// procesa mensajes json con el campo cmd = 'create_room'
 const {ProtocolException} = require("../exceptions.js");
 
 function processCreateAndJoinRoomRequest(json, peer, server) {

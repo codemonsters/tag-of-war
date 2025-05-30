@@ -1,6 +1,5 @@
 const {NotImplementedException, ProtocolException} = require("../exceptions.js");
 
-// procesa mensajes json con el campo cmd = 'login'
 function processLoginRequest(json, peer, server) {
     const data = typeof(json['data']) === 'object' ? json['data'] : null;
     if (data == null) {
