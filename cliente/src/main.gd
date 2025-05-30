@@ -12,6 +12,7 @@ var wsc = WebSocketClient.new()
 var fade_duration = 1.0
 var screen_transition_duration = 1.0
 var menu_scene = preload("res://screens/menu/main.tscn")
+var game_scene = preload("res://screens/game/main.tscn")
 var modal_window = preload("res://misc/modal_window.tscn")
 
 signal server_message_received(dict: Dictionary)

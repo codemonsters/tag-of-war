@@ -12,6 +12,8 @@ const PORT = 7000
 const DEFAULT_SERVER_IP = "127.0.0.1" # IPv4 localhost
 const MAX_CONNECTIONS = 20
 
+@onready var peer = ENetMultiplayerPeer.new()
+
 # This will contain player info for every player,
 # with the keys being each player's unique IDs.
 var players = {}
@@ -37,7 +39,6 @@ func _ready():
 func join_game(address = ""):
 	if address.is_empty():
 		address = DEFAULT_SERVER_IP
-	var peer = ENetMultiplayerPeer.new()
 	var error = peer.create_client(address, PORT)
 	if error:
 		return error
@@ -45,7 +46,6 @@ func join_game(address = ""):
 
 
 func create_game():
-	var peer = ENetMultiplayerPeer.new()
 	var error = peer.create_server(PORT, MAX_CONNECTIONS)
 	if error:
 		return error
