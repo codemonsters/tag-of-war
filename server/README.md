@@ -189,27 +189,19 @@ Respuesta OK:
                 {
                     "room_name": "room1",
                     "owner": "matador53",
-                    "number_of_players": 3,
-                    "map": "map1",
-                    "mode": "classic",
-                    "playing": false,
-                    "owner_ip": "192.168.0.1",
-                    "owner_port": "7000"
+                    "number_of_players": 3
                 },
                 {
                     "room_name": "test_room",
                     "owner": "player43",
-                    "number_of_players": 1,
-                    "map": "map1",
-                    "mode": "infection",
-                    "playing": true,
-                    "owner_ip": "192.168.0.2",
-                    "owner_port": "7000"
+                    "number_of_players": 1
                 }
             ]
         }
 }
 ```
+
+TODO: Añadir la siguiente información sobre cada habitación: "map": "map1", "mode": "classic", "playing": false, "owner_ip": "192.168.0.1", "owner_port": "7000"
 
 Respuesta con error:
 
@@ -287,15 +279,12 @@ Respuesta OK:
         "players": [
             "matador53",
             "matador54"
-        ],
-        "map": "map1",
-        "mode": "infection",
-        "playing": true,
-        "owner_ip": "192.168.0.2",
-        "owner_port": "7000"
+        ]
     }
 }
 ```
+
+TODO: Añadir los siguientes datos a la infoamación de cada habituación: "map": "map1", "mode": "infection", "playing": true, "owner_ip": "192.168.0.2", "owner_port": "7000"
 
 Respuesta con error:
 

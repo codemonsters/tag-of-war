@@ -8,6 +8,7 @@ function processGetRoomsRequest(json, peer, server) {
     for (let room_name of room_names) {
         let room_details = server.get_room_details(room_name);
         // TODO: Seguir aquí para completar el request get_rooms e implementar también el request get_room_details
+        room_details.room_name
     }
 
     peer.ws.send(JSON.stringify({

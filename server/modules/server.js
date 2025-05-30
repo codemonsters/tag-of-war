@@ -43,7 +43,7 @@ server._username_exists = function(username) {
 }
 
 server._username_format_valid = function(username) {
-    return (username.length >= 3 && username.length <= 20 && /^[a-zA-Z0-9ñÑ]+$/).test(username);
+    return username && (username.length >= 3 && username.length <= 20 && /^[a-zA-Z0-9ñÑ]+$/).test(username);
 }
 
 server.guest_login = function(peer, username) {
@@ -154,7 +154,6 @@ server.join_room = function(peer, roomName) {
     if (this._get_num_players_in_room(roomName) >= this.MAX_PLAYERS_PER_ROOM) {
         throw ProtocolException("The room is full", "join_room");
     }
-    console.log(peer);
     let roomId = this.db.sqlite.prepare("SELECT room_id FROM rooms WHERE name=(?)").get(roomName)['room_id'];
     this.db.sqlite.prepare("INSERT INTO rooms_players (room_id, player_id) VALUES (?, (SELECT player_id FROM profiles WHERE username=?))").run(roomId, peer.username);
 }
@@ -223,12 +222,19 @@ server.get_room_details = function(peer, roomName) {
         throw ProtocolException("Room not found", "get_room_details")
     }
 
-    let room_details = this.db.sqlite.prepare("SELECT name, ownner FROM rooms WHERE name=(?)").get(roomName);
-    room_details['players'] = this._get_usernames_in_room(roomName);
-    return room_details;    
+    let room_details = this.db.sqlite.prepare("SELECT rooms.name AS room_name, profiles.username AS owner FROM rooms LEFT JOIN profiles ON rooms.owner_player_id=profiles.player_id WHERE rooms.name=(?)").get(roomName);
+    let player_list = this.get_usernames_in_room(roomName);
+    response = {
+        room_name: room_details['room_name'],
+        owner: room_details['owner'],
+        players: Array.from(player_list)
+    }
+
+    console.debug(response);
+    return response;
 }
-server.get_room_usernames = function(roomName) {
-    let peers_in_room = new Set();
+
+server.get_usernames_in_room = function(roomName) {
     let rows = this.db.sqlite.prepare("SELECT username FROM profiles LEFT JOIN rooms_players ON profiles.player_id=rooms_players.player_id LEFT JOIN rooms ON rooms_players.room_id=rooms.room_id WHERE rooms.name=(?)").all(roomName);
     const usernames = new Set();
     for (const row of rows) {

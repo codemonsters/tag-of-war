@@ -8,18 +8,14 @@ function processGetRoomDetailsRequest(json, peer, server) {
         throw new ProtocolException("Missing data object in get room details request", "get_room_details");
     }
 
-    const roomName = typeof(data['name']) === 'string' ? data['name'] : '';
+    const roomName = typeof(data['room_name']) === 'string' ? data['room_name'] : '';
     console.log(`Get room details request received. Room name = "${roomName}"`);
 
     room_details = server.get_room_details(peer, roomName);
     peer.ws.send(JSON.stringify({
         'cmd': 'get_room_details',
         'success': true,
-        'data': {
-            'name': room_details.name,
-            'owner': room_details.owner,
-            'players': room_details.players
-        }
+        'data': room_details
     }));
 }
 
