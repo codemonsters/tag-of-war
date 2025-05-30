@@ -18,5 +18,6 @@ offset_bottom = 32.0
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 1)
 shape = SubResource("CapsuleShape2D_vxsfh")
+debug_color = Color(6.64204e-06, 0.589235, 0.758102, 0.42)
 
 [node name="Camera2D" type="Camera2D" parent="."]
