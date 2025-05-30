@@ -1,4 +1,3 @@
-//  procesa mensajes json con el campo cmd = 'join_room'
 const {ProtocolException} = require("../exceptions.js");
 
 function processJoinRoomRequest(json, peer, server) {
@@ -16,7 +15,7 @@ function processJoinRoomRequest(json, peer, server) {
         'data': { 'details': 'Room joined successfully', 'room_name': roomName}
     }));
     // Enviamos un mensaje a los otros jugadores de la habitación informando sobre la entrada del jugador actual
-    room_peers = server._get_room_peers(roomName);
+    room_peers = server.get_room_peers(roomName);
     for (p in room_peers) {
         if (p.username && p.username != peer.username) {
             p.ws.send(JSON.stringify({

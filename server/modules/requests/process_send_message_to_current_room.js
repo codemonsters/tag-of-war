@@ -1,5 +1,3 @@
-//  procesa mensajes json con el campo cmd = 'send_message_to_current_room'
-
 const {ProtocolException} = require("../exceptions.js");
 
 function processSendMessageToCurrentRoomRequest(json, peer, server) {

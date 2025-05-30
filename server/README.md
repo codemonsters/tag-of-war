@@ -165,6 +165,62 @@ Inmediatamente después de que un jugador entre en una habitación, el servidor 
 }
 ```
 
+### get_rooms
+
+Solicita al servidor una lista con información sobre todas las habitaciones actuales.
+
+Solicitud de ejemplo:
+
+```json
+{
+    "cmd": "get_rooms"
+}
+```
+
+Respuesta OK:
+
+```json
+{
+    "cmd": "get_rooms",
+    "success": true,
+    "data": {
+        "rooms":
+            [
+                {
+                    "room_name": "room1",
+                    "owner": "matador53",
+                    "number_of_players": 3,
+                    "map": "map1",
+                    "mode": "classic",
+                    "playing": false,
+                    "owner_ip": "192.168.0.1",
+                    "owner_port": "7000"
+                },
+                {
+                    "room_name": "test_room",
+                    "owner": "player43",
+                    "number_of_players": 1,
+                    "map": "map1",
+                    "mode": "infection",
+                    "playing": true,
+                    "owner_ip": "192.168.0.2",
+                    "owner_port": "7000"
+                }
+            ]
+        }
+}
+```
+
+Respuesta con error:
+
+```json
+{
+    "cmd": "get_rooms",
+    "success": false,
+    "data": { "details": "Please login to get the list of rooms" }
+}
+```
+
 ### leave_current_room
 
 Los jugadores que estén en una habitación pueden abandonarla enviando este mensaje. Si quien abandona es el propietario, la habitación será eliminada (ver más abajo).
@@ -215,7 +271,7 @@ Solicitud de ejemplo:
 ```json
 {
     "cmd": "get_room_details",
-    "data": { "name": "room1" }
+    "data": {"room_name": "room1"}
 }
 ```
 
@@ -226,12 +282,17 @@ Respuesta OK:
     "cmd": "get_room_details",
     "success": true,
     "data": {
-        "name": "room1",
-        "owner": "matador53",
+        "room_name": "room1",
+        "owner": "player43",
         "players": [
             "matador53",
             "matador54"
-        ]
+        ],
+        "map": "map1",
+        "mode": "infection",
+        "playing": true,
+        "owner_ip": "192.168.0.2",
+        "owner_port": "7000"
     }
 }
 ```
@@ -327,5 +388,46 @@ Tras el envío de un mensaje, el resto de los jugadores de la habitación recibi
 {
     "cmd": "room_message",
     "data": { "from": "matador53", "message": "Hello world!" }
+}
+```
+
+### start_match
+
+El propietario de una habitación debe enviar este mensaje al servidor en el momento que quiera que el juego comience.
+
+Solicitud de ejemplo:
+
+```json
+{
+    "cmd": "start_match"
+}
+```
+
+Respuesta OK:
+
+```json
+{
+    "cmd": "start_match",
+    "success": true,
+    "data": {}
+}
+```
+
+Respuesta con error:
+
+```json
+{
+    "cmd": "start_match",
+    "success": false,
+    "data": { "details": "You don't own any room" }
+}
+```
+
+Antes de que el servidor envíe la anterior respuesta, cada uno de los jugadores de la habitación recibirá un mensaje como el siguiente, en el cual se incluye la ip y el puerto al que tendrán que conectarse para unirse a la partida:
+
+```json
+{
+    "cmd": "match_started",
+    "data": { "host_ip": "192.168.0.1", "host_port": "7000" }
 }
 ```

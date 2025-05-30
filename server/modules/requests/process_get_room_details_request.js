@@ -1,8 +1,8 @@
-//  procesa mensajes json con el campo cmd = 'get_room_details'
-
 const {ProtocolException} = require("../exceptions.js");
 
 function processGetRoomDetailsRequest(json, peer, server) {
+    // TODO: Si el usuario no está logeado, enviar error pidiendo que lo haga
+    
     const data = typeof(json['data']) === 'object' ? json['data'] : null;
     if (data == null) {
         throw new ProtocolException("Missing data object in get room details request", "get_room_details");
