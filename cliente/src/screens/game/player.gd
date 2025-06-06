@@ -13,6 +13,7 @@ extends CharacterBody2D
 var speed = 0
 var walk_direction = 1
 var walljump_available = 2
+var hola = false
 
 func _ready() -> void:
 	velocity.y += 100
@@ -21,30 +22,38 @@ func _physics_process(delta: float) -> void:
 	
 	if is_on_floor():
 		walljump_available = 2
+		hola = false
 	
 	var on_floor = is_on_floor()
 	
 	var on_wall = is_on_wall()
 	
-	if Input.is_action_pressed("walk_right"):
+	if Input.is_action_just_released("jump"):
+		hola = true
+	
+	if Input.is_action_pressed("walk_right") and Input.is_action_pressed("walk_left"):
+		walk_direction = 0
+		
+	elif Input.is_action_pressed("walk_right"):
 		if walljump_available > 1:
-			if walk_direction == -1:
+			if walk_direction != 1:
 				speed = 0
 				walk_direction = 1
 			speed = clamp(speed + (acceleration * delta), 0, walkspeed)
 	elif Input.is_action_pressed("walk_left"):
 		if walljump_available > 1:
-			if walk_direction == 1:
+			if walk_direction != -1:
 				speed = 0
 				walk_direction = -1
 			speed = clamp(speed + (acceleration * delta), 0, walkspeed)
 	else:
 		speed = clamp(speed - (deceleration * delta), 0, walkspeed)
-	
+
 	if Input.is_action_pressed("jump"):
 		if on_floor:
 			velocity.y -= jump + velocity.y
-		elif is_on_wall_only() and walljump_available > 0:
+			hola = false
+		elif is_on_wall_only() and walljump_available > 0 and hola == true:
 			velocity.y -= jump + velocity.y
 			walljump_available -= 1
 			print(get_wall_normal().x)
@@ -54,6 +63,7 @@ func _physics_process(delta: float) -> void:
 			else:
 				walk_direction = -1
 				velocity.x = walkspeed * walk_direction
+			hola = false
 			
 	velocity.x = speed * walk_direction
 	
