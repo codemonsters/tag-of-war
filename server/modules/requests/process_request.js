@@ -31,7 +31,7 @@ function processRequest(msg, peer, server) {
             _processGetRoomDetailsRequest(json, peer, server);
             break;
         case 'get_rooms':
-            console.debug('Peer wants to get room names');
+            console.debug('Peer wants to get information about all the available rooms');
             _processGetRoomsRequest(json, peer, server);
             break;
         case 'join_room':

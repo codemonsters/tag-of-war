@@ -20,7 +20,7 @@ function processCreateAndJoinRoomRequest(json, peer, server) {
     for (p in server.peers) {
         if (p.username && p.username != peer.username) {
             p.ws.send(JSON.stringify({
-                'cmd': 'new_room_avaiable',
+                'cmd': 'new_room_available',
                 'data' : {
                     'name': roomName
                 }

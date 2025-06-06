@@ -89,7 +89,7 @@ Solicitud de ejemplo:
 ```json
 {
     "cmd": "create_and_join_room",
-    "data": { "name": "room1" }
+    "data": { "room_name": "room1" }
 }
 ```
 
@@ -284,7 +284,7 @@ Respuesta OK:
 }
 ```
 
-TODO: Añadir los siguientes datos a la infoamación de cada habituación: "map": "map1", "mode": "infection", "playing": true, "owner_ip": "192.168.0.2", "owner_port": "7000"
+TODO: Añadir los siguientes datos a la información de cada habituación: "map": "map1", "mode": "infection", "playing": true, "owner_ip": "192.168.0.2", "owner_port": "7000"
 
 Respuesta con error:
 
