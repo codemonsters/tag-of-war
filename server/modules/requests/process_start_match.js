@@ -12,9 +12,8 @@ function processStartMatchRequest(json, peer, server) {
             }
         }));
     } else {
-        var usernames = server.get_room_usernames(room_name);
+        var usernames = server.get_usernames_in_room(room_name);
         for (const username of usernames) {
-
             for (let [p, value] of server.peers) {
                 if (p.username == username) {
                     p.ws.send(JSON.stringify({
