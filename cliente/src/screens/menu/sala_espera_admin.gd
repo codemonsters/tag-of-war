@@ -4,7 +4,7 @@ signal connect_to_server()
 signal send_to_server(message: Variant)
 signal change_in_player_list(button)
 var valor_anterior = "LISTO"
-var admin_name = "admin" + " (admin)"
+var admin_name = Globals.username + " (admin)"
 var player_names = [admin_name]
 
 # Called when the node enters the scene tree for the first time.
@@ -35,7 +35,7 @@ func _on_leave_button_pressed() -> void:
 	var destroy_room_dict = {"cmd": "room_destroyed", "data": { "name": Globals.room_name}}
 	send_to_server.emit(JSON.stringify(destroy_room_dict))
 	Globals.room_name = null
-	Globals.players_number = 0 
+	Globals.players_number = 0
 	get_parent().change_window(get_parent().server_list)
 
 
