@@ -27,7 +27,7 @@ server.connect_peer_by_websocket = function(ws) {
 }
 
 server.disconnect_peer = function(peer) {
-    // TODO: Actualizar la base de datos para que el peer salga de la habitación (y la destruya si él es el propietario)
+    // TODO: Actualizar la base de datos para que el peer salga de la habitación (y la destruya, eche a los jugadores y demás si él es el propietario)
     this.peers.delete(peer);
 }
 
