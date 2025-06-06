@@ -44,7 +44,7 @@ func _on_button_next_pressed() -> void:
 		$ChooseMap/SelectName/ErrorMissingName.visible = false
 		if $ChooseMap/SelectName/RoomName.text != "":
 			Globals.room_name = $ChooseMap/SelectName/RoomName.text
-			var create_room_dict = {"cmd": "create_and_join_room", "data": {"name": Globals.room_name}}
+			var create_room_dict = {"cmd": "create_and_join_room", "data": {"room_name": Globals.room_name}}
 			send_to_server.emit(JSON.stringify(create_room_dict))
 		else:
 			$ChooseMap/SelectName/ErrorMissingName.visible = true
