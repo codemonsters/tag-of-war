@@ -14,11 +14,14 @@ var speed = 0
 var walk_direction = 1 #1 o -1 para cambiar el signo de la velocidad al ser multiplicado por ella
 var walljump_available = 2
 var hola = false
+var crouch = false
 
 func _ready() -> void:
 	velocity.y += 100
 
 func _physics_process(delta: float) -> void:
+	
+	print(crouch)
 	
 	if is_on_floor():
 		walljump_available = 2
@@ -50,10 +53,10 @@ func _physics_process(delta: float) -> void:
 		speed = clamp(speed - (deceleration * delta), 0, walkspeed)
 
 	if Input.is_action_pressed("jump"):
-		if on_floor:
+		if on_floor and crouch == false:
 			velocity.y -= jump + velocity.y
 			hola = false
-		elif is_on_wall_only() and walljump_available > 0 and hola == true:
+		elif is_on_wall_only() and walljump_available > 0 and hola == true and crouch == false:
 			velocity.y -= jump + velocity.y
 			walljump_available -= 1
 			print(get_wall_normal().x)
@@ -66,6 +69,15 @@ func _physics_process(delta: float) -> void:
 			hola = false
 			
 	velocity.x = speed * walk_direction
+	
+	if Input.is_action_pressed("crouch") and is_on_floor():
+		crouch = true
+		$ColorRect.size = Vector2(32, 32)
+		$ColorRect.position = Vector2(-16, 0)
+	else:
+		crouch = false
+		$ColorRect.size = Vector2(32, 64)
+		$ColorRect.position = Vector2(-16, -32)
 	
 	if not on_floor:
 		if velocity.y <= terminal_velocity:
