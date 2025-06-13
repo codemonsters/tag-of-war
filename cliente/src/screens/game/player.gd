@@ -33,7 +33,7 @@ func _physics_process(delta: float) -> void:
 	
 	if Input.is_action_pressed("walk_right") and Input.is_action_pressed("walk_left"):
 		walk_direction = 0
-		
+
 	elif Input.is_action_pressed("walk_right"):
 		if walljump_available > 1:
 			if walk_direction != 1:

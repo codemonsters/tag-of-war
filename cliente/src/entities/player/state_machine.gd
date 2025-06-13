@@ -11,12 +11,16 @@ func ready():
 			child.Transition.connect(on_child_transition)
 
 func _process(delta: float):
-#	if Input.is_action_pressed("walk_left"):
-#		on_child_transition(current_state, "Run")
-#	if Input.is_action_just_pressed("walk_right"):
-#		on_child_transition(current_state, "")
+	if Input.is_action_pressed("walk_left"):
+		$Run.run_direction = -1
+		on_child_transition(current_state, "Run")
+	if Input.is_action_pressed("walk_right"):
+		$Run.run_direction = 1
+		on_child_transition(current_state, "Run")
+	if Input.is_action_pressed("jump"):
+		on_child_transition(current_state, "Jump")
 	if current_state:
-		current_state.process(delta)
+		current_state.Process(delta)
 		
 	if initial_state:
 		initial_state.Enter()
