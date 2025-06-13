@@ -13,6 +13,6 @@ script = ExtResource("1_ldyrl")
 [node name="Players" type="Node" parent="."]
 
 [node name="Player" parent="Players" instance=ExtResource("2_ldyrl")]
-position = Vector2(431, 554)
+position = Vector2(607, 671)
 
 [node name="Hud" parent="." instance=ExtResource("3_6xclv")]

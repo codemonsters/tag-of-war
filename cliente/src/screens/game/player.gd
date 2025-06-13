@@ -11,7 +11,7 @@ extends CharacterBody2D
 @export var terminal_velocity = 600
 
 var speed = 0
-var walk_direction = 1
+var walk_direction = 1 #1 o -1 para cambiar el signo de la velocidad al ser multiplicado por ella
 var walljump_available = 2
 var hola = false
 
