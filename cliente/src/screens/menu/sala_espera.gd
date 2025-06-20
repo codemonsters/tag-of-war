@@ -38,7 +38,6 @@ func _on_leave_button_pressed() -> void:
 
 func on_server_message_recieved(dict: Dictionary):
 	if dict["cmd"] == "match_started":
-		Lobby.join_game(dict["data"]["host_ip"])
 		get_parent().get_parent().change_screen(get_parent().get_parent().game_scene, true, true)
 	elif dict["cmd"] == "leave_current_room" and dict["success"]:
 		Globals.room_name = null

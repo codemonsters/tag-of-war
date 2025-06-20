@@ -41,7 +41,6 @@ func _on_leave_button_pressed() -> void:
 
 func on_server_message_received(dict: Dictionary):
 	if dict["cmd"] == "start_match" and dict["success"]:
-		Lobby.create_game()
 		get_parent().get_parent().change_screen(get_parent().get_parent().game_scene, true, true)
 	elif dict["cmd"] == "player_joined_current_room":
 		player_names.append(dict["data"]["username"])
@@ -79,4 +78,5 @@ func _on_change_in_player_list(button) -> void:
 
 func _on_iniciar_partida_button_pressed() -> void:
 	var create_game_dict = {"cmd":"start_match"}
+	$LANBootstrapper.host()
 	send_to_server.emit(JSON.stringify(create_game_dict))

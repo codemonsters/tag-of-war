@@ -1,6 +1,7 @@
-[gd_scene load_steps=7 format=3 uid="uid://k13o7p4xjv3i"]
+[gd_scene load_steps=8 format=3 uid="uid://k13o7p4xjv3i"]
 
 [ext_resource type="Script" uid="uid://d1a5w3n5falu6" path="res://screens/menu/sala_espera_admin.gd" id="1_qhs5g"]
+[ext_resource type="Script" uid="uid://tgc2rf6m8ho3" path="res://screens/menu/lan_bootstrapper.gd" id="2_v01wp"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_6x0wv"]
 
@@ -241,6 +242,9 @@ offset_top = 616.0
 offset_right = 1078.0
 offset_bottom = 684.0
 text = "INICIAR PARTIDA"
+
+[node name="LANBootstrapper" type="Node" parent="."]
+script = ExtResource("2_v01wp")
 
 [connection signal="change_in_player_list" from="." to="." method="_on_change_in_player_list"]
 [connection signal="pressed" from="LeaveButton" to="." method="_on_leave_button_pressed"]
