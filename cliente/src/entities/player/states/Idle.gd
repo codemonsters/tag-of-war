@@ -10,4 +10,4 @@ func Process(delta: float):
 	pass
 
 func Physics_process(delta: float):
-	pass
+	print("Idle physics process")

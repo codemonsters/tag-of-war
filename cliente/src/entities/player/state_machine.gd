@@ -4,7 +4,10 @@ var states : Dictionary = {}
 var current_state : State
 @export var initial_state : State
 
-func ready():
+func _ready():
+	if initial_state:
+		initial_state.Enter()
+		current_state = initial_state
 	for child in get_children():
 		if child is State:
 			states[child.name] = child
@@ -21,10 +24,6 @@ func _process(delta: float):
 		on_child_transition(current_state, "Jump")
 	if current_state:
 		current_state.Process(delta)
-		
-	if initial_state:
-		initial_state.Enter()
-		current_state= initial_state
 
 func _physics_process(delta: float):
 	if current_state:
@@ -33,10 +32,10 @@ func _physics_process(delta: float):
 func on_child_transition(state : State, new_state_name : String):
 	if state != current_state:
 		return
-	var new_state = state.get(new_state_name)
+	var new_state = states.get(new_state_name)
 	if !new_state:
 		return
 	if current_state:
 		current_state.Exit()
-	new_state.enter()
+	new_state.Enter()
 	current_state = new_state
