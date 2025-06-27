@@ -21,8 +21,6 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	
-	print(crouch)
-	
 	if is_on_floor():
 		walljump_available = 2
 		hola = false
@@ -59,7 +57,6 @@ func _physics_process(delta: float) -> void:
 		elif is_on_wall_only() and walljump_available > 0 and hola == true and crouch == false:
 			velocity.y -= jump + velocity.y
 			walljump_available -= 1
-			print(get_wall_normal().x)
 			if get_wall_normal().x > 0:
 				walk_direction = 1
 				velocity.x = walkspeed * walk_direction
@@ -72,12 +69,17 @@ func _physics_process(delta: float) -> void:
 	
 	if Input.is_action_pressed("crouch") and is_on_floor():
 		crouch = true
+		$CollisionShape2D.shape.height = 31
+		$CollisionShape2D.position = Vector2(0, 16.5)
+		if $CollisionShape2D.
 		$ColorRect.size = Vector2(32, 32)
 		$ColorRect.position = Vector2(-16, 0)
 	else:
 		crouch = false
 		$ColorRect.size = Vector2(32, 64)
 		$ColorRect.position = Vector2(-16, -32)
+		$CollisionShape2D.shape.height = 62
+		$CollisionShape2D.position = Vector2(0, 1)
 	
 	if not on_floor:
 		if velocity.y <= terminal_velocity:
