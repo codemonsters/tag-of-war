@@ -81,6 +81,10 @@ change_weapon={
 ]
 }
 
+[physics]
+
+2d/physics_engine="Rapier2D"
+
 [rendering]
 
 renderer/rendering_method="gl_compatibility"

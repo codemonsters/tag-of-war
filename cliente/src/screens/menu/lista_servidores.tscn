@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://bme4hgj88elrb"]
 
-[ext_resource type="Script" uid="uid://bnt1xx2w7218u" path="res://screens/menu/lista_servidores.gd" id="1_dq6en"]
+[ext_resource type="Script" path="res://screens/menu/lista_servidores.gd" id="1_dq6en"]
 
 [node name="Principal" type="Control"]
 custom_minimum_size = Vector2(1280, 720)
