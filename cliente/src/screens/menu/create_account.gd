@@ -39,7 +39,6 @@ func _on_btn_create_account_pressed() -> void:
 	else:
 		$ErrorMessageMail.visible = false
 	if regex.search($TxtAccountMail.get_text()) != null and str($TxtAccountPassword.get_text()).length() < 20 and str($TxtAccountPassword.get_text()).length() > 6 and str($TxtAccountName.get_text()).length() < 20 and str($TxtAccountName.get_text()).length() > 1: 
-		print("Todos los campos son correctos")
 		var login_dict = {"cmd":"login", "data": {"username": Account_username}} #Cambiar una vez exista comando para crear cuenta
 		connect_to_server.emit()
 		await get_tree().create_timer(1).timeout
