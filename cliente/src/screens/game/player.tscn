@@ -1,6 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://cct0t2jpyj5cg"]
+[gd_scene load_steps=6 format=3 uid="uid://cct0t2jpyj5cg"]
 
 [ext_resource type="Script" uid="uid://b02ego3xeec2d" path="res://screens/game/player.gd" id="1_04piu"]
+[ext_resource type="Script" uid="uid://dgv36o2rf45u1" path="res://screens/game/player-input.gd" id="2_2j468"]
+[ext_resource type="Script" uid="uid://d350u8evihs1u" path="res://addons/netfox/rollback/rollback-synchronizer.gd" id="2_y85i4"]
+[ext_resource type="Script" uid="uid://dour8fehaaugp" path="res://addons/netfox/tick-interpolator.gd" id="3_23huj"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_vxsfh"]
 radius = 14.0
@@ -8,12 +11,6 @@ height = 62.0
 
 [node name="CharacterBody2D" type="CharacterBody2D"]
 script = ExtResource("1_04piu")
-walkspeed = null
-acceleration = null
-deceleration = null
-jump = null
-gravity = null
-terminal_velocity = null
 
 [node name="ColorRect" type="ColorRect" parent="."]
 offset_left = -16.0
@@ -27,3 +24,16 @@ shape = SubResource("CapsuleShape2D_vxsfh")
 debug_color = Color(6.64204e-06, 0.589235, 0.758102, 0.42)
 
 [node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="RollbackSynchronizer" type="Node" parent="." node_paths=PackedStringArray("root")]
+script = ExtResource("2_y85i4")
+root = NodePath("..")
+metadata/_custom_type_script = "uid://d350u8evihs1u"
+
+[node name="TickInterpolator" type="Node" parent="." node_paths=PackedStringArray("root")]
+script = ExtResource("3_23huj")
+root = NodePath("..")
+metadata/_custom_type_script = "uid://dour8fehaaugp"
+
+[node name="Input" type="Node" parent="."]
+script = ExtResource("2_2j468")

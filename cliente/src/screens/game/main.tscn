@@ -14,11 +14,5 @@ script = ExtResource("1_ldyrl")
 
 [node name="Player" parent="Players" instance=ExtResource("2_ldyrl")]
 position = Vector2(509, 672)
-walkspeed = null
-acceleration = null
-deceleration = null
-jump = null
-gravity = null
-terminal_velocity = null
 
 [node name="Hud" parent="." instance=ExtResource("3_6xclv")]

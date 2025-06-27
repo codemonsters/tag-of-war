@@ -1,6 +1,46 @@
 extends CharacterBody2D
 
-@export var walkspeed = 320
+@export var speed = 5.0
+@export var input: PlayerInput
+
+# Get the gravity from the project settings to be synced with RigidBody nodes.
+var gravity = ProjectSettings.get_setting(&"physics/3d/default_gravity")
+
+func _ready():
+	position = Vector2(200, 200)
+	
+	if input == null:
+		input = $Input
+
+func _rollback_tick(delta, _tick, _is_fresh):
+	# Add the gravity.
+	if not is_on_floor():
+		velocity.y -= gravity * delta
+
+	var input_dir = input.movement
+	print(input_dir)
+	var direction = (Vector2(input_dir.x, input_dir.z)).normalized()
+	if direction:
+		velocity.x = direction.x * speed
+		velocity.y = direction.y * speed
+	else:
+		velocity.x = move_toward(velocity.x, 0, speed)
+		velocity.y = move_toward(velocity.y, 0, speed)
+
+	# move_and_slide assumes physics delta
+	# multiplying velocity by NetworkTime.physics_factor compensates for it
+	velocity *= NetworkTime.physics_factor
+	move_and_slide()
+	velocity /= NetworkTime.physics_factor
+
+# -------------------------------------------------------------------------------------------------
+
+
+
+
+"""
+
+@export var walkspeed = 320	# TODO: Eliminar en favor de speed? (speed lo introdujimos con Netfox)
 ##Pixels per second
 @export var acceleration = 800
 ##Pixels per second
@@ -10,7 +50,7 @@ extends CharacterBody2D
 @export var gravity = 20
 @export var terminal_velocity = 600
 
-var speed = 0
+# var speed = 0	# 
 var walk_direction = 1 #1 o -1 para cambiar el signo de la velocidad al ser multiplicado por ella
 var walljump_available = 2
 var hola = false
@@ -86,3 +126,4 @@ func _physics_process(delta: float) -> void:
 			velocity.y += gravity
 	
 	move_and_slide()
+"""
