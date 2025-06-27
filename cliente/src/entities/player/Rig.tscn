@@ -1,10 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://rkj5oav0o5jv"]
+[gd_scene load_steps=5 format=3 uid="uid://rkj5oav0o5jv"]
 
 [ext_resource type="Texture2D" uid="uid://cqysx8eerhu2q" path="res://assets/cubo_verde.png" id="1_u3cgb"]
 [ext_resource type="Animation" uid="uid://dg2m84qj2efkp" path="res://assets/animations/run_animation.res" id="2_0bse0"]
-
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_0bse0"]
-height = 32.0
 
 [sub_resource type="Animation" id="Animation_4dl5e"]
 resource_name = "test"
@@ -27,11 +24,7 @@ _data = {
 &"test": SubResource("Animation_4dl5e")
 }
 
-[node name="Rig" type="CharacterBody2D"]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, 1)
-shape = SubResource("CapsuleShape2D_0bse0")
+[node name="Rig" type="Node2D"]
 
 [node name="Body" type="Sprite2D" parent="."]
 texture_filter = 1

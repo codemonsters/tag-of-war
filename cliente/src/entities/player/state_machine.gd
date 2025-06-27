@@ -14,6 +14,7 @@ func _ready():
 			child.Transition.connect(on_child_transition)
 
 func _process(delta: float):
+	print(InputEvent)
 	if Input.is_action_pressed("walk_left"):
 		$Run.run_direction = -1
 		on_child_transition(current_state, "Run")
