@@ -71,7 +71,7 @@ func _physics_process(delta: float) -> void:
 		crouch = true
 		$CollisionShape2D.shape.height = 31
 		$CollisionShape2D.position = Vector2(0, 16.5)
-		if $CollisionShape2D.
+#		if $CollisionShape2D.
 		$ColorRect.size = Vector2(32, 32)
 		$ColorRect.position = Vector2(-16, 0)
 	else:
